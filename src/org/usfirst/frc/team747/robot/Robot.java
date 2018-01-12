@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team747.robot.commands.ExampleCommand;
 import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +27,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI mOI;
-	public static WPI_TalonSRX mTalon;
+	public static TalonSRX mTalon;
+	private int notRun = 1;
+	public static int stopTimer = 0;
 
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
@@ -41,7 +44,7 @@ public class Robot extends TimedRobot {
 		mChooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", mChooser);
-		mTalon = new WPI_TalonSRX(9);
+		mTalon = new TalonSRX(9);
 	}
 
 	/**
@@ -104,7 +107,6 @@ public class Robot extends TimedRobot {
 		if (mAutonomousCommand != null) {
 			mAutonomousCommand.cancel();
 		}
-		mTalon.set(1.0);
 	}
 
 	/**
@@ -113,12 +115,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		try {
-			Thread.sleep((long) 5.0);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		stopTimer++;
+		if (stopTimer < 250) {
+			mTalon.set(ControlMode.PercentOutput, 1.0);
+		} else {
+		mTalon.set(ControlMode.PercentOutput, 0.0);
 		}
-		mTalon.set(0);
 	}
 
 	/**
