@@ -113,6 +113,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		try {
+			Thread.sleep((long) 5.0);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		mTalon.set(0);
 	}
 
 	/**
