@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI mOI;
 	public static TalonSRX mTalon;
-	private int notRun = 1;
 	public static int stopTimer = 0;
 
 	Command mAutonomousCommand;
