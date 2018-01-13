@@ -121,9 +121,12 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	
 		double leftJoystickValue = leftDrive.getRawAxis(1);
-		double rightJoystickValue = rightDrive.getRawAxis(1);
+		double rightJoystickValue = -rightDrive.getRawAxis(1);
 
-		leftFrontDrive.set(ControlMode.PercentOutput, 0.5);
+		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
+		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
+		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 	}
 
 	/**
