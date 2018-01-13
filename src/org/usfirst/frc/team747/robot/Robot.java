@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team747.robot.commands.ExampleCommand;
 import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -25,7 +28,8 @@ import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
-
+	public static TalonSRX leftFrontDrive = new TalonSRX(0);
+	public static int sleepTimer;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -109,6 +113,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		
+		while(sleepTimer < 250) {
+			leftFrontDrive.set(ControlMode.PercentOutput, 1.0);
+			sleepTimer++;
+		}
+		
+		leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
 	}
 
 	/**
