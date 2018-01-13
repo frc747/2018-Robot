@@ -124,20 +124,33 @@ public class Robot extends TimedRobot {
 		
 			boolean leftTriggerPressed = leftDrive.getRawButton(1);
 			boolean rightTriggerPressed = rightDrive.getRawButton(1);
-		
+			boolean leftBrakePressed = leftDrive.getRawButton(2);
+			boolean rightBrakePressed = leftDrive.getRawButton(2);
+			
+			boolean brakePressed = false;
+			
+			if(leftBrakePressed || rightBrakePressed) {
+				brakePressed = true;
+			}
 			if(leftTriggerPressed || rightTriggerPressed) {
 				speedModifier = 1;
 			} else {
-				speedModifier = 2;
+				speedModifier = 0.5;
 			}
 			
-			
+			if(brakePressed) {
+				speedModifier = 0;
+				leftFrontDrive.set(ControlMode.);
+				leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
+				rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+				rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+			}
 	
-			double rightJoystickValue = -rightDrive.getRawAxis(1)/speedModifier;
-			double leftJoystickValue = leftDrive.getRawAxis(1)/speedModifier;
+			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
+			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
 		
 		
-		
+			
 		
 		//double leftJoystickValue = leftDrive.getRawAxis(1)/2;
 		
