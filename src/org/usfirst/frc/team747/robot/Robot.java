@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
 		if (stopTimer < 250) {
 			mTalon.set(ControlMode.PercentOutput, 1.0);
 		} else {
-		mTalon.set(ControlMode.PercentOutput, 0.0);
+			mTalon.set(ControlMode.PercentOutput, 0.0);
 		}
 	}
 
