@@ -113,14 +113,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+	
 		
-		
-		while(sleepTimer < 250) {
-			leftFrontDrive.set(ControlMode.PercentOutput, 1.0);
-			sleepTimer++;
-		}
-		
-		leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
+		leftFrontDrive.set(ControlMode.PercentOutput, 0.5);
 	}
 
 	/**
