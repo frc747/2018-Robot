@@ -107,8 +107,20 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		double distance = 0;
+		double distance = 55;
 		double time = distance/(SPEED*5);
+		if (time > 0) {
+			time--;
+			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
+			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
+			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
+			rightRearDrive.set(ControlMode.PercentOutput, 0.25);
+		} else {
+			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
+			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
+			rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
+			rightRearDrive.set(ControlMode.PercentOutput, 0.0);
+		}
 	}
 
 	@Override
