@@ -119,10 +119,28 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+			double speedModifier;
+		
+		
+			boolean leftTriggerPressed = leftDrive.getRawButton(1);
+			boolean rightTriggerPressed = rightDrive.getRawButton(1);
+		
+			if(leftTriggerPressed || rightTriggerPressed) {
+				speedModifier = 1;
+			} else {
+				speedModifier = 2;
+			}
+			
+			
 	
-		double leftJoystickValue = leftDrive.getRawAxis(1);
-		double rightJoystickValue = -rightDrive.getRawAxis(1);
-
+			double rightJoystickValue = -rightDrive.getRawAxis(1)/speedModifier;
+			double leftJoystickValue = leftDrive.getRawAxis(1)/speedModifier;
+		
+		
+		
+		
+		//double leftJoystickValue = leftDrive.getRawAxis(1)/2;
+		
 		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
