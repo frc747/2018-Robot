@@ -119,29 +119,27 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-			double speedModifier;
+		double speedModifier;
 		
-			boolean leftTriggerPressed = leftDrive.getRawButton(1);
-			boolean rightTriggerPressed = rightDrive.getRawButton(1);
-			boolean leftBrakePressed = leftDrive.getRawButton(2);
-			boolean rightBrakePressed = leftDrive.getRawButton(2);
+		boolean leftTriggerPressed = leftDrive.getRawButton(1);
+		boolean rightTriggerPressed = rightDrive.getRawButton(1);
+		boolean leftBrakePressed = leftDrive.getRawButton(2);
+		boolean rightBrakePressed = leftDrive.getRawButton(2);
 			
-			if(leftTriggerPressed ^ rightTriggerPressed) {
-				speedModifier = 0.5;
-			} else if (leftTriggerPressed && rightTriggerPressed) {
-				speedModifier = 1;
-			} else {
-				speedModifier = 0.25;
-			}
-			
-			if(leftBrakePressed || rightBrakePressed) {
-				speedModifier = 0;
-			}
-			
-			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
-			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
+		if(leftTriggerPressed ^ rightTriggerPressed) {
+			speedModifier = 0.5;
+		} else if (leftTriggerPressed && rightTriggerPressed) {
+			speedModifier = 1.0;
+		} else {
+			speedModifier = 0.25;
+		}
 		
-		//double leftJoystickValue = leftDrive.getRawAxis(1)/2;
+		if(leftBrakePressed || rightBrakePressed) {
+			speedModifier = 0.0;
+		}
+			
+		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
+		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
 		
 		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
