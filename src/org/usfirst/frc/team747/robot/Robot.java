@@ -31,11 +31,18 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	Joystick rightDrive = new Joystick(1);
 	Joystick leftDrive = new Joystick(0);
+	public static TalonSRX ballShooter1 = new TalonSRX(4);
+	public static TalonSRX ballShooter2 = new TalonSRX(5);
+	public static TalonSRX ballShooter3 = new TalonSRX(6);
+	public static TalonSRX ballShooter4 = new TalonSRX(7);
+	public static TalonSRX ballIndexer = new TalonSRX(8);
+	public static TalonSRX ballIntakeTalon = new TalonSRX(9);
 	public static TalonSRX leftFrontDrive = new TalonSRX(0);
 	public static TalonSRX leftRearDrive = new TalonSRX(1);
 	public static TalonSRX rightFrontDrive = new TalonSRX(2);
 	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
+	public double SPEED = 29.8814933638;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -100,6 +107,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		double distance = 0;
+		double time = distance/(SPEED*5);
 	}
 
 	@Override
@@ -120,23 +129,42 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 			double speedModifier;
-		
-			boolean leftTriggerPressed = leftDrive.getRawButton(1);
-			boolean rightTriggerPressed = rightDrive.getRawButton(1);
-			boolean leftBrakePressed = leftDrive.getRawButton(2);
-			boolean rightBrakePressed = leftDrive.getRawButton(2);
-			
-			if(leftTriggerPressed ^ rightTriggerPressed) {
+					
+			if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
 				speedModifier = 0.5;
-			} else if (leftTriggerPressed && rightTriggerPressed) {
+			} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
 				speedModifier = 1;
 			} else {
 				speedModifier = 0.25;
 			}
 			
-			if(leftBrakePressed || rightBrakePressed) {
+			if(rightDrive.getRawButton(2)) {
 				speedModifier = 0;
 			}
+			
+			if(leftDrive.getRawButton(3)) {
+				ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
+			} else {
+				ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
+			}
+			
+			if(leftDrive.getRawButton(4)) {
+				ballShooter1.set(ControlMode.PercentOutput, -1.0);
+				ballShooter2.set(ControlMode.PercentOutput, -1.0);
+				ballShooter3.set(ControlMode.PercentOutput, 1.0);
+				ballShooter4.set(ControlMode.PercentOutput, 1.0);
+				ballIndexer.set(ControlMode.PercentOutput, 1.0);
+
+
+			} else {
+				ballShooter1.set(ControlMode.PercentOutput, 0.0);
+				ballShooter2.set(ControlMode.PercentOutput, 0.0);
+				ballShooter3.set(ControlMode.PercentOutput, 0.0);
+				ballShooter4.set(ControlMode.PercentOutput, 0.0);
+				ballIndexer.set(ControlMode.PercentOutput, 0.0);
+
+			}
+		
 			
 			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
 			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
@@ -147,6 +175,8 @@ public class Robot extends TimedRobot {
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+		
+		
 	}
 
 	/**
