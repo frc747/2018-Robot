@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -28,7 +29,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
+	Joystick rightDrive = new Joystick(1);
+	Joystick leftDrive = new Joystick(0);
 	public static TalonSRX leftFrontDrive = new TalonSRX(0);
+	public static TalonSRX leftRearDrive = new TalonSRX(1);
+	public static TalonSRX rightFrontDrive = new TalonSRX(2);
+	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -114,7 +120,9 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	
-		
+		double leftJoystickValue = leftDrive.getRawAxis(1);
+		double rightJoystickValue = rightDrive.getRawAxis(1);
+
 		leftFrontDrive.set(ControlMode.PercentOutput, 0.5);
 	}
 
