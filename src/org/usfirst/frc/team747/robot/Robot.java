@@ -121,36 +121,25 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 			double speedModifier;
 		
-		
 			boolean leftTriggerPressed = leftDrive.getRawButton(1);
 			boolean rightTriggerPressed = rightDrive.getRawButton(1);
 			boolean leftBrakePressed = leftDrive.getRawButton(2);
 			boolean rightBrakePressed = leftDrive.getRawButton(2);
 			
-			boolean brakePressed = false;
-			
-			if(leftBrakePressed || rightBrakePressed) {
-				brakePressed = true;
-			}
-			if(leftTriggerPressed || rightTriggerPressed) {
+			if(leftTriggerPressed ^ rightTriggerPressed) {
+				speedModifier = 0.5;
+			} else if (leftTriggerPressed && rightTriggerPressed) {
 				speedModifier = 1;
 			} else {
-				speedModifier = 0.5;
+				speedModifier = 0.25;
 			}
 			
-			if(brakePressed) {
+			if(leftBrakePressed || rightBrakePressed) {
 				speedModifier = 0;
-				leftFrontDrive.set(ControlMode.);
-				leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
-				rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
-				rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 			}
-	
-			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
-			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
-		
-		
 			
+			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
+			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
 		
 		//double leftJoystickValue = leftDrive.getRawAxis(1)/2;
 		
