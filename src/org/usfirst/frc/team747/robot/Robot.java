@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
 	public double DISTANCE = 55;
 	public double TIME = DISTANCE/SPEED;
 	public int stopTimer = 0;
+	public double autonomousSpeed = 0.25;
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
 
@@ -111,13 +112,14 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		TIME *= (1/autonomousSpeed);
+		stopTimer++;
 		
 		if (stopTimer < TIME) {
-			stopTimer++;
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.25);
+			leftFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+			leftRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+			rightFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+			rightRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
 		} else {
 			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
 			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
