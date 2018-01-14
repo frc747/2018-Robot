@@ -43,6 +43,9 @@ public class Robot extends TimedRobot {
 	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
 	public double SPEED = 29.8814933638;
+	public double DISTANCE = 55;
+	public double TIME = DISTANCE/SPEED;
+	public int stopTimer = 0;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -107,10 +110,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		double distance = 55;
-		double time = distance/(SPEED*5);
-		if (time > 0) {
-			time--;
+		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		if (stopTimer < TIME) {
+			stopTimer++;
 			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
 			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
 			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
