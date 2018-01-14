@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		
 		if (stopTimer < TIME) {
 			stopTimer++;
 			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
@@ -142,55 +143,47 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-			double speedModifier;
+		double speedModifier;
 					
-			if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
-				speedModifier = 0.5;
-			} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
-				speedModifier = 1;
-			} else {
-				speedModifier = 0.25;
-			}
+		if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
+			speedModifier = 0.5;
+		} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
+			speedModifier = 1;
+		} else {
+			speedModifier = 0.25;
+		}
 			
-			if(rightDrive.getRawButton(2)) {
-				speedModifier = 0;
-			}
+		if(rightDrive.getRawButton(2)) {
+			speedModifier = 0;
+		}
 			
-			if(leftDrive.getRawButton(3)) {
-				ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
-			} else {
-				ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
-			}
+		if(leftDrive.getRawButton(3)) {
+			ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
+		} else {
+			ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
+		}
 			
-			if(leftDrive.getRawButton(4)) {
-				ballShooter1.set(ControlMode.PercentOutput, -1.0);
-				ballShooter2.set(ControlMode.PercentOutput, -1.0);
-				ballShooter3.set(ControlMode.PercentOutput, 1.0);
-				ballShooter4.set(ControlMode.PercentOutput, 1.0);
-				ballIndexer.set(ControlMode.PercentOutput, 1.0);
-
-
-			} else {
-				ballShooter1.set(ControlMode.PercentOutput, 0.0);
-				ballShooter2.set(ControlMode.PercentOutput, 0.0);
-				ballShooter3.set(ControlMode.PercentOutput, 0.0);
-				ballShooter4.set(ControlMode.PercentOutput, 0.0);
-				ballIndexer.set(ControlMode.PercentOutput, 0.0);
-
-			}
+		if(leftDrive.getRawButton(4)) {
+			ballShooter1.set(ControlMode.PercentOutput, -1.0);
+			ballShooter2.set(ControlMode.PercentOutput, -1.0);
+			ballShooter3.set(ControlMode.PercentOutput, 1.0);
+			ballShooter4.set(ControlMode.PercentOutput, 1.0);
+			ballIndexer.set(ControlMode.PercentOutput, 1.0);
+		} else {
+			ballShooter1.set(ControlMode.PercentOutput, 0.0);
+			ballShooter2.set(ControlMode.PercentOutput, 0.0);
+			ballShooter3.set(ControlMode.PercentOutput, 0.0);
+			ballShooter4.set(ControlMode.PercentOutput, 0.0);
+			ballIndexer.set(ControlMode.PercentOutput, 0.0);
+		}
 		
-			
-			double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
-			double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
-		
-		//double leftJoystickValue = leftDrive.getRawAxis(1)/2;
+		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
+		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
 		
 		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
-		
-		
 	}
 
 	/**
