@@ -28,7 +28,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
-	public static OI m_oi;
+	public static OI mOI;
 	Joystick rightDrive = new Joystick(1);
 	Joystick leftDrive = new Joystick(0);
 	public static TalonSRX ballShooter1 = new TalonSRX(4);
@@ -46,8 +46,8 @@ public class Robot extends TimedRobot {
 	public double DISTANCE = 55;
 	public double TIME = DISTANCE/SPEED;
 	public int stopTimer = 0;
-	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	Command mAutonomousCommand;
+	SendableChooser<Command> mChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -55,10 +55,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		mOI = new OI();
+		mChooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		SmartDashboard.putData("Auto mode", mChooser);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		mAutonomousCommand = mChooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -99,8 +99,8 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		if (mAutonomousCommand != null) {
+			mAutonomousCommand.start();
 		}
 	}
 
@@ -131,8 +131,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (mAutonomousCommand != null) {
+			mAutonomousCommand.cancel();
 		}
 	}
 
