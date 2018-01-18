@@ -28,27 +28,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
-	public static OI mOI;
+	public static OI m_oi;
 	Joystick rightDrive = new Joystick(1);
 	Joystick leftDrive = new Joystick(0);
-	public static TalonSRX ballShooter1 = new TalonSRX(4);
-	public static TalonSRX ballShooter2 = new TalonSRX(5);
-	public static TalonSRX ballShooter3 = new TalonSRX(6);
-	public static TalonSRX ballShooter4 = new TalonSRX(7);
-	public static TalonSRX ballIndexer = new TalonSRX(8);
-	public static TalonSRX ballIntakeTalon = new TalonSRX(9);
 	public static TalonSRX leftFrontDrive = new TalonSRX(0);
 	public static TalonSRX leftRearDrive = new TalonSRX(1);
 	public static TalonSRX rightFrontDrive = new TalonSRX(2);
 	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
-	public double autonomousSpeed = 4;
-	public double SPEED = 29.8814933638;
-	public double DISTANCE = 35;
-	public double TIME = (DISTANCE/SPEED)*235*(1/autonomousSpeed); // converts TIME to milliseconds and divides out the 20 ms in between running this
-	public int stopTimer = 0;
-	Command mAutonomousCommand;
-	SendableChooser<Command> mChooser = new SendableChooser<>();
+	Command m_autonomousCommand;
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -56,10 +45,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		mOI = new OI();
-		mChooser.addDefault("Default Auto", new ExampleCommand());
+		m_oi = new OI();
+		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", mChooser);
+		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	/**
@@ -90,7 +79,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		mAutonomousCommand = mChooser.getSelected();
+		m_autonomousCommand = m_chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -100,11 +89,9 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (mAutonomousCommand != null) {
-			mAutonomousCommand.start();
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.start();
 		}
-		stopTimer = 0;
-		
 	}
 
 	/**
@@ -113,21 +100,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		stopTimer++;
-		
-		
-		if (stopTimer < TIME) {
-			leftFrontDrive.set(ControlMode.PercentOutput, -(1/autonomousSpeed));
-			leftRearDrive.set(ControlMode.PercentOutput, -(1/autonomousSpeed));
-			
-			rightFrontDrive.set(ControlMode.PercentOutput, (1/autonomousSpeed));
-			rightRearDrive.set(ControlMode.PercentOutput, (1/autonomousSpeed));
-		} else {
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.0);
-		}
 	}
 
 	@Override
@@ -136,8 +108,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (mAutonomousCommand != null) {
-			mAutonomousCommand.cancel();
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.cancel();
 		}
 	}
 
@@ -148,46 +120,52 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		double speedModifier;
-					
-		if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
+		
+		boolean leftTriggerPressed = leftDrive.getRawButton(1);
+		boolean rightTriggerPressed = rightDrive.getRawButton(1);
+		boolean leftBrakePressed = leftDrive.getRawButton(2);
+		boolean rightBrakePressed = leftDrive.getRawButton(2);
+			
+		if(leftTriggerPressed ^ rightTriggerPressed) {
 			speedModifier = 0.5;
-		} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
-			speedModifier = 1;
+		} else if (leftTriggerPressed && rightTriggerPressed) {
+			speedModifier = 1.0;
 		} else {
 			speedModifier = 0.25;
 		}
-			
-		if(rightDrive.getRawButton(2)) {
-			speedModifier = 0;
-		}
-			
-		if(leftDrive.getRawButton(3)) {
-			ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
-		} else {
-			ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
-		}
-			
-		if(leftDrive.getRawButton(4)) {
-			ballShooter1.set(ControlMode.PercentOutput, -1.0);
-			ballShooter2.set(ControlMode.PercentOutput, -1.0);
-			ballShooter3.set(ControlMode.PercentOutput, 1.0);
-			ballShooter4.set(ControlMode.PercentOutput, 1.0);
-			ballIndexer.set(ControlMode.PercentOutput, 1.0);
-		} else {
-			ballShooter1.set(ControlMode.PercentOutput, 0.0);
-			ballShooter2.set(ControlMode.PercentOutput, 0.0);
-			ballShooter3.set(ControlMode.PercentOutput, 0.0);
-			ballShooter4.set(ControlMode.PercentOutput, 0.0);
-			ballIndexer.set(ControlMode.PercentOutput, 0.0);
-		}
 		
-		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
-		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
+		if(leftBrakePressed || rightBrakePressed) {
+			speedModifier = 0.0;
+		}
+			
+		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
+		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
 		
 		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+
+//		leftFrontDrive.set(ControlMode.MotionMagic, thisWouldBeWhereYouEnterHowManyTicksYouWantToDrive); and it will hone onto 
+//		that position to the best of its ability until you take it out of motion magic mode or change what position (in ticks) that you want to go to
+//		
+//        leftFrontDrive.configSelectedFeedbackSensor(arg0, arg1, arg2);
+//        
+//        leftFrontDrive.configNominalOutputForward(arg0, arg1);
+//        leftFrontDrive.configNominalOutputReverse(arg0, arg1);
+//        leftFrontDrive.configPeakOutputForward(arg0, arg1);
+//        leftFrontDrive.configPeakOutputReverse(arg0, arg1);
+//        
+//        leftFrontDrive.config_IntegralZone(arg0, arg1, arg2);
+//        leftFrontDrive.configMaxIntegralAccumulator(arg0, arg1, arg2);
+//        
+//        leftFrontDrive.configMotionAcceleration(arg0, arg1);
+//        leftFrontDrive.configMotionCruiseVelocity(arg0, arg1);
+//
+//        leftFrontDrive.config_kP(arg0, arg1, arg2);
+//        leftFrontDrive.config_kI(arg0, arg1, arg2);
+//        leftFrontDrive.config_kD(arg0, arg1, arg2);
+//        leftFrontDrive.config_kF(arg0, arg1, arg2);
 	}
 
 	/**
