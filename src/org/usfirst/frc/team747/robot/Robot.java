@@ -42,11 +42,11 @@ public class Robot extends TimedRobot {
 	public static TalonSRX rightFrontDrive = new TalonSRX(2);
 	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
+	public double autonomousSpeed = 4;
 	public double SPEED = 29.8814933638;
-	public double DISTANCE = 55;
-	public double TIME = DISTANCE/SPEED;
+	public double DISTANCE = 35;
+	public double TIME = (DISTANCE/SPEED)*235*(1/autonomousSpeed); // converts TIME to milliseconds and divides out the 20 ms in between running this
 	public int stopTimer = 0;
-	public double autonomousSpeed = 0.25;
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
 
@@ -103,6 +103,8 @@ public class Robot extends TimedRobot {
 		if (mAutonomousCommand != null) {
 			mAutonomousCommand.start();
 		}
+		stopTimer = 0;
+		
 	}
 
 	/**
@@ -111,15 +113,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
-		TIME *= (1/autonomousSpeed);
 		stopTimer++;
 		
+		
 		if (stopTimer < TIME) {
-			leftFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
-			leftRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
-			rightFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
-			rightRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+			leftFrontDrive.set(ControlMode.PercentOutput, -(1/autonomousSpeed));
+			leftRearDrive.set(ControlMode.PercentOutput, -(1/autonomousSpeed));
+			
+			rightFrontDrive.set(ControlMode.PercentOutput, (1/autonomousSpeed));
+			rightRearDrive.set(ControlMode.PercentOutput, (1/autonomousSpeed));
 		} else {
 			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
 			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
