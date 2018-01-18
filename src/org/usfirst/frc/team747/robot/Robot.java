@@ -100,6 +100,26 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		leftFrontDrive.set(ControlMode.MotionMagic, 10); //it will hone onto 
+		//that position to the best of its ability until you take it out of motion magic mode or change what position (in ticks) that you want to go to		
+        leftFrontDrive.configSelectedFeedbackSensor(arg0, arg1, arg2);
+        
+        leftFrontDrive.configNominalOutputForward(arg0, arg1);
+        leftFrontDrive.configNominalOutputReverse(arg0, arg1);
+        leftFrontDrive.configPeakOutputForward(arg0, arg1);
+        leftFrontDrive.configPeakOutputReverse(arg0, arg1);
+        
+        leftFrontDrive.config_IntegralZone(arg0, arg1, arg2);
+        leftFrontDrive.configMaxIntegralAccumulator(arg0, arg1, arg2);
+        
+        leftFrontDrive.configMotionAcceleration(arg0, arg1);
+        leftFrontDrive.configMotionCruiseVelocity(arg0, arg1);
+
+        leftFrontDrive.config_kP(arg0, arg1, arg2);
+        leftFrontDrive.config_kI(arg0, arg1, arg2);
+        leftFrontDrive.config_kD(arg0, arg1, arg2);
+        leftFrontDrive.config_kF(arg0, arg1, arg2);
 	}
 
 	@Override
@@ -145,27 +165,6 @@ public class Robot extends TimedRobot {
 		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
 		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
-
-//		leftFrontDrive.set(ControlMode.MotionMagic, thisWouldBeWhereYouEnterHowManyTicksYouWantToDrive); and it will hone onto 
-//		that position to the best of its ability until you take it out of motion magic mode or change what position (in ticks) that you want to go to
-//		
-//        leftFrontDrive.configSelectedFeedbackSensor(arg0, arg1, arg2);
-//        
-//        leftFrontDrive.configNominalOutputForward(arg0, arg1);
-//        leftFrontDrive.configNominalOutputReverse(arg0, arg1);
-//        leftFrontDrive.configPeakOutputForward(arg0, arg1);
-//        leftFrontDrive.configPeakOutputReverse(arg0, arg1);
-//        
-//        leftFrontDrive.config_IntegralZone(arg0, arg1, arg2);
-//        leftFrontDrive.configMaxIntegralAccumulator(arg0, arg1, arg2);
-//        
-//        leftFrontDrive.configMotionAcceleration(arg0, arg1);
-//        leftFrontDrive.configMotionCruiseVelocity(arg0, arg1);
-//
-//        leftFrontDrive.config_kP(arg0, arg1, arg2);
-//        leftFrontDrive.config_kI(arg0, arg1, arg2);
-//        leftFrontDrive.config_kD(arg0, arg1, arg2);
-//        leftFrontDrive.config_kF(arg0, arg1, arg2);
 	}
 
 	/**
