@@ -17,6 +17,7 @@ import org.usfirst.frc.team747.robot.commands.ExampleCommand;
 import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
 		
 		leftFrontDrive.set(ControlMode.MotionMagic, 10); //it will hone onto 
 		//that position to the best of its ability until you take it out of motion magic mode or change what position (in ticks) that you want to go to		
-        leftFrontDrive.configSelectedFeedbackSensor(arg0, arg1, arg2);
+        leftFrontDrive.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
         
         leftFrontDrive.configNominalOutputForward(arg0, arg1);
         leftFrontDrive.configNominalOutputReverse(arg0, arg1);
@@ -119,7 +120,7 @@ public class Robot extends TimedRobot {
         leftFrontDrive.config_kP(arg0, arg1, arg2);
         leftFrontDrive.config_kI(arg0, arg1, arg2);
         leftFrontDrive.config_kD(arg0, arg1, arg2);
-        leftFrontDrive.config_kF(arg0, arg1, arg2);
+        leftFrontDrive.config_kF(arg0, arg1, arg2); 
 	}
 
 	@Override
