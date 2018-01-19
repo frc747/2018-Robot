@@ -93,6 +93,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
+		Auton.autonPeriodic();
 	}
 
 	/**
@@ -102,25 +104,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-		leftFrontDrive.set(ControlMode.MotionMagic, 10); //it will hone onto 
-		//that position to the best of its ability until you take it out of motion magic mode or change what position (in ticks) that you want to go to		
-        leftFrontDrive.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
-        
-        leftFrontDrive.configNominalOutputForward(arg0, arg1);
-        leftFrontDrive.configNominalOutputReverse(arg0, arg1);
-        leftFrontDrive.configPeakOutputForward(arg0, arg1);
-        leftFrontDrive.configPeakOutputReverse(arg0, arg1);
-        
-        leftFrontDrive.config_IntegralZone(arg0, arg1, arg2);
-        leftFrontDrive.configMaxIntegralAccumulator(arg0, arg1, arg2);
-        
-        leftFrontDrive.configMotionAcceleration(arg0, arg1);
-        leftFrontDrive.configMotionCruiseVelocity(arg0, arg1);
-
-        leftFrontDrive.config_kP(arg0, arg1, arg2);
-        leftFrontDrive.config_kI(arg0, arg1, arg2);
-        leftFrontDrive.config_kD(arg0, arg1, arg2);
-        leftFrontDrive.config_kF(arg0, arg1, arg2); 
+		Auton.autonPeriodic();
 	}
 
 	@Override
