@@ -9,7 +9,7 @@ public class CubeSightIntakeSpin {
 	
 	public static void detectCube() {
 		targetArea = table.getNumber("ta", 0);
-		if(targetArea >= 50 && targetArea <= 65) {
+		if(targetArea >= 20 && targetArea <= 35) {
 			SpinIntake.spinIntake();
 		} else {
 			SpinIntake.stopSpinIntake();
