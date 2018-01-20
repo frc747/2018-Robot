@@ -30,12 +30,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
-	Joystick rightDrive = new Joystick(1);
-	Joystick leftDrive = new Joystick(0);
-	public static TalonSRX leftFrontDrive = new TalonSRX(0);
-	public static TalonSRX leftRearDrive = new TalonSRX(1);
-	public static TalonSRX rightFrontDrive = new TalonSRX(2);
-	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -121,32 +115,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		double speedModifier;
 		
-		boolean leftTriggerPressed = leftDrive.getRawButton(1);
-		boolean rightTriggerPressed = rightDrive.getRawButton(1);
-		boolean leftBrakePressed = leftDrive.getRawButton(2);
-		boolean rightBrakePressed = leftDrive.getRawButton(2);
-			
-		if(leftTriggerPressed ^ rightTriggerPressed) {
-			speedModifier = 0.5;
-		} else if (leftTriggerPressed && rightTriggerPressed) {
-			speedModifier = 1.0;
-		} else {
-			speedModifier = 0.25;
-		}
+		Drive.drive();
 		
-		if(leftBrakePressed || rightBrakePressed) {
-			speedModifier = 0.0;
-		}
-			
-		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
-		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
-		
-		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
-		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
-		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
-		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 	}
 
 	/**
