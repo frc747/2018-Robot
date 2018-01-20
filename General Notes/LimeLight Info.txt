@@ -1,0 +1,6 @@
+54 degrees Horiontal FOV
+41 degrees Vertical FOV
+
+320 x 240 pixel resolution (Horizontal by Vertical)
+
+54/320 = 0.16875 (Horizontal Degrees per Pixel)
