@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team747.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -117,7 +116,6 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		
 		Drive.drive();
-		
 	}
 
 	/**

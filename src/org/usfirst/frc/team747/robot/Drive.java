@@ -32,6 +32,9 @@ public class Drive {
 		if(leftBrakePressed || rightBrakePressed) {
 			speedModifier = 0.0;
 		}
+		
+		CubeSightIntakeSpin.detectCube();
+
 			
 		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;
 		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;
