@@ -6,13 +6,42 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class CubeSightIntakeSpin {
 	static NetworkTable table = NetworkTable.getTable("limelight");
 	static double targetArea;
+	static boolean zeroSwitch = false;
 	
 	public static void detectCube() {
 		targetArea = table.getNumber("ta", 0);
-		if(targetArea >= 50 && targetArea <= 65) {
-			SpinIntake.spinIntake();
-		} else {
-			SpinIntake.stopSpinIntake();
+		
+		if(!zeroSwitch) {
+			if(targetArea != 0) {
+			zeroSwitch = true;
+			}
 		}
+		
+		
+		if(zeroSwitch) {
+			if(targetArea == 0 || (targetArea < 100 && targetArea > 99.7) || targetArea > 35) {
+				SpinIntake.spinIntake();
+				zeroSwitch = true;
+			} else {
+				SpinIntake.stopSpinIntake();
+				zeroSwitch = false;
+			}
+		}
+		
+		if(zeroSwitch) {
+			if(targetArea < 35 && targetArea != 0) {
+				zeroSwitch = false;
+				SpinIntake.stopSpinIntake();
+			}
+			
+			
+		if(!zeroSwitch) {
+			if(targetArea == 0) {
+				SpinIntake.stopSpinIntake();
+			}
+			}
+		}
+		
+		
 	}
 }
