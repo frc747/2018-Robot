@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import javax.swing.Spring;
 
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
@@ -32,6 +35,7 @@ public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static OI m_oi;
 	public static int sleepTimer;
+	public String gameData;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
@@ -61,6 +65,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
@@ -77,6 +82,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
