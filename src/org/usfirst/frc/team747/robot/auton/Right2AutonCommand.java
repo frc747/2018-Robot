@@ -1,13 +1,21 @@
 package org.usfirst.frc.team747.robot.auton;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
+import org.usfirst.frc.team747.robot.maps.RobotMap;
 
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team747.robot.commands.*;
 /**
  *
  */
 public class Right2AutonCommand extends CommandGroup {
 
     public Right2AutonCommand() {
+    	addSequential(new PIDDriveRevolutions(60-RobotMap.robotLength));
+    	addSequential(new PIDDriveRotateCommand(90));
+    	addSequential(new PIDDriveRevolutions(54));
+    	addSequential(new PIDDriveRotateCommand(-90));
+    	addSequential(new PIDDriveRevolutions(81));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

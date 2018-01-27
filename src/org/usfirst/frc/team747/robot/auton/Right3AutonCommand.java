@@ -1,5 +1,7 @@
 package org.usfirst.frc.team747.robot.auton;
 
+import org.usfirst.frc.team747.robot.maps.RobotMap;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -8,6 +10,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Right3AutonCommand extends CommandGroup {
 
     public Right3AutonCommand() {
+    	addSequential(new PIDDriveRevolutions(141-RobotMap.robotLength));
+
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

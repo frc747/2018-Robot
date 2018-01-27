@@ -1,6 +1,7 @@
 package org.usfirst.frc.team747.robot.auton;
 
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
+import org.usfirst.frc.team747.robot.maps.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -10,11 +11,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Left2AutonCommand extends CommandGroup {
 
     public Left2AutonCommand() {
-    	addSequential(new PIDDriveRevolutions(60));
+    	addSequential(new PIDDriveRevolutions(60-RobotMap.robotLength));
     	addSequential(new PIDDriveRotateCommand(-90));
     	addSequential(new PIDDriveRevolutions(54));
     	addSequential(new PIDDriveRotateCommand(90));
-    	addSequential()
+    	addSequential(new PIDDriveRevolutions(81));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
