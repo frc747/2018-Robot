@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	private static Joystick leftStick = new Joystick(0);
-	private static Joystick rightStick = new Joystick(1);
+	public static Joystick leftStick = new Joystick(0);
+	public static Joystick rightStick = new Joystick(1);
 	private static Joystick operatorController = new Joystick(2);
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
