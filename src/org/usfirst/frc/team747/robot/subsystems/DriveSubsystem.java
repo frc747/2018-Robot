@@ -30,7 +30,7 @@ public class DriveSubsystem extends Subsystem {
 		leftFrontDrive.set(ControlMode.PercentOutput, speedMod);
 		leftMiddleDrive.set(ControlMode.Follower, leftFrontDrive.getDeviceID());
 		leftRearDrive.set(ControlMode.Follower, leftFrontDrive.getDeviceID());
-		rightFrontDrive.set(ControlMode.PercentOutput, speedMod);
+		rightFrontDrive.set(ControlMode.PercentOutput, -speedMod);
 		rightMiddleDrive.set(ControlMode.Follower, rightFrontDrive.getDeviceID());
 		rightRearDrive.set(ControlMode.Follower, rightFrontDrive.getDeviceID());
 	}

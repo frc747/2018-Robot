@@ -8,6 +8,7 @@
 package org.usfirst.frc.team747.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,11 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import javax.swing.Spring;
 
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.commands.SelectAutonomousCommand;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,11 +38,23 @@ public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static OI m_oi;
 	public static int sleepTimer;
-	public String gameData;
-	Command m_autonomousCommand;
+	public static String gameData;
+	SendableChooser<SelectAutonomousCommand> autoChooser;
+	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
-
+    private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
+    public static double getNavXAngle() {
+    	return NAV_X.getYaw();
+    }
+    
+    public static double getNavXAngleRadians() {
+    	return Math.toRadians(getNavXAngle());
+    }
+    
+    public static void resetNavXAngle() {
+    	NAV_X.zeroYaw();
+    }
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -47,9 +62,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
+		autoChooser = new SendableChooser();
+		autoChooser.addObject("Robot Position 1", new SelectAutonomousCommand(1));
+		autoChooser.addObject("Robot Position 2", new SelectAutonomousCommand(2));
+		autoChooser.addObject("Robot Position 3", new SelectAutonomousCommand(3));
+		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	/**
@@ -81,7 +100,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -91,9 +109,8 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
+		autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand.start();
 	}
 
 	/**
@@ -110,8 +127,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
 		}
 		
 	}
