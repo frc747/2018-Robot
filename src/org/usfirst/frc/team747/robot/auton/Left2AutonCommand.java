@@ -1,5 +1,6 @@
 package org.usfirst.frc.team747.robot.auton;
 
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.maps.RobotMap;
 
@@ -9,13 +10,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class Left2AutonCommand extends CommandGroup {
-
+	private static boolean finished = false;
     public Left2AutonCommand() {
-    	addSequential(new PIDDriveRevolutions(60-RobotMap.robotLength));
+    	addSequential(new PIDDriveInchesCommand(60-RobotMap.robotLength, true));
     	addSequential(new PIDDriveRotateCommand(-90));
-    	addSequential(new PIDDriveRevolutions(54));
+    	addSequential(new PIDDriveInchesCommand(54, true));
     	addSequential(new PIDDriveRotateCommand(90));
-    	addSequential(new PIDDriveRevolutions(81));
+    	addSequential(new PIDDriveInchesCommand(81, true));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -34,4 +35,11 @@ public class Left2AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     }
+    public boolean isFinished() {
+		if(finished) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

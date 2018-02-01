@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static OI m_oi;
 	public static int sleepTimer;
-	public static String gameData;
+	//public static String gameData;
 	SendableChooser<SelectAutonomousCommand> autoChooser;
 	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -62,11 +62,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		autoChooser = new SendableChooser();
-		autoChooser.addObject("Robot Position 1", new SelectAutonomousCommand(1));
-		autoChooser.addObject("Robot Position 2", new SelectAutonomousCommand(2));
-		autoChooser.addObject("Robot Position 3", new SelectAutonomousCommand(3));
-		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
+//		autoChooser = new SendableChooser<SelectAutonomousCommand>();
+//		autoChooser.addObject("Robot Position 1", new SelectAutonomousCommand(1));
+//		autoChooser.addObject("Robot Position 2", new SelectAutonomousCommand(2));
+//		autoChooser.addObject("Robot Position 3", new SelectAutonomousCommand(3));
+//		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		//gameData = DriverStation.getInstance().getGameSpecificMessage();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -109,8 +109,9 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		autonomousCommand = (Command) autoChooser.getSelected();
-		autonomousCommand.start();
+		//autonomousCommand = (Command) autoChooser.getSelected();
+		//autonomousCommand.start();
+		
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team747.robot.auton;
 
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.maps.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -8,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class Right3AutonCommand extends CommandGroup {
-
+	private static boolean finished = false;
     public Right3AutonCommand() {
-    	addSequential(new PIDDriveRevolutions(141-RobotMap.robotLength));
+    	addSequential(new PIDDriveInchesCommand(141-RobotMap.robotLength, true));
 
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -29,4 +30,11 @@ public class Right3AutonCommand extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     }
+    public boolean isFinished() {
+		if(finished) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

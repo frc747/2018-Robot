@@ -22,7 +22,7 @@ public class DriveCommand extends Command{
 		System.out.println("Initialized DriveCommand.");
 	}
 	protected void execute() {
-		if(OI.leftStick.getRawButton(1) && OI.rightStick.getRawButton(1)) {
+		if(OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
 			speedMod = 1;
 		} else {
 			speedMod = 0.5;
