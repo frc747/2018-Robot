@@ -30,8 +30,17 @@ public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
 	public static int sleepTimer;
+<<<<<<< HEAD
 	Command m_autonomousCommand;
     SendableChooser<Command> m_chooser = new SendableChooser<>();
+=======
+	public double SPEED = 29.8814933638;
+	public double DISTANCE = 55;
+	public double TIME = DISTANCE/SPEED;
+	public int stopTimer = 0;
+	Command mAutonomousCommand;
+	SendableChooser<Command> mChooser = new SendableChooser<>();
+>>>>>>> parent of 8273232... Auton changes
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -94,7 +103,24 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+<<<<<<< HEAD
 		Auton.autonPeriodic();
+=======
+		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		
+		if (stopTimer < TIME) {
+			stopTimer++;
+			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
+			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
+			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
+			rightRearDrive.set(ControlMode.PercentOutput, 0.25);
+		} else {
+			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
+			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
+			rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
+			rightRearDrive.set(ControlMode.PercentOutput, 0.0);
+		}
+>>>>>>> parent of 8273232... Auton changes
 	}
 
 	@Override
