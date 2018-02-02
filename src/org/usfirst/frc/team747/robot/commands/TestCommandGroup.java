@@ -20,7 +20,7 @@ public class TestCommandGroup extends CommandGroup {
     	addSequential(new PIDDriveInchesCommand(60, false));
     	  break;
       case 3:
-    	addSequential(new PIDDriveInchesCommand(60, false));
+    	addSequential(new PIDDriveInchesCommand(75, false));
     	addSequential(new PIDDriveRotateCommand(180));
     	addSequential(new PIDDriveInchesCommand(30, false));
     	  break;
@@ -38,7 +38,6 @@ public class TestCommandGroup extends CommandGroup {
     	addSequential(new PIDDriveInchesCommand(15, false));
     	addSequential(new PIDDriveRotateCommand(90));
     	addSequential(new PIDDriveInchesCommand(15, false));
-
     	  break;
       case 5:
     	  addSequential(new PIDDriveRotateCommand(359));
@@ -49,11 +48,7 @@ public class TestCommandGroup extends CommandGroup {
 
     	  break;
       }
-    	addSequential(new PIDDriveInchesCommand(24, false));
-    	addSequential(new PIDDriveRotateCommand(90));
-    	addSequential(new PIDDriveInchesCommand(10, false));
-    	addSequential(new PIDDriveRotateCommand(-90));
-    	addSequential(new PIDDriveInchesCommand(30, false));
+    	
 
     }
 }
