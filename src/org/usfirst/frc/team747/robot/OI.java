@@ -11,6 +11,7 @@ import org.usfirst.frc.team747.robot.auton.Left1AutonCommand;
 import org.usfirst.frc.team747.robot.auton.Left3AutonCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.SelectAutonomousCommand;
+import org.usfirst.frc.team747.robot.commands.TestCommandGroup;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -54,8 +55,8 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	public OI() {
-		left.toggleWhenPressed(new Left1AutonCommand());
-		right.toggleWhenPressed(new Left3AutonCommand());
+		left.toggleWhenPressed(new TestCommandGroup(2));
+	//right.toggleWhenPressed(new TestCommandGroup(3));
 
 	}
 }
