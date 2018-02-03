@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,7 +17,6 @@ import org.usfirst.frc.team747.robot.commands.ExampleCommand;
 import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
@@ -29,18 +29,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
 	public static OI m_oi;
+	Joystick rightDrive = new Joystick(1);
+	Joystick leftDrive = new Joystick(0);
+	public static TalonSRX leftFrontDrive = new TalonSRX(0);
+	public static TalonSRX leftRearDrive = new TalonSRX(1);
+	public static TalonSRX rightFrontDrive = new TalonSRX(2);
+	public static TalonSRX rightRearDrive = new TalonSRX(3);
 	public static int sleepTimer;
-<<<<<<< HEAD
 	Command m_autonomousCommand;
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
-=======
-	public double SPEED = 29.8814933638;
-	public double DISTANCE = 55;
-	public double TIME = DISTANCE/SPEED;
-	public int stopTimer = 0;
-	Command mAutonomousCommand;
-	SendableChooser<Command> mChooser = new SendableChooser<>();
->>>>>>> parent of 8273232... Auton changes
+	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -83,7 +80,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
-		Auton.autonInit();
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -103,24 +100,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-<<<<<<< HEAD
-		Auton.autonPeriodic();
-=======
-		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
-		
-		if (stopTimer < TIME) {
-			stopTimer++;
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.25);
-		} else {
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.0);
-		}
->>>>>>> parent of 8273232... Auton changes
 	}
 
 	@Override
@@ -140,8 +119,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
+	
 		Drive.drive();
+
 	}
 
 	/**
