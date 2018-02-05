@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,7 +19,6 @@ import org.usfirst.frc.team747.robot.commands.ExampleCommand;
 import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
@@ -28,19 +30,32 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 public class Robot extends TimedRobot {
 	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
-	public static OI m_oi;
+	public static OI mOI;
+	Joystick rightDrive = new Joystick(1);
+	Joystick leftDrive = new Joystick(0);
+	public static TalonSRX ballShooter1 = new TalonSRX(4);
+	public static TalonSRX ballShooter2 = new TalonSRX(5);
+	public static TalonSRX ballShooter3 = new TalonSRX(6);
+	public static TalonSRX ballShooter4 = new TalonSRX(7);
+	public static TalonSRX ballIndexer = new TalonSRX(8);
+	public static TalonSRX ballIntakeTalon = new TalonSRX(9);
+	public static TalonSRX leftFrontDrive = new TalonSRX(0);
+	public static TalonSRX leftRearDrive = new TalonSRX(2);
+	public static TalonSRX rightFrontDrive = new TalonSRX(3);
+	public static TalonSRX rightRearDrive = new TalonSRX(5);
 	public static int sleepTimer;
-<<<<<<< HEAD
-	Command m_autonomousCommand;
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
-=======
 	public double SPEED = 29.8814933638;
 	public double DISTANCE = 55;
 	public double TIME = DISTANCE/SPEED;
 	public int stopTimer = 0;
+	public double autonomousSpeed = 0.25;
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
->>>>>>> parent of 8273232... Auton changes
+	NetworkTableInstance table = NetworkTableInstance.getDefault();
+	NetworkTableEntry tx = table.getEntry("tx");
+	NetworkTableEntry tv = table.getEntry("tv");
+	public static double x = 10;
+	public static double v = 10;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,10 +63,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		mOI = new OI();
+		mChooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		SmartDashboard.putData("Auto mode", mChooser);
 	}
 
 	/**
@@ -82,8 +97,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
-		Auton.autonInit();
+		mAutonomousCommand = mChooser.getSelected();
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -92,8 +107,8 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		if (mAutonomousCommand != null) {
+			mAutonomousCommand.start();
 		}
 	}
 
@@ -103,24 +118,22 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-<<<<<<< HEAD
-		Auton.autonPeriodic();
-=======
-		TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		//TIME *= 50; // converts TIME to milliseconds and divides out the 20 ms in between running this
+		//TIME *= (1/autonomousSpeed);
+		//stopTimer++;
+		//
+		//if (stopTimer < TIME) {
+		//	leftFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+		//	leftRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+		//	rightFrontDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+		//	rightRearDrive.set(ControlMode.PercentOutput, autonomousSpeed);
+		//} else {
+		//	leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
+		//	leftRearDrive.set(ControlMode.PercentOutput, 0.0);
+		//	rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
+		//	rightRearDrive.set(ControlMode.PercentOutput, 0.0);
+		//}
 		
-		if (stopTimer < TIME) {
-			stopTimer++;
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.25);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.25);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.25);
-		} else {
-			leftFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			leftRearDrive.set(ControlMode.PercentOutput, 0.0);
-			rightFrontDrive.set(ControlMode.PercentOutput, 0.0);
-			rightRearDrive.set(ControlMode.PercentOutput, 0.0);
-		}
->>>>>>> parent of 8273232... Auton changes
 	}
 
 	@Override
@@ -129,8 +142,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (mAutonomousCommand != null) {
+			mAutonomousCommand.cancel();
 		}
 	}
 
@@ -140,8 +153,70 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		double speedModifier;
+					
+		if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
+			speedModifier = 0.5;
+		} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
+			speedModifier = 1;
+		} else {
+			speedModifier = 0.25;
+		}
+			
+		if(rightDrive.getRawButton(2)) {
+			speedModifier = 0;
+		}
+			
+		if(leftDrive.getRawButton(3)) {
+			ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
+		} else {
+			ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
+		}
+			
+		if(leftDrive.getRawButton(4)) {
+			ballShooter1.set(ControlMode.PercentOutput, -1.0);
+			ballShooter2.set(ControlMode.PercentOutput, -1.0);
+			ballShooter3.set(ControlMode.PercentOutput, 1.0);
+			ballShooter4.set(ControlMode.PercentOutput, 1.0);
+			ballIndexer.set(ControlMode.PercentOutput, 1.0);
+		} else {
+			ballShooter1.set(ControlMode.PercentOutput, 0.0);
+			ballShooter2.set(ControlMode.PercentOutput, 0.0);
+			ballShooter3.set(ControlMode.PercentOutput, 0.0);
+			ballShooter4.set(ControlMode.PercentOutput, 0.0);
+			ballIndexer.set(ControlMode.PercentOutput, 0.0);
+		}
 		
-		Drive.drive();
+		if (rightDrive.getRawButton(4)) {
+			this.table = NetworkTableInstance.getDefault();
+			this.tx = this.table.getEntry("tx");
+			this.tv = this.table.getEntry("tv");
+			Robot.x = this.tx.getDouble(0);
+			Robot.v = this.tv.getDouble(0);
+			
+			if (Robot.v == 1) {
+				if (Robot.x > 5 || Robot.x < -5) {
+					leftFrontDrive.set(ControlMode.PercentOutput, .5);
+					rightFrontDrive.set(ControlMode.PercentOutput, .5);
+				} else {
+					leftFrontDrive.set(ControlMode.PercentOutput, 0);
+					leftRearDrive.set(ControlMode.PercentOutput, 0);
+					rightFrontDrive.set(ControlMode.PercentOutput, 0);
+					rightRearDrive.set(ControlMode.PercentOutput, 0);
+				}
+			} else {
+				leftFrontDrive.set(ControlMode.PercentOutput, .5);
+				rightFrontDrive.set(ControlMode.PercentOutput, .5);
+			}
+		}
+		
+//		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
+//		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	
+				
+//		leftFrontDrive.set(ControlMode.PercentOutput, leftJoystickValue);
+//		leftRearDrive.set(ControlMode.PercentOutput, leftJoystickValue);
+//		rightFrontDrive.set(ControlMode.PercentOutput, rightJoystickValue);
+//		rightRearDrive.set(ControlMode.PercentOutput, rightJoystickValue);
 	}
 
 	/**
