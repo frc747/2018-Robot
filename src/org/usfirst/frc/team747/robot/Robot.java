@@ -54,8 +54,8 @@ public class Robot extends TimedRobot {
 	NetworkTableInstance table = NetworkTableInstance.getDefault();
 	NetworkTableEntry tx = table.getEntry("tx");
 	NetworkTableEntry tv = table.getEntry("tv");
-	public static double x = 10;
-	public static double v = 10;
+	public static double x;// = 10;
+	public static double v;// = 10;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -191,8 +191,8 @@ public class Robot extends TimedRobot {
 			this.table = NetworkTableInstance.getDefault();
 			this.tx = this.table.getEntry("tx");
 			this.tv = this.table.getEntry("tv");
-			Robot.x = this.tx.getDouble(0);
-			Robot.v = this.tv.getDouble(0);
+			Robot.x = this.tx.getDouble(-1);
+			Robot.v = this.tv.getDouble(-1);
 			
 			if (Robot.v == 1) {
 				if (Robot.x > 5 || Robot.x < -5) {
