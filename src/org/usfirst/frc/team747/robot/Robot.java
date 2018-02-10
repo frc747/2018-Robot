@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team747.robot.commands.ExampleCommand;
-import org.usfirst.frc.team747.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -30,7 +30,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem = new ExampleSubsystem();
+	public static final DriveSubsystem DRIVE_TRAIN = new DriveSubsystem();
 	public static OI mOI;
 	Joystick rightDrive = new Joystick(1);
 	Joystick leftDrive = new Joystick(0);
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		mOI = new OI();
-		mChooser.addDefault("Default Auto", new ExampleCommand());
+		mChooser.addDefault("Default Auto", new DriveCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", mChooser);
 		
@@ -225,6 +225,7 @@ public class Robot extends TimedRobot {
 			this.ty = table.getEntry("ty");
 			Robot.y = this.ty.getDouble(0);
 			distance = 3/(Math.tan(85+y));
+			
 		}
 		
 //		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
