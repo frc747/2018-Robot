@@ -51,8 +51,10 @@ public class Robot extends TimedRobot {
 	NetworkTable table;
 	NetworkTableEntry tx;
 	NetworkTableEntry tv;
+	NetworkTableEntry ty;
 	public static double x;// = 10;
 	public static double v;// = 10;
+	public static double y;
 	
 	
 
@@ -215,6 +217,14 @@ public class Robot extends TimedRobot {
 				leftFrontDrive.set(ControlMode.PercentOutput, .5);
 				rightFrontDrive.set(ControlMode.PercentOutput, .5);
 			}*/
+		}
+		
+		if (rightDrive.getRawButton(3)) {
+			double distance;
+			this.table = NetworkTableInstance.getDefault().getTable("limelight");
+			this.ty = table.getEntry("ty");
+			Robot.y = this.ty.getDouble(0);
+			distance = 3/(Math.tan(85+y));
 		}
 		
 //		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
