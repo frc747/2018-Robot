@@ -34,15 +34,11 @@ public class Robot extends TimedRobot {
 	public static OI mOI;
 	Joystick rightDrive = new Joystick(1);
 	Joystick leftDrive = new Joystick(0);
-	public static TalonSRX ballShooter1 = new TalonSRX(4);
-	public static TalonSRX ballShooter2 = new TalonSRX(5);
-	public static TalonSRX ballShooter3 = new TalonSRX(6);
-	public static TalonSRX ballShooter4 = new TalonSRX(7);
-	public static TalonSRX ballIndexer = new TalonSRX(8);
-	public static TalonSRX ballIntakeTalon = new TalonSRX(9);
 	public static TalonSRX leftFrontDrive = new TalonSRX(0);
+	public static TalonSRX leftMiddleDrive = new TalonSRX(1);
 	public static TalonSRX leftRearDrive = new TalonSRX(2);
 	public static TalonSRX rightFrontDrive = new TalonSRX(3);
+	public static TalonSRX rightMiddleDrive = new TalonSRX(4);
 	public static TalonSRX rightRearDrive = new TalonSRX(5);
 	public static int sleepTimer;
 	public double SPEED = 29.8814933638;
@@ -57,6 +53,8 @@ public class Robot extends TimedRobot {
 	NetworkTableEntry tv;
 	public static double x;// = 10;
 	public static double v;// = 10;
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -68,6 +66,11 @@ public class Robot extends TimedRobot {
 		mChooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", mChooser);
+		
+		leftMiddleDrive.set(ControlMode.Follower, 0);
+		leftRearDrive.set(ControlMode.Follower, 0);
+		rightMiddleDrive.set(ControlMode.Follower, 3);
+		rightRearDrive.set(ControlMode.Follower, 3);
 	}
 
 	/**
@@ -146,6 +149,10 @@ public class Robot extends TimedRobot {
 		if (mAutonomousCommand != null) {
 			mAutonomousCommand.cancel();
 		}
+		leftMiddleDrive.set(ControlMode.PercentOutput, 0);
+		leftRearDrive.set(ControlMode.PercentOutput, 0);
+		rightMiddleDrive.set(ControlMode.PercentOutput, 0);
+		rightRearDrive.set(ControlMode.PercentOutput, 0);
 	}
 
 	/**
@@ -167,26 +174,6 @@ public class Robot extends TimedRobot {
 		if(rightDrive.getRawButton(2)) {
 			speedModifier = 0;
 		}
-			
-		if(leftDrive.getRawButton(3)) {
-			ballIntakeTalon.set(ControlMode.PercentOutput, 1.0);
-		} else {
-			ballIntakeTalon.set(ControlMode.PercentOutput, 0.0);
-		}
-			
-		if(leftDrive.getRawButton(4)) {
-			ballShooter1.set(ControlMode.PercentOutput, -1.0);
-			ballShooter2.set(ControlMode.PercentOutput, -1.0);
-			ballShooter3.set(ControlMode.PercentOutput, 1.0);
-			ballShooter4.set(ControlMode.PercentOutput, 1.0);
-			ballIndexer.set(ControlMode.PercentOutput, 1.0);
-		} else {
-			ballShooter1.set(ControlMode.PercentOutput, 0.0);
-			ballShooter2.set(ControlMode.PercentOutput, 0.0);
-			ballShooter3.set(ControlMode.PercentOutput, 0.0);
-			ballShooter4.set(ControlMode.PercentOutput, 0.0);
-			ballIndexer.set(ControlMode.PercentOutput, 0.0);
-		}
 		
 		if (rightDrive.getRawButton(4)) {
 			this.table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -195,20 +182,39 @@ public class Robot extends TimedRobot {
 			Robot.x = this.tx.getDouble(0);
 			Robot.v = this.tv.getDouble(0);
 			
-			if (Robot.v == 1) {
-				if (Robot.x > 5 || Robot.x < -5) {
-					leftFrontDrive.set(ControlMode.PercentOutput, .5);
-					rightFrontDrive.set(ControlMode.PercentOutput, .5);
+			if (Robot.v != 1) {
+				leftFrontDrive.set(ControlMode.PercentOutput, -1);
+				rightFrontDrive.set(ControlMode.PercentOutput, -1);
+			} else {
+				if (Robot.x > 10) {
+					leftFrontDrive.set(ControlMode.PercentOutput, -.7);
+					rightFrontDrive.set(ControlMode.PercentOutput, -.7);
+				} else if(Robot.x < -10) {
+					leftFrontDrive.set(ControlMode.PercentOutput, .7);
+					rightFrontDrive.set(ControlMode.PercentOutput, .7);
 				} else {
 					leftFrontDrive.set(ControlMode.PercentOutput, 0);
-					leftRearDrive.set(ControlMode.PercentOutput, 0);
 					rightFrontDrive.set(ControlMode.PercentOutput, 0);
-					rightRearDrive.set(ControlMode.PercentOutput, 0);
+				}
+				//leftFrontDrive.set(ControlMode.PercentOutput, 0);
+				//rightFrontDrive.set(ControlMode.PercentOutput, 0);
+			}
+			
+			/*if (Robot.v == 1) {
+				if (Robot.x < -5) {
+					leftFrontDrive.set(ControlMode.PercentOutput, .5);
+					rightFrontDrive.set(ControlMode.PercentOutput, .5);
+				} else if(Robot.x > 5) {
+					leftFrontDrive.set(ControlMode.PercentOutput, -.5);
+					rightFrontDrive.set(ControlMode.PercentOutput, -.5);
+				} else {
+					leftFrontDrive.set(ControlMode.PercentOutput, 0);
+					rightFrontDrive.set(ControlMode.PercentOutput, 0);
 				}
 			} else {
 				leftFrontDrive.set(ControlMode.PercentOutput, .5);
 				rightFrontDrive.set(ControlMode.PercentOutput, .5);
-			}
+			}*/
 		}
 		
 //		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
