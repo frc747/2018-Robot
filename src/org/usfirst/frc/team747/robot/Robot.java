@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -51,9 +52,9 @@ public class Robot extends TimedRobot {
 	public double autonomousSpeed = 0.25;
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
-	NetworkTableInstance table = NetworkTableInstance.getDefault();
-	NetworkTableEntry tx = table.getEntry("tx");
-	NetworkTableEntry tv = table.getEntry("tv");
+	NetworkTable table;
+	NetworkTableEntry tx;
+	NetworkTableEntry tv;
 	public static double x;// = 10;
 	public static double v;// = 10;
 
@@ -188,11 +189,11 @@ public class Robot extends TimedRobot {
 		}
 		
 		if (rightDrive.getRawButton(4)) {
-			this.table = NetworkTableInstance.getDefault();
+			this.table = NetworkTableInstance.getDefault().getTable("limelight");
 			this.tx = this.table.getEntry("tx");
 			this.tv = this.table.getEntry("tv");
-			Robot.x = this.tx.getDouble(-1);
-			Robot.v = this.tv.getDouble(-1);
+			Robot.x = this.tx.getDouble(0);
+			Robot.v = this.tv.getDouble(0);
 			
 			if (Robot.v == 1) {
 				if (Robot.x > 5 || Robot.x < -5) {
