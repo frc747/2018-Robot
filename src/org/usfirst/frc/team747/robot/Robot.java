@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -48,13 +49,14 @@ public class Robot extends TimedRobot {
 	public double autonomousSpeed = 0.25;
 	Command mAutonomousCommand;
 	SendableChooser<Command> mChooser = new SendableChooser<>();
-	NetworkTable table;
-	NetworkTableEntry tx;
-	NetworkTableEntry tv;
-	NetworkTableEntry ty;
+	static NetworkTable table;
+	static NetworkTableEntry tx;
+	static NetworkTableEntry tv;
+	static NetworkTableEntry ty;
 	public static double x;// = 10;
 	public static double v;// = 10;
 	public static double y;
+	public boolean bswitch;
 	
 	
 
@@ -73,6 +75,13 @@ public class Robot extends TimedRobot {
 		leftRearDrive.set(ControlMode.Follower, 0);
 		rightMiddleDrive.set(ControlMode.Follower, 3);
 		rightRearDrive.set(ControlMode.Follower, 3);
+		
+		leftFrontDrive.setInverted(true);
+		leftMiddleDrive.setInverted(true);
+		leftRearDrive.setInverted(true);
+		rightFrontDrive.setInverted(false);
+		rightMiddleDrive.setInverted(false);
+		rightRearDrive.setInverted(false);
 	}
 
 	/**
@@ -155,6 +164,8 @@ public class Robot extends TimedRobot {
 		leftRearDrive.set(ControlMode.PercentOutput, 0);
 		rightMiddleDrive.set(ControlMode.PercentOutput, 0);
 		rightRearDrive.set(ControlMode.PercentOutput, 0);
+		
+		bswitch = true;
 	}
 
 	/**
@@ -163,70 +174,50 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		double speedModifier;
-					
-		if(leftDrive.getRawButton(1) ^ rightDrive.getRawButton(1)) {
-			speedModifier = 0.5;
-		} else if (leftDrive.getRawButton(1) && rightDrive.getRawButton(1)) {
-			speedModifier = 1;
-		} else {
-			speedModifier = 0.25;
-		}
-			
-		if(rightDrive.getRawButton(2)) {
-			speedModifier = 0;
-		}
 		
-		if (rightDrive.getRawButton(4)) {
+		if (rightDrive.getRawButton(1)) {
 			this.table = NetworkTableInstance.getDefault().getTable("limelight");
 			this.tx = this.table.getEntry("tx");
 			this.tv = this.table.getEntry("tv");
+			this.ty = this.table.getEntry("ty");
 			Robot.x = this.tx.getDouble(0);
 			Robot.v = this.tv.getDouble(0);
-			
+			Robot.y = this.ty.getDouble(0);
+			OI.distance = Math.toDegrees(-8/(Math.tan(Math.toRadians(85+Robot.y))));
+		}
+		
+		if (rightDrive.getRawButton(4)) {
 			if (Robot.v != 1) {
-				leftFrontDrive.set(ControlMode.PercentOutput, -1);
+				leftFrontDrive.set(ControlMode.PercentOutput, 1);
 				rightFrontDrive.set(ControlMode.PercentOutput, -1);
 			} else {
 				if (Robot.x > 10) {
-					leftFrontDrive.set(ControlMode.PercentOutput, -.7);
+					leftFrontDrive.set(ControlMode.PercentOutput, .7);
 					rightFrontDrive.set(ControlMode.PercentOutput, -.7);
 				} else if(Robot.x < -10) {
-					leftFrontDrive.set(ControlMode.PercentOutput, .7);
+					leftFrontDrive.set(ControlMode.PercentOutput, -.7);
 					rightFrontDrive.set(ControlMode.PercentOutput, .7);
 				} else {
 					leftFrontDrive.set(ControlMode.PercentOutput, 0);
 					rightFrontDrive.set(ControlMode.PercentOutput, 0);
 				}
-				//leftFrontDrive.set(ControlMode.PercentOutput, 0);
-				//rightFrontDrive.set(ControlMode.PercentOutput, 0);
 			}
-			
-			/*if (Robot.v == 1) {
-				if (Robot.x < -5) {
-					leftFrontDrive.set(ControlMode.PercentOutput, .5);
-					rightFrontDrive.set(ControlMode.PercentOutput, .5);
-				} else if(Robot.x > 5) {
-					leftFrontDrive.set(ControlMode.PercentOutput, -.5);
-					rightFrontDrive.set(ControlMode.PercentOutput, -.5);
-				} else {
-					leftFrontDrive.set(ControlMode.PercentOutput, 0);
-					rightFrontDrive.set(ControlMode.PercentOutput, 0);
-				}
-			} else {
-				leftFrontDrive.set(ControlMode.PercentOutput, .5);
-				rightFrontDrive.set(ControlMode.PercentOutput, .5);
-			}*/
 		}
 		
-		if (rightDrive.getRawButton(3)) {
+		/*if (rightDrive.getRawButton(3)) {
 			double distance;
 			this.table = NetworkTableInstance.getDefault().getTable("limelight");
 			this.ty = table.getEntry("ty");
 			Robot.y = this.ty.getDouble(0);
 			distance = 3/(Math.tan(85+y));
 			
-		}
+			
+			/*if (bswitch) {
+				new PIDDriveInchesCommand(distance, false);
+				bswitch = false;
+			}
+			
+		}*/
 		
 //		double rightJoystickValue = -rightDrive.getRawAxis(1)*speedModifier;	
 //		double leftJoystickValue = leftDrive.getRawAxis(1)*speedModifier;	

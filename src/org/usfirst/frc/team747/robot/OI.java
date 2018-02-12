@@ -1,9 +1,8 @@
 package org.usfirst.frc.team747.robot;
 
-import org.usfirst.frc.team747.robot.commands.*;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 //import org.usfirst.frc.team747.robot.maps.AutonomousConfig;
 import org.usfirst.frc.team747.robot.maps.DriverStation;
-import org.usfirst.frc.team747.robot.maps.ValueConfig;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
@@ -18,6 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 	//// CREATING BUTTONS
+	
+	public static double distance;
+	
 	 public static final Joystick 
 	 //Joysticks control both climb and drive
 		JOYSTICK_DRIVER_LEFT = new Joystick(DriverStation.Controller.DRIVER_LEFT.getValue()),
@@ -59,17 +61,16 @@ public class OI {
     static Preferences prefs;
     
 	public OI() {
-		new Notifier(() -> updateOI()).startPeriodic(0.100); //value in seconds
-	}
-	
-	public static boolean getGearDeployButton() {
-	    return CONTROLLER_OPERATOR.getRawAxis(DriverStation.GamePad.TRIGGER_LEFT.getValue())
-	                >= 0.5;
+		new Notifier(() -> updateOI()).startPeriodic(0.1); //value in seconds
+		
+		BUTTON_PID_TEST_REVERSE_BUTTON_ONE.toggleWhenPressed(new PIDDriveInchesCommand(OI.distance, false));
 	}
 	
 	public void updateOI() {
 		SmartDashboard.putNumber("tx", Robot.x);
 		SmartDashboard.putNumber("tv", Robot.v);
+		SmartDashboard.putNumber("ty", Robot.y);
+		SmartDashboard.putNumber("distance", OI.distance);
 	}
 
 	

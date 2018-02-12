@@ -42,9 +42,9 @@ public class DriveSubsystem extends Subsystem {
     public DriveSubsystem() {
         super();
         
-        this.talonDriveLeftPrimary.setInverted(true);
-        this.talonDriveLeftMid.setInverted(true);
-        this.talonDriveLeftBack.setInverted(true);
+        this.talonDriveLeftPrimary.setInverted(false);
+        this.talonDriveLeftMid.setInverted(false);
+        this.talonDriveLeftBack.setInverted(false);
         
         this.talonDriveRightPrimary.setInverted(false);
         this.talonDriveRightMid.setInverted(false);
