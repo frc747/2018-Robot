@@ -7,19 +7,20 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import javax.swing.Spring;
 
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
-import org.usfirst.frc.team747.robot.commands.SelectAutonomousCommand;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -38,8 +39,12 @@ public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static OI m_oi;
 	public static int sleepTimer;
+	NetworkTable table;
+	NetworkTableEntry tx;
+	 NetworkTableEntry tv;
+	public static double x;
+	public static double v;
 	//public static String gameData;
-	SendableChooser<SelectAutonomousCommand> autoChooser;
 	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
@@ -140,7 +145,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		this.table = NetworkTableInstance.getDefault().getTable("limelight");
+		this.tx = this.table.getEntry("tx");
+		this.tv = this.table.getEntry("tv");
+		Robot.x = this.tx.getDouble(0);
+		Robot.v = this.tv.getDouble(0);
 		
+		OI.degrees = Math.round(x);
 	}
 
 	/**
