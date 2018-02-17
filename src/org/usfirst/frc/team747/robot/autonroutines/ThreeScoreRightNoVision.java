@@ -13,9 +13,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class ThreeScoreRightNoVision extends CommandGroup {
 
     public ThreeScoreRightNoVision() {
-    	addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH-RobotMap.robotLength+24, false));
+    	addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH+36-RobotMap.robotLength, false));
         addSequential(new PIDDriveRotateCommand(-90));
-        addSequential(new PIDDriveInchesCommand(33.75-(RobotMap.robotLength/2), false));
         //addSequential(new EjectCubeCommand(1));
     }
 }

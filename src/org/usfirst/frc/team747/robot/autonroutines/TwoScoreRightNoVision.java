@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class TwoScoreRightNoVision extends CommandGroup {
 
     public TwoScoreRightNoVision() {
-    	addSequential(new PIDDriveInchesCommand(60, false));
+    	addSequential(new PIDDriveInchesCommand(90, false));
     	addSequential(new PIDDriveRotateCommand(90));
-    	addSequential(new PIDDriveInchesCommand(44.75-(RobotMap.robotLength/2), false));
+    	addSequential(new PIDDriveInchesCommand(35-(RobotMap.robotLength/2), false));
     	addSequential(new PIDDriveRotateCommand(-90));
-    	addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH-60-(RobotMap.robotLength/2), false));
+    	addSequential(new PIDDriveInchesCommand(50, false));
+
     	// addSequential(new EjectCommand(1));
     }
 }
