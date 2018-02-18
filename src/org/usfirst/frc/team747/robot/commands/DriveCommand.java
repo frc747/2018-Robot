@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command{
 	Solenoid leftS = new Solenoid(0);
 	Solenoid rightS = new Solenoid(1);
-
+	public boolean test = (OI.leftStick.getRawAxis(1) > 0.3 && OI.leftStick.getRawAxis(1) < -0.3) || (OI.rightStick.getRawAxis(1) > 0.3 && OI.rightStick.getRawAxis(1) < -0.3);
+	public boolean switchb = false;
 	private double speedMod; // A modifier to allow for different speeds.
 	public DriveCommand() {
 		requires(Robot.DRIVE_SUBSYSTEM);
@@ -26,12 +27,20 @@ public class DriveCommand extends Command{
 	protected void execute() {
 		
 		//Solenoid Switch
-		if((OI.leftStick.getRawAxis(1) > 0.3 && OI.leftStick.getRawAxis(1) < -0.3) || (OI.rightStick.getRawAxis(1) > 0.3 && OI.rightStick.getRawAxis(1) < -0.3)) {
+		if(OI.operatorController.getRawButton(4)) {
+			switchb = !switchb;
+		} else if(test) {
+			switchb = true;
+		} else {
+			switchb = false;
+		}
+		
+		if(switchb) {
 			leftS.set(true);
 			rightS.set(true);
 		} else {
-			leftS.set(false);
-			rightS.set(false);
+			leftS.set(true);
+			rightS.set(true);
 
 		}
 		

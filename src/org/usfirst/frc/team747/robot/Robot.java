@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import javax.swing.Spring;
 
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
 	//public static String gameData;
 	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	
+	public static CubeSubsystem cube = new CubeSubsystem();
 	
     private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
     public static double getNavXAngle() {
@@ -136,6 +139,9 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		
+		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
+		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
 		
 	}
 

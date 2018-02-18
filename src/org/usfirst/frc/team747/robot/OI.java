@@ -8,10 +8,9 @@
 package org.usfirst.frc.team747.robot;
 
 
-import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
+import org.usfirst.frc.team747.robot.commands.EjectCommand;
+import org.usfirst.frc.team747.robot.commands.IntakeCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
-import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommandVision;
-import org.usfirst.frc.team747.robot.commands.TestCommandGroup;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
@@ -24,19 +23,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	private double inches;
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
-	private static Joystick operatorController = new Joystick(2);
+	public static Joystick operatorController = new Joystick(2);
 	public static double degrees;
-	Button left = new JoystickButton(leftStick, 3);
-	Button right = new JoystickButton(leftStick, 4);
+	Button OP_A = new JoystickButton(operatorController, 1);
+	Button OP_B = new JoystickButton(operatorController, 2);
+	Button OP_X = new JoystickButton(operatorController, 3);
 
 	
 	public OI() {
-		left.toggleWhenPressed(new PIDDriveRotateCommandVision());
-	//right.toggleWhenPressed(new TestCommandGroup(3));
 		new Notifier(() -> updateOI()).startPeriodic(.1);
+		
+		OP_A.whileHeld(new IntakeCommand());
+		OP_B.whileHeld(new EjectCommand());
+		OP_X.toggleWhenPressed(new PIDDriveRotateCommand(90));
 	}
 	
 	public void updateOI() {

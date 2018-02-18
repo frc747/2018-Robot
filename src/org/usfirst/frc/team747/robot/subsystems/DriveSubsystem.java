@@ -18,15 +18,15 @@ public class DriveSubsystem extends Subsystem {
 	
     public static TalonSRX talonDriveLeftPrimary = new TalonSRX(0);
 
-	public TalonSRX talonDriveLeftMid = new TalonSRX(1);
+	//public TalonSRX talonDriveLeftMid = new TalonSRX(1);
 
-	public TalonSRX talonDriveLeftBack = new TalonSRX(2);
+	public TalonSRX talonDriveLeftBack = new TalonSRX(1);
 
-	public static TalonSRX talonDriveRightPrimary = new TalonSRX(3);
+	public static TalonSRX talonDriveRightPrimary = new TalonSRX(2);
 
-	public TalonSRX talonDriveRightMid = new TalonSRX(4);
+	//public TalonSRX talonDriveRightMid = new TalonSRX(4);
 
-	public TalonSRX talonDriveRightBack = new TalonSRX(5);
+	public TalonSRX talonDriveRightBack = new TalonSRX(3);
 
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;
@@ -49,19 +49,15 @@ public class DriveSubsystem extends Subsystem {
         super();
         
         talonDriveLeftPrimary.setInverted(true);
-        this.talonDriveLeftMid.setInverted(true);
         this.talonDriveLeftBack.setInverted(true);
         
         talonDriveRightPrimary.setInverted(false);
-        this.talonDriveRightMid.setInverted(false);
         this.talonDriveRightBack.setInverted(false);
        
 //        this.talonDriveLeftPrimary.setSensorPhase(true);
 //        this.talonDriveRightPrimary.setSensorPhase(false);
         
-        talonDriveLeftMid.set(ControlMode.Follower, talonDriveLeftPrimary.getDeviceID());
         talonDriveLeftBack.set(ControlMode.Follower, talonDriveLeftPrimary.getDeviceID());
-        talonDriveRightMid.set(ControlMode.Follower, talonDriveRightPrimary.getDeviceID());
         talonDriveRightBack.set(ControlMode.Follower, talonDriveRightPrimary.getDeviceID());
         
         talonDriveLeftPrimary.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeoutMs);
