@@ -18,17 +18,17 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
     //Half a second is being multiplied by the user input to achieve the desired "ON_TARGET_COUNT"
     private final static double ON_TARGET_MINIMUM_COUNT = TARGET_COUNT_ONE_SECOND * 0.25; //times 10 is 5 seconds, times 20 is 10 seconds, etc...
     
-    private final static double STOP_THRESHOLD_DEGREES = 2;
+    private final static double STOP_THRESHOLD_DEGREES = 3.5;
     private final static double MAX_PERCENT_VBUS = .5;
     
     private final static double DRIVE_SPEED_MINIMUM = 0.325;
     private static final double MAX_PERCENT_VOLTAGE = 1.0;
-    private static final double MIN_PERCENT_VOLTAGE = 0.25;
+    private static final double MIN_PERCENT_VOLTAGE = 0.16;
     private static final int timeoutMs = 10;
 
     public PIDDriveRotateCommand(double degreesRotate) {
 //        super(0.05, 0.0005, 0.5);
-        super(0.2, 0.0, 0.375); //.2,0,.375
+        super(0.2, 0.4, 0.46); //.2,0,.375     .1,0,.1       .3,0,.1
         
         this.angleToRotate = degreesRotate;
         
@@ -51,10 +51,10 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
         
         Robot.resetNavXAngle();
         
-        getPIDController().setContinuous(true); //will reset back to the minimum value after reaching the max value
-        getPIDController().setAbsoluteTolerance(STOP_THRESHOLD_DEGREES); //the threshold that the PID Controller abides by to consider the value as "on target"
         getPIDController().setInputRange(-180, 180);
         getPIDController().setOutputRange(-MAX_PERCENT_VBUS, MAX_PERCENT_VBUS);
+        getPIDController().setAbsoluteTolerance(STOP_THRESHOLD_DEGREES); //the threshold that the PID Controller abides by to consider the value as "on target"
+        getPIDController().setContinuous(true); //will reset back to the minimum value after reaching the max value
         
         getPIDController().setSetpoint(angleToRotate);
     }
@@ -100,6 +100,6 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
 //            OUTPUT = SIGN * DRIVE_SPEED_MINIMUM;
 //        }
         
-        Robot.DRIVE_SUBSYSTEM.set(output, -output);
+        Robot.DRIVE_SUBSYSTEM.set(output*4, -output*4);
     }
 }

@@ -42,9 +42,12 @@ public class Robot extends TimedRobot {
 	public static int sleepTimer;
 	NetworkTable table;
 	NetworkTableEntry tx;
-	 NetworkTableEntry tv;
+	NetworkTableEntry tv;
+	NetworkTableEntry ty; 
 	public static double x;
 	public static double v;
+	public static double y;
+	public static double distance;
 	//public static String gameData;
 	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -154,8 +157,11 @@ public class Robot extends TimedRobot {
 		this.table = NetworkTableInstance.getDefault().getTable("limelight");
 		this.tx = this.table.getEntry("tx");
 		this.tv = this.table.getEntry("tv");
+		this.ty = this.table.getEntry("ty");
 		Robot.x = this.tx.getDouble(0);
 		Robot.v = this.tv.getDouble(0);
+		Robot.y = this.ty.getDouble(0);
+		Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
 		
 		OI.degrees = Math.round(x);
 	}

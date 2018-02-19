@@ -16,17 +16,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 	
-    public static TalonSRX talonDriveLeftPrimary = new TalonSRX(0);
+    public static TalonSRX talonDriveLeftPrimary = new TalonSRX(2);
 
 	//public TalonSRX talonDriveLeftMid = new TalonSRX(1);
 
 	public TalonSRX talonDriveLeftBack = new TalonSRX(1);
 
-	public static TalonSRX talonDriveRightPrimary = new TalonSRX(2);
+	public static TalonSRX talonDriveRightPrimary = new TalonSRX(9);
 
 	//public TalonSRX talonDriveRightMid = new TalonSRX(4);
 
-	public TalonSRX talonDriveRightBack = new TalonSRX(3);
+	public TalonSRX talonDriveRightBack = new TalonSRX(10);
 
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;

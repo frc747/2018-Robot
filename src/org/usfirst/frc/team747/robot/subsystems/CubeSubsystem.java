@@ -12,13 +12,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CubeSubsystem extends Subsystem {
 
-	public static TalonSRX intakeRoller = new TalonSRX(4); // = new TalonSRX(?); 4
+	public static TalonSRX intakeRollerLeft = new TalonSRX(3); // = new TalonSRX(?); 4
+	public static TalonSRX intakeRollerRight = new TalonSRX(8); 
 	
-	public static TalonSRX intakeLeft = new TalonSRX(5); // = new TalonSRX(?); 5
-	public static TalonSRX intakeRight = new TalonSRX(6); // = new TalonSRX(?); 6
+	public static TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
+	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6
 	
-	public static TalonSRX ejectLeft = new TalonSRX(7); // = new TalonSRX(?); 7
-	public static TalonSRX ejectRight = new TalonSRX(8); // = new TalonSRX(?); 8
+	public static TalonSRX ejectLeft = new TalonSRX(5); // = new TalonSRX(?); 7
+	public static TalonSRX ejectRight = new TalonSRX(6); // = new TalonSRX(?); 8
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -29,11 +30,13 @@ public class CubeSubsystem extends Subsystem {
 	
 	public void setIntake(boolean enable) {
 		if (enable) {
-			intakeRoller.set(ControlMode.PercentOutput, .5);
+			intakeRollerLeft.set(ControlMode.PercentOutput, .5);
+			intakeRollerRight.set(ControlMode.PercentOutput, .5);
 			intakeLeft.set(ControlMode.PercentOutput, .5);
 			intakeRight.set(ControlMode.PercentOutput, -.5);
 		} else {
-			intakeRoller.set(ControlMode.PercentOutput, 0);
+			intakeRollerLeft.set(ControlMode.PercentOutput, 0);
+			intakeRollerRight.set(ControlMode.PercentOutput, 0);
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
 			
