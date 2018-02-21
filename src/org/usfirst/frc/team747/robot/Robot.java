@@ -161,7 +161,11 @@ public class Robot extends TimedRobot {
 		Robot.x = this.tx.getDouble(0);
 		Robot.v = this.tv.getDouble(0);
 		Robot.y = this.ty.getDouble(0);
-		Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
+		if (Robot.v == 1) {
+			Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
+		} else {
+			Robot.distance = 0;
+		}
 		
 		OI.degrees = Math.round(x);
 	}

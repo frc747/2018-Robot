@@ -44,14 +44,7 @@ public class DriveCommand extends Command{
 
 		}
 		
-		if(OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
-			speedMod = 1;
-		} else {
-			speedMod = 0.5;
-		}
-		
-		
-		DriveSubsystem.setMotorSpeed(speedMod);
+		DriveSubsystem.setMotorSpeed(1);
 	}
 	
 	@Override

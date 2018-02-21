@@ -9,14 +9,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeCommand extends Command {
 	
-    public IntakeCommand() {
+	boolean rev;
+	
+    public IntakeCommand(boolean reverse) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
+    	rev = reverse;
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setIntake(true);
+    	Robot.cube.setIntake(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -26,7 +29,7 @@ public class IntakeCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setIntake(false);
+    	Robot.cube.setIntake(false, rev);
     }
     
 }

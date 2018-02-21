@@ -9,14 +9,16 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class EjectCommand extends Command {
 	
-    public EjectCommand() {
+	boolean rev;
+	
+    public EjectCommand(boolean reverse) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
+    	rev = reverse;
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setEject(true);
+    	Robot.cube.setEject(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -26,7 +28,7 @@ public class EjectCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setEject(false);
+    	Robot.cube.setEject(false, rev);
     }
     
 }

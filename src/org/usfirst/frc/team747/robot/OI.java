@@ -9,9 +9,12 @@ package org.usfirst.frc.team747.robot;
 
 
 import org.usfirst.frc.team747.robot.commands.EjectCommand;
+import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
-import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandWithVision;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommandVision;
+import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
@@ -32,17 +35,22 @@ public class OI {
 	Button OP_B = new JoystickButton(operatorController, 2);
 	Button OP_X = new JoystickButton(operatorController, 3);
 	Button OP_Y = new JoystickButton(operatorController, 4);
+	Button OP_START = new JoystickButton(operatorController, 8);
 
 	
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
 		
-		OP_A.whileHeld(new IntakeCommand());
-		OP_B.whileHeld(new EjectCommand());
-		OP_X.toggleWhenPressed(new PIDDriveRotateCommand(90));
-		if (Robot.v == 1) {
-			OP_Y.toggleWhenPressed(new PIDDriveInchesCommandWithVision());
-		}
+		/*
+		OP_A.whileHeld(new IntakeCommand(false));
+		OP_B.whileHeld(new EjectCommand(false));
+		OP_X.toggleWhenPressed(new PIDDriveRotateCommand(-180));
+		OP_Y.toggleWhenPressed(new PIDDriveInchesCommand(Robot.distance, false));
+		OP_START.toggleWhenPressed(new PIDDriveRotateCommand(OI.getDegrees()));
+		*/
+		
+		OP_Y.whileHeld(new ForwardGroup());
+		OP_A.whileHeld(new ReverseGroup());
 	}
 	
 	public void updateOI() {

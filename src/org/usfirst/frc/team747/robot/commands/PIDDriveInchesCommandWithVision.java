@@ -176,8 +176,8 @@ public class PIDDriveInchesCommandWithVision extends Command {
         end();
     }
     
-    public static double estimate() {
-    	return (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
+    protected double estimate() {
+    	return Math.round((11-18)/Math.tan(Math.toRadians(-50+Robot.y)));
     }
 
 }

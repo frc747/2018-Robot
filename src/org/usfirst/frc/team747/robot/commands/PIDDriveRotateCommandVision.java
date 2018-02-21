@@ -29,7 +29,8 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
 
     public PIDDriveRotateCommandVision() {
 //        super(0.05, 0.0005, 0.5);
-        super(0.2, 0.0, 0.375);
+//        super(0.2, 0.0, 0.375);
+    	super(0.1, 0.0, 0.0);
         
         this.angleToRotate = OI.getDegrees();
         

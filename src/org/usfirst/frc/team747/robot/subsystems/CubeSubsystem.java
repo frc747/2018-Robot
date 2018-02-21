@@ -12,14 +12,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class CubeSubsystem extends Subsystem {
 
-	public static TalonSRX intakeRollerLeft = new TalonSRX(3); // = new TalonSRX(?); 4
-	public static TalonSRX intakeRollerRight = new TalonSRX(8); 
+	public static TalonSRX intakeArmLeft = new TalonSRX(3); // = new TalonSRX(?); 4
+	public static TalonSRX intakeArmRight = new TalonSRX(8); 
 	
 	public static TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
 	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6
 	
 	public static TalonSRX ejectLeft = new TalonSRX(5); // = new TalonSRX(?); 7
 	public static TalonSRX ejectRight = new TalonSRX(6); // = new TalonSRX(?); 8
+	
+	public static TalonSRX roller = new TalonSRX(11);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -28,25 +30,35 @@ public class CubeSubsystem extends Subsystem {
 		
 	}
 	
-	public void setIntake(boolean enable) {
-		if (enable) {
-			intakeRollerLeft.set(ControlMode.PercentOutput, .5);
-			intakeRollerRight.set(ControlMode.PercentOutput, .5);
-			intakeLeft.set(ControlMode.PercentOutput, .5);
-			intakeRight.set(ControlMode.PercentOutput, -.5);
+	public void setIntake(boolean enable, boolean reverse) {
+		int mod;
+		if (reverse == true) {
+			mod = -1;
 		} else {
-			intakeRollerLeft.set(ControlMode.PercentOutput, 0);
-			intakeRollerRight.set(ControlMode.PercentOutput, 0);
+			mod = 1;
+		}
+		if (enable) {
+			intakeLeft.set(ControlMode.PercentOutput, .5*mod);
+			intakeRight.set(ControlMode.PercentOutput, .5*mod);
+			roller.set(ControlMode.PercentOutput, .5*mod);
+		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
+			roller.set(ControlMode.PercentOutput, 0);
 			
 		}
 	}
 	
-	public void setEject(boolean enable) {
+	public void setEject(boolean enable, boolean reverse) {
+		int mod;
+		if (reverse == true) {
+			mod = -1;
+		} else {
+			mod = 1;
+		}
 		if (enable) {
-			ejectLeft.set(ControlMode.PercentOutput, .5);
-			ejectRight.set(ControlMode.PercentOutput, -.5);
+			ejectLeft.set(ControlMode.PercentOutput, .5*mod);
+			ejectRight.set(ControlMode.PercentOutput, -.5*mod);
 		} else {
 			ejectLeft.set(ControlMode.PercentOutput, 0);
 			ejectRight.set(ControlMode.PercentOutput, 0);
