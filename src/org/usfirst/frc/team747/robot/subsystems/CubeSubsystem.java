@@ -1,3 +1,5 @@
+
+
 package org.usfirst.frc.team747.robot.subsystems;
 
 import org.usfirst.frc.team747.robot.OI;
@@ -16,7 +18,7 @@ public class CubeSubsystem extends Subsystem {
 	public static TalonSRX intakeArmRight = new TalonSRX(8); 
 	
 	public static TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
-	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6
+	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6 // 7 is reversed
 	
 	public static TalonSRX ejectLeft = new TalonSRX(5); // = new TalonSRX(?); 7
 	public static TalonSRX ejectRight = new TalonSRX(6); // = new TalonSRX(?); 8

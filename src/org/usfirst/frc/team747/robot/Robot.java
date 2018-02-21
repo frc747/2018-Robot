@@ -48,6 +48,8 @@ public class Robot extends TimedRobot {
 	public static double v;
 	public static double y;
 	public static double distance;
+	public static boolean switchb = false;
+
 	//public static String gameData;
 	public static Command autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();

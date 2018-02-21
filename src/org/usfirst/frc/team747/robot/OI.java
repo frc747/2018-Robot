@@ -36,6 +36,7 @@ public class OI {
 	Button OP_X = new JoystickButton(operatorController, 3);
 	Button OP_Y = new JoystickButton(operatorController, 4);
 	Button OP_START = new JoystickButton(operatorController, 8);
+	Button OP_PRESS = new JoystickButton(operatorController, 9)
 
 	
 	public OI() {
@@ -51,6 +52,7 @@ public class OI {
 		
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
+		OP_X.whileHeld(new IntakeCommand(false));
 	}
 	
 	public void updateOI() {
