@@ -19,6 +19,6 @@ public class TwoScoreRightNoVision extends CommandGroup {
     	addSequential(new PIDDriveRotateCommand(-90));
     	addSequential(new PIDDriveInchesCommand(50, false));
 
-    	// addSequential(new EjectCommand(1));
+    	//addSequential(new EjectAutonCommand(1));
     }
 }

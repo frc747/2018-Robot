@@ -15,6 +15,6 @@ public class OneScoreLeftNoVision extends CommandGroup {
     public OneScoreLeftNoVision() {
         addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH+36-RobotMap.robotLength, false));
         addSequential(new PIDDriveRotateCommand(90));
-        //addSequential(new EjectCubeCommand(1));
+        //addSequential(new EjectAutonCommand(1));
     }
 }

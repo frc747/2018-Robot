@@ -19,19 +19,19 @@ public class OneScoreLeftVisionClose extends CommandGroup {
         addSequential(new PIDDriveInchesCommand(48.75-(RobotMap.robotLength/2), false));
         addSequential(new PIDDriveRotateCommand(-90));
         addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH-60, false));
-        //addSequential(new EjectCubeCommand(1));
+        //addSequential(new EjectAutonCommand(1));
         addSequential(new PIDDriveInchesCommand(55, true));
         addSequential(new PIDDriveRotateCommand(-135));
         addSequential(new PIDDriveInchesCommand(10, false));
         addSequential(new RotateToCubeCommand());
         //addSequential(new PIDDriveInchesCommand(distanceToCube, false));
-        //addSequential(new IntakeCubeCommand));h
+        //addSequential(new IntakeAutonCommand));
         
         //addSequential(new PIDDriveInchesCommand(distanceToCube, true));
         addSequential(new PIDDriveInchesCommand(10, true));
         addSequential(new PIDDriveRotateCommand(135));
         addSequential(new PIDDriveInchesCommand(55, false));
-        //addSequential(new EjectCubeCommand(1));
+        //addSequential(new EjectAutonCommand(1));
         
     }
 }

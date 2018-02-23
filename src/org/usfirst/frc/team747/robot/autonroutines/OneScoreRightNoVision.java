@@ -18,6 +18,6 @@ public class OneScoreRightNoVision extends CommandGroup {
     	addSequential(new PIDDriveInchesCommand(154+(RobotMap.robotLength/2), false));
     	addSequential(new PIDDriveRotateCommand(-90));
     	addSequential(new PIDDriveInchesCommand(50, false));
-        //addSequential(new EjectCubeCommand(1));
+        //addSequential(new EjectAutonCommand(1));
     }
 }
