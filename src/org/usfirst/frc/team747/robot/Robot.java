@@ -49,6 +49,9 @@ public class Robot extends TimedRobot {
 	public static double y;
 	public static double distance;
 	public static boolean switchb = false;
+	
+	public static double degreesRotated;
+	public static double inchesMoved;
 
 	//public static String gameData;
 	public static Command autonomousCommand;
@@ -163,6 +166,7 @@ public class Robot extends TimedRobot {
 		Robot.x = this.tx.getDouble(0);
 		Robot.v = this.tv.getDouble(0);
 		Robot.y = this.ty.getDouble(0);
+		
 		if (Robot.v == 1) {
 			Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
 		} else {

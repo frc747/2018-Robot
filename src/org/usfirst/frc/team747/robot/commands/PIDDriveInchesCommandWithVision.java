@@ -65,6 +65,7 @@ public class PIDDriveInchesCommandWithVision extends Command {
 //      this.driveTicks = inches / ENCODER_TICKS_PER_REVOLUTION;
     
         this.driveTicks = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(estimate() * ENCODER_TICKS_PER_REVOLUTION);
+        Robot.inchesMoved = estimate();
         this.driveP = specificDistanceP;
         this.driveI = specificDistanceI;
         this.driveD = specificDistanceD;

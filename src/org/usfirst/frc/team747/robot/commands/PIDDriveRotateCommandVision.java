@@ -33,6 +33,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
     	super(0.1, 0.0, 0.0);
         
         this.angleToRotate = OI.getDegrees();
+        Robot.degreesRotated = OI.getDegrees();
         
         requires(Robot.DRIVE_SUBSYSTEM);
     }
