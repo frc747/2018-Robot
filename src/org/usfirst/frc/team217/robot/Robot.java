@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
         _rightFrontTalon.set(ControlMode.MotionMagic, _rightBackPrimaryTalon.getDeviceID());
         /* first choose the sensor */
         _rightBackPrimaryTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        _rightBackPrimaryTalon.setSensorPhase(true);
+        _rightBackPrimaryTalon.setSensorPhase(false);
         _rightBackPrimaryTalon.setInverted(false);
 
         /* Set relevant frame periods to be at least as fast as periodic rate */
@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
         _rightBackPrimaryTalon.config_kI(0, 0, Constants.kTimeoutMs);
         _rightBackPrimaryTalon.config_kD(0, 0, Constants.kTimeoutMs);
         /* set acceleration and vcruise velocity - see documentation */
-        _rightBackPrimaryTalon.configMotionCruiseVelocity(2000, Constants.kTimeoutMs);
-        _rightBackPrimaryTalon.configMotionAcceleration(2000, Constants.kTimeoutMs);
+        _rightBackPrimaryTalon.configMotionCruiseVelocity(10000, Constants.kTimeoutMs);
+        _rightBackPrimaryTalon.configMotionAcceleration(10000, Constants.kTimeoutMs);
         /* zero the sensor */
         _rightBackPrimaryTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     }
