@@ -14,8 +14,8 @@ public class SolenoidSwitch extends Command {
 
 	Solenoid leftHIGH = new Solenoid(0);
 	Solenoid rightHIGH = new Solenoid(1);
-	Solenoid leftLOW = new Solenoid(2);
-	Solenoid rightLOW = new Solenoid(3);
+//	Solenoid leftLOW = new Solenoid(2);
+//	Solenoid rightLOW = new Solenoid(3);
 	
     public SolenoidSwitch() {
         // Use requires() here to declare subsystem dependencies
@@ -31,15 +31,15 @@ public class SolenoidSwitch extends Command {
 		//Solenoid Switch
 		if(Robot.switchb) {
 			leftHIGH.set(true);
-			rightHIGH.set(true);
-			leftLOW.set(false);
-			rightLOW.set(false);
+			rightHIGH.set(false);
+//			leftLOW.set(false);
+//			rightLOW.set(false);
 			Robot.switchb = false;
 		} else {
 			leftHIGH.set(false);
-			rightHIGH.set(false);
-			leftLOW.set(true);
-			rightLOW.set(true);
+			rightHIGH.set(true);
+//			leftLOW.set(true);
+//			rightLOW.set(true);
 			Robot.switchb = true;
 		}
 		pgname = true;

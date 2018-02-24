@@ -15,6 +15,7 @@ import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommandVision;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
+import org.usfirst.frc.team747.robot.commands.SolenoidSwitch;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
@@ -31,12 +32,13 @@ public class OI {
 	public static Joystick rightStick = new Joystick(1);
 	public static Joystick operatorController = new Joystick(2);
 	public static double degrees;
+	public String highLow;
 	Button OP_A = new JoystickButton(operatorController, 1);
 	Button OP_B = new JoystickButton(operatorController, 2);
 	Button OP_X = new JoystickButton(operatorController, 3);
 	Button OP_Y = new JoystickButton(operatorController, 4);
 	Button OP_START = new JoystickButton(operatorController, 8);
-	Button OP_PRESS = new JoystickButton(operatorController, 9)
+	Button OP_PRESS = new JoystickButton(operatorController, 9);
 
 	
 	public OI() {
@@ -53,9 +55,12 @@ public class OI {
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
+		OP_PRESS.toggleWhenPressed(new SolenoidSwitch());
 	}
 	
 	public void updateOI() {
+		highLow = (Robot.switchb)? "High" : "Low";
+		SmartDashboard.putString("High or Low?", highLow);
 	    SmartDashboard.putNumber("Value of TX:", getDegrees());
 	    SmartDashboard.putNumber("Value of TV:", Robot.v);
 	    SmartDashboard.putNumber("Distance:", Robot.distance);
