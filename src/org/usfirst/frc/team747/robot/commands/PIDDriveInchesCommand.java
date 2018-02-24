@@ -94,32 +94,32 @@ public class PIDDriveInchesCommand extends Command {
          * desired location.
          */
                 
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.config_kP(pidIdx, specificDistanceP, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.config_kP(pidIdx, specificDistanceP, timeoutMs);
-//        
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.config_kI(pidIdx, specificDistanceI, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.config_kI(pidIdx, specificDistanceI, timeoutMs);
-//        
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.config_kD(pidIdx, specificDistanceD, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.config_kD(pidIdx, specificDistanceD, timeoutMs);
-//        
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.config_kF(pidIdx, specificDistanceF, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.config_kF(pidIdx, specificDistanceF, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kP(pidIdx, specificDistanceP, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kP(pidIdx, specificDistanceP, timeoutMs);
         
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.ClearIaccum();
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.ClearIaccum();
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kI(pidIdx, specificDistanceI, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kI(pidIdx, specificDistanceI, timeoutMs);
         
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kD(pidIdx, specificDistanceD, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kD(pidIdx, specificDistanceD, timeoutMs);
         
-//        Robot.DRIVE_TRAIN.talonDriveLeftPrimary.setCloseLoopRampRate(rampRate);
-//        Robot.DRIVE_TRAIN.talonDriveRightPrimary.setCloseLoopRampRate(rampRate);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kF(pidIdx, specificDistanceF, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kF(pidIdx, specificDistanceF, timeoutMs);
+        
+//        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.ClearIaccum();
+//        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.ClearIaccum();
+        
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        
+//        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.setCloseLoopRampRate(rampRate);
+//        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.setCloseLoopRampRate(rampRate);
         
         DriveSubsystem.talonDriveLeftPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
         DriveSubsystem.talonDriveRightPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
@@ -130,24 +130,24 @@ public class PIDDriveInchesCommand extends Command {
     }
     
     protected void execute() {
-//      SmartDashboard.putNumber("STOP THRESHOLD:", Robot.DRIVE_TRAIN.convertRevsToInches(STOP_THRESHOLD_ADJUSTED));
-//      SmartDashboard.putNumber("Closed-Loop Error Left:", Robot.DRIVE_TRAIN.talonDriveLeftPrimary.getClosedLoopError());
-//      SmartDashboard.putNumber("Closed-Loop Error Right:", Robot.DRIVE_TRAIN.talonDriveRightPrimary.getClosedLoopError());
-//      SmartDashboard.putNumber("I Accum Left:", Robot.DRIVE_TRAIN.talonDriveLeftPrimary.GetIaccum());
-//      SmartDashboard.putNumber("I Accum Right:", Robot.DRIVE_TRAIN.talonDriveRightPrimary.GetIaccum());
+//      SmartDashboard.putNumber("STOP THRESHOLD:", Robot.DRIVE_SUBSYSTEM.convertRevsToInches(STOP_THRESHOLD_ADJUSTED));
+//      SmartDashboard.putNumber("Closed-Loop Error Left:", Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.getClosedLoopError());
+//      SmartDashboard.putNumber("Closed-Loop Error Right:", Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.getClosedLoopError());
+//      SmartDashboard.putNumber("I Accum Left:", Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.GetIaccum());
+//      SmartDashboard.putNumber("I Accum Right:", Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.GetIaccum());
         
-//        IAccumDistanceTraveled = Robot.DRIVE_TRAIN.convertRevsToInches((Robot.DRIVE_TRAIN.getRightPosition() + Robot.DRIVE_TRAIN.getLeftPosition()) * 4);
+//        IAccumDistanceTraveled = Robot.DRIVE_SUBSYSTEM.convertRevsToInches((Robot.DRIVE_SUBSYSTEM.getRightPosition() + Robot.DRIVE_SUBSYSTEM.getLeftPosition()) * 4);
 //      
 //      if ((Math.abs(IAccumDistanceTraveled) - Math.abs(IAccumDistanceCounter)) >= Math.abs(I_ACCUM_RESET_BENCHMARK_IN_INCHES)) {
 //          IAccumDistanceCounter = IAccumDistanceTraveled;
-//          Robot.DRIVE_TRAIN.talonDriveLeftPrimary.ClearIaccum();
-//          Robot.DRIVE_TRAIN.talonDriveRightPrimary.ClearIaccum();
+//          Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.ClearIaccum();
+//          Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.ClearIaccum();
 //      }
 //      
 //      if ((Math.abs(IAccumDistanceTraveled) >= Math.abs(driveTicks) && !firstPass)) {
 //          firstPass = true;
-//            Robot.DRIVE_TRAIN.talonDriveLeftPrimary.ClearIaccum();
-//            Robot.DRIVE_TRAIN.talonDriveRightPrimary.ClearIaccum();
+//            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.ClearIaccum();
+//            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.ClearIaccum();
 //      }
         
     }

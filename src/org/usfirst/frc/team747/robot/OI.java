@@ -66,6 +66,8 @@ public class OI {
 	    SmartDashboard.putNumber("Value of TX:", getDegrees());
 	    SmartDashboard.putNumber("Value of TV:", Robot.v);
 	    SmartDashboard.putNumber("Distance:", Robot.distance);
+	    SmartDashboard.putNumber("Left Encoder Position:", Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition());
+		SmartDashboard.putNumber("Right Encoder Position:", Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition());
 
 	}
 	public static double getDegrees() {
