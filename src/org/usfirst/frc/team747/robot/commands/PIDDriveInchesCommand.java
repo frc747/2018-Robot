@@ -65,9 +65,9 @@ public class PIDDriveInchesCommand extends Command {
 //      this.driveTicks = inches / ENCODER_TICKS_PER_REVOLUTION;
     
         if (reverse) {
-            this.driveTicks = -Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION);//input now has to be ticks instead of revolutions which is why we multiply by 4096
+            this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));//input now has to be ticks instead of revolutions which is why we multiply by 4096
         } else {
-            this.driveTicks = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION);
+            this.driveTicks = Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));
         }
         this.driveP = specificDistanceP;
         this.driveI = specificDistanceI;
