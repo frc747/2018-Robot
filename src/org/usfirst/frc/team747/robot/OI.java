@@ -8,6 +8,18 @@
 package org.usfirst.frc.team747.robot;
 
 
+import java.util.Random;
+
+import javax.swing.JFrame;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
@@ -37,7 +49,9 @@ public class OI {
 	Button OP_Y = new JoystickButton(operatorController, 4);
 	Button OP_START = new JoystickButton(operatorController, 8);
 	Button OP_PRESS = new JoystickButton(operatorController, 9);
-
+	
+	private Random randGen = new Random();
+	static TimeSeries ts = new TimeSeries("data", Millisecond.class);
 	
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
@@ -53,14 +67,45 @@ public class OI {
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
+		OP_START.toggleWhenPressed(new PIDDriveInchesCommand(1, false));
+		
+
+        TimeSeriesCollection dataset = new TimeSeriesCollection(ts);
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+            "GraphTest",
+            "Time",
+            "Value",
+            dataset,
+            true,
+            true,
+            false
+        );
+        final XYPlot plot = chart.getXYPlot();
+        ValueAxis axis = plot.getDomainAxis();
+        axis.setAutoRange(true);
+        axis.setFixedAutoRange(60000.0);
+
+        JFrame frame = new JFrame("GraphTest");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ChartPanel label = new ChartPanel(chart);
+        frame.getContentPane().add(label);
+        //Suppose I add combo boxes and buttons here later
+
+        frame.pack();
+        frame.setVisible(true);
 	}
 	
 	public void updateOI() {
 	    SmartDashboard.putNumber("Value of TX:", getDegrees());
 	    SmartDashboard.putNumber("Value of TV:", Robot.v);
 	    SmartDashboard.putNumber("Distance:", Robot.distance);
+	    
+	    int num = randGen.nextInt(1000);
+        System.out.println(num);
+        ts.addOrUpdate(new Millisecond(), num);
 
 	}
+	
 	public static double getDegrees() {
 		return OI.degrees;
 	}

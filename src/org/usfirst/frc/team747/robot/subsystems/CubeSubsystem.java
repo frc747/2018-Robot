@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class CubeSubsystem extends Subsystem {
-
-	public static TalonSRX intakeArmLeft = new TalonSRX(3); // = new TalonSRX(?); 4
-	public static TalonSRX intakeArmRight = new TalonSRX(8); 
 	
 	public static TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
 	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6 // 7 is reversed
