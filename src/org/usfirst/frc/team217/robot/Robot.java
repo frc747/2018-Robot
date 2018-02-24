@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 		_rightBackPrimaryTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
 		_rightBackPrimaryTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
 		_rightBackPrimaryTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
-		_rightBackPrimaryTalon.configPeakOu tputReverse(-1, Constants.kTimeoutMs);
+		_rightBackPrimaryTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
 		/* set closed loop gains in slot0 - see documentation */
 		_rightBackPrimaryTalon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
