@@ -28,7 +28,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
 
     public PIDDriveRotateCommand(double degreesRotate) {
 //        super(0.05, 0.0005, 0.5);
-        super(0.2, 0.4, 0.5855); //.2,0,.375     .1,0,.1       .3,0,.1
+        super(0.0, 0.0, 0.0); //.2,0,.375     .1,0,.1       .3,0,.1
         
         this.angleToRotate = degreesRotate;
         
@@ -100,6 +100,6 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
 //            OUTPUT = SIGN * DRIVE_SPEED_MINIMUM;
 //        }
         
-        Robot.DRIVE_SUBSYSTEM.set(output*4, -output*4);
+        Robot.DRIVE_SUBSYSTEM.set(output, -output);
     }
 }

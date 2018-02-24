@@ -55,7 +55,7 @@ public class OI {
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
-		OP_PRESS.toggleWhenPressed(new SolenoidSwitch());
+		OP_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
 		OP_START.toggleWhenPressed(new PIDDriveInchesCommand(19.635, false));
 		
 	}
