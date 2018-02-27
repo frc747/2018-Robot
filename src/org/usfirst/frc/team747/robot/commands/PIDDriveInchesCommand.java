@@ -42,13 +42,13 @@ public class PIDDriveInchesCommand extends Command {
 
     private double specificDistanceInches;
     
-    private double specificDistanceP = 1.5;
+    private double specificDistanceP = 7.5;
     
     private double specificDistanceI = 0;
     
     private double specificDistanceD = 0;
     
-    private double specificDistanceF = 0;
+    private double specificDistanceF = 0.1489;
     
     //the values used for motion magic (universal PID values for driving forward and back
     

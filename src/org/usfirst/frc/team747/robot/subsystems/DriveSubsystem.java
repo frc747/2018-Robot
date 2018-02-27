@@ -222,6 +222,11 @@ public class DriveSubsystem extends Subsystem {
     public double getRightPosition() {
         return talonDriveRightPrimary.getSelectedSensorPosition(pidIdx);
     }
+
+    public static void resetEncoderPositions() {
+    	talonDriveLeftPrimary.setSelectedSensorPosition(0, 0, 10);
+    	talonDriveRightPrimary.setSelectedSensorPosition(0, 0, 10);
+    }
     
     public double getCombindedEncoderPosition() {
         return (getLeftEncoderPosition() + getRightEncoderPosition()) / 2;

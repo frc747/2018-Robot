@@ -170,6 +170,10 @@ public class Robot extends TimedRobot {
 		}
 		
 		OI.degrees = Math.round(x);
+		
+		if (OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
+			DriveSubsystem.resetEncoderPositions();
+		}
 	}
 
 	/**
