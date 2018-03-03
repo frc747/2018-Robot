@@ -176,9 +176,6 @@ public class Robot extends TimedRobot {
 			DriveSubsystem.resetEncoderPositions();
 		}
 		
-		CubeSubsystem.intakeLeft.set(ControlMode.PercentOutput, .5*OI.operatorController.getRawAxis(1));
-		CubeSubsystem.intakeRight.set(ControlMode.PercentOutput, -.5*OI.operatorController.getRawAxis(5));
-		CubeSubsystem.roller.set(ControlMode.PercentOutput, .5*(OI.operatorController.getRawAxis(1)+OI.operatorController.getRawAxis(5))/2);
 	}
 
 	/**
