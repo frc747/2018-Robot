@@ -1,5 +1,3 @@
-
-
 package org.usfirst.frc.team747.robot.subsystems;
 
 import org.usfirst.frc.team747.robot.OI;
@@ -40,9 +38,9 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			intakeLeft.set(ControlMode.PercentOutput, .5*mod);
+			intakeLeft.set(ControlMode.PercentOutput, -.5*mod);
 			intakeRight.set(ControlMode.PercentOutput, .5*mod);
-			roller.set(ControlMode.PercentOutput, .5*mod);
+			roller.set(ControlMode.PercentOutput, -.5*mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
@@ -59,8 +57,8 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			ejectLeft.set(ControlMode.PercentOutput, .5*mod);
-			ejectRight.set(ControlMode.PercentOutput, -.5*mod);
+			ejectLeft.set(ControlMode.PercentOutput, -.5*mod);
+			ejectRight.set(ControlMode.PercentOutput, .5*mod);
 		} else {
 			ejectLeft.set(ControlMode.PercentOutput, 0);
 			ejectRight.set(ControlMode.PercentOutput, 0);
