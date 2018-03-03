@@ -63,9 +63,9 @@ public class OI {
 		
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
-		OP_X.whileHeld(new IntakeCommand(false));
-		OP_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(OI.PIDdegrees));
-		OP_START.toggleWhenPressed(new PIDDriveInchesCommand(inches, false));
+		//OP_X.whileHeld(new IntakeCommand(false));
+		//OP_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(OI.PIDdegrees));
+		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(inches, false));
 	}
 	
 	public void updateOI() {

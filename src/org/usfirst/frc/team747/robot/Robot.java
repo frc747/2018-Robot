@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import javax.swing.Spring;
 
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
@@ -174,6 +175,10 @@ public class Robot extends TimedRobot {
 		if (OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
 			DriveSubsystem.resetEncoderPositions();
 		}
+		
+		CubeSubsystem.intakeLeft.set(ControlMode.PercentOutput, .5*OI.operatorController.getRawAxis(1));
+		CubeSubsystem.intakeRight.set(ControlMode.PercentOutput, -.5*OI.operatorController.getRawAxis(5));
+		CubeSubsystem.roller.set(ControlMode.PercentOutput, .5*(OI.operatorController.getRawAxis(1)+OI.operatorController.getRawAxis(5))/2);
 	}
 
 	/**
