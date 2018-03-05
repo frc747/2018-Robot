@@ -7,27 +7,15 @@
 
 package org.usfirst.frc.team747.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import javax.swing.Spring;
-
-import org.usfirst.frc.team747.robot.commands.DriveCommand;
-import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -41,15 +29,6 @@ public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static final CubeSubsystem cube = new CubeSubsystem();
 
-	public static int sleepTimer;
-	NetworkTable table;
-	NetworkTableEntry tx;
-	NetworkTableEntry tv;
-	NetworkTableEntry ty; 
-	public static double x;
-	public static double v;
-	public static double y;
-	public static double distance;
 	public static boolean switchb = false;
 
     public static OI oi = null;
@@ -131,11 +110,6 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
-		// schedule the autonomous command (example)
-		//autonomousCommand = (Command) autoChooser.getSelected();
-		//autonomousCommand.start();
-	    
-	    
 	    //above this point is what was written before I modified stuff -Brian 3/5/18
         autonomous.startMode();
         if (autonomousCommand != null) {
@@ -178,20 +152,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		this.table = NetworkTableInstance.getDefault().getTable("limelight");
-		this.tx = this.table.getEntry("tx");
-		this.tv = this.table.getEntry("tv");
-		this.ty = this.table.getEntry("ty");
-		Robot.x = this.tx.getDouble(0);
-		Robot.v = this.tv.getDouble(0);
-		Robot.y = this.ty.getDouble(0);
-		if (Robot.v == 1) {
-			Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
-		} else {
-			Robot.distance = 0;
-		}
-		
-		OI.degrees = Math.round(x);
 	}
 
 	/**

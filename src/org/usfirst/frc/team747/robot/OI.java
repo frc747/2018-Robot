@@ -15,7 +15,6 @@ import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
-import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommandVision;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.SolenoidSwitch;
 import org.usfirst.frc.team747.robot.maps.ControllerMap;
@@ -31,12 +30,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public static double inches = 20;
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
-	public static double degrees;
-	public static double PIDdegrees = 90;
 	public String highLow;
 	
 	
@@ -63,23 +59,16 @@ public class OI {
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		//OP_X.whileHeld(new IntakeCommand(false));
-		//OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(OI.PIDdegrees));
-		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(inches, false));
+		//OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
+		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(20, false));
 	}
 	
 	public void updateOI() {
-//		inches = 20.1;
 		highLow = (Robot.switchb)? "High" : "Low";
 		SmartDashboard.putString("High or Low?", highLow);
-	    SmartDashboard.putNumber("Value of TX:", getDegrees());
-	    SmartDashboard.putNumber("Value of TV:", Robot.v);
-	    SmartDashboard.putNumber("Distance:", Robot.distance);
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
-//		SmartDashboard.putNumber("Inches", inches);
-		SmartDashboard.putNumber("Error", Robot.getNavXAngle()-OI.PIDdegrees);
-		SmartDashboard.putNumber("Current", Robot.getNavXAngle());
-		SmartDashboard.putNumber("Degrees", OI.PIDdegrees);
+		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);
 		SmartDashboard.putNumber("kI", OI.kI);
@@ -88,7 +77,6 @@ public class OI {
 		OI.kI = SmartDashboard.getNumber("kI", OI.kI);
 		OI.kD = SmartDashboard.getNumber("kD", OI.kD);
 		*/
-//		inches = 20;
 		
 		
 		
@@ -112,8 +100,5 @@ public class OI {
 	    SmartDashboard.putNumber("Right Talon Percent Output:", Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.getMotorOutputPercent());
 	    SmartDashboard.putNumber("Right Talon Voltage Output:", Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.getMotorOutputVoltage());
         */
-	}
-	public static double getDegrees() {
-		return OI.degrees;
 	}
 }
