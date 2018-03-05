@@ -39,7 +39,8 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
-	public static OI m_oi;
+	public static final CubeSubsystem cube = new CubeSubsystem();
+
 	public static int sleepTimer;
 	NetworkTable table;
 	NetworkTableEntry tx;
@@ -51,13 +52,15 @@ public class Robot extends TimedRobot {
 	public static double distance;
 	public static boolean switchb = false;
 
-	//public static String gameData;
-	public static Command autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+    public static OI oi = null;
 	
-	public static CubeSubsystem cube = new CubeSubsystem();
+	//public static String gameData;
+	private Command autonomousCommand;
+	private Autonomous autonomous;
+//	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
     private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
+    
     public static double getNavXAngle() {
     	return NAV_X.getYaw();
     }
@@ -68,6 +71,12 @@ public class Robot extends TimedRobot {
     
     public static void resetNavXAngle() {
     	NAV_X.zeroYaw();
+    	try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -75,14 +84,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
-//		autoChooser = new SendableChooser<SelectAutonomousCommand>();
-//		autoChooser.addObject("Robot Position 1", new SelectAutonomousCommand(1));
-//		autoChooser.addObject("Robot Position 2", new SelectAutonomousCommand(2));
-//		autoChooser.addObject("Robot Position 3", new SelectAutonomousCommand(3));
-//		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+
+	    DRIVE_SUBSYSTEM.changeControlMode(ControlMode.PercentOutput);
+	    
+	    this.autonomous = new Autonomous();
+        
+        if (oi == null) {
+            oi = new OI();
+        }
 	}
 
 	/**
@@ -125,7 +134,17 @@ public class Robot extends TimedRobot {
 		// schedule the autonomous command (example)
 		//autonomousCommand = (Command) autoChooser.getSelected();
 		//autonomousCommand.start();
-		
+	    
+	    
+	    //above this point is what was written before I modified stuff -Brian 3/5/18
+        autonomous.startMode();
+        if (autonomousCommand != null) {
+            autonomousCommand.start();
+        }
+        
+        if (oi == null) {
+            oi = new OI();
+        }
 	}
 
 	/**
@@ -138,6 +157,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+//	    resetNavXAngle();
+	    Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -146,8 +167,8 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 		
-		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
-		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
+//		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
+//		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
 		
 	}
 
@@ -171,11 +192,6 @@ public class Robot extends TimedRobot {
 		}
 		
 		OI.degrees = Math.round(x);
-		
-		if (OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
-			DriveSubsystem.resetEncoderPositions();
-		}
-		
 	}
 
 	/**

@@ -114,10 +114,10 @@ public class PIDDriveInchesCommandWithVision extends Command {
 //        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.setCloseLoopRampRate(rampRate);
 //        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.setCloseLoopRampRate(rampRate);
         
-        DriveSubsystem.talonDriveLeftPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
-        DriveSubsystem.talonDriveRightPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs); //was 6
         
-        DriveSubsystem.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
 
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
     }
