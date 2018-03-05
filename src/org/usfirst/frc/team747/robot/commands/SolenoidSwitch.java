@@ -24,38 +24,36 @@ public class SolenoidSwitch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	leftHIGH.set(true);
+		rightHIGH.set(false);
+//		leftLOW.set(false);
+//		rightLOW.set(false);
+		Robot.switchb = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		//Solenoid Switch
-		if(Robot.switchb) {
-			leftHIGH.set(true);
-			rightHIGH.set(false);
-//			leftLOW.set(false);
-//			rightLOW.set(false);
-			Robot.switchb = false;
-		} else {
-			leftHIGH.set(false);
-			rightHIGH.set(true);
-//			leftLOW.set(true);
-//			rightLOW.set(true);
-			Robot.switchb = true;
-		}
-		pgname = true;
+			
+		
+	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(pgname) {
-        	return true;
-        } else {
+       
         	return false;
-        }
+        
     }
 
     // Called once after isFinished returns true
     protected void end() {
+
+		leftHIGH.set(false);
+		rightHIGH.set(true);
+//		leftLOW.set(true);
+//		rightLOW.set(true);
+		Robot.switchb = true;
     }
 
     // Called when another command which requires one or more of the same
