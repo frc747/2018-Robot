@@ -1,6 +1,7 @@
 package org.usfirst.frc.team747.robot.commands;
 
 import org.usfirst.frc.team747.robot.Robot;
+import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,8 +13,7 @@ public class SolenoidSwitch extends Command {
 	
 	public boolean pgname = false;
 
-	Solenoid leftHIGH = new Solenoid(0);
-	Solenoid rightHIGH = new Solenoid(1);
+	
 //	Solenoid leftLOW = new Solenoid(2);
 //	Solenoid rightLOW = new Solenoid(3);
 	
@@ -24,8 +24,8 @@ public class SolenoidSwitch extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	leftHIGH.set(true);
-		rightHIGH.set(false);
+    	DriveSubsystem.leftHIGH.set(true);
+		DriveSubsystem.rightHIGH.set(false);
 //		leftLOW.set(false);
 //		rightLOW.set(false);
 		Robot.switchb = false;
@@ -49,8 +49,8 @@ public class SolenoidSwitch extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
-		leftHIGH.set(false);
-		rightHIGH.set(true);
+		DriveSubsystem.leftHIGH.set(false);
+		DriveSubsystem.rightHIGH.set(true);
 //		leftLOW.set(true);
 //		rightLOW.set(true);
 		Robot.switchb = true;

@@ -28,7 +28,7 @@ import com.kauailabs.navx.frc.AHRS;
 public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static final CubeSubsystem cube = new CubeSubsystem();
-
+	
 	public static boolean switchb = false;
 
     public static OI oi = null;
@@ -111,6 +111,11 @@ public class Robot extends TimedRobot {
 		 */
 
 	    //above this point is what was written before I modified stuff -Brian 3/5/18
+		DriveSubsystem.leftHIGH.set(false);
+		DriveSubsystem.rightHIGH.set(true);
+//		leftLOW.set(true);
+//		rightLOW.set(true);
+		Robot.switchb = true;
         autonomous.startMode();
         if (autonomousCommand != null) {
             autonomousCommand.start();
@@ -119,6 +124,7 @@ public class Robot extends TimedRobot {
         if (oi == null) {
             oi = new OI();
         }
+        
 	}
 
 	/**
@@ -137,6 +143,11 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+	    DriveSubsystem.leftHIGH.set(false);
+		DriveSubsystem.rightHIGH.set(true);
+//		leftLOW.set(true);
+//		rightLOW.set(true);
+		Robot.switchb = true;
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}

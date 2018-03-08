@@ -1,5 +1,6 @@
 package org.usfirst.frc.team747.robot.subsystems;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.commands.IntakeDriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -11,9 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class CubeSubsystem extends Subsystem {
-
-	public TalonSRX intakeArmLeft = new TalonSRX(3); // = new TalonSRX(?); 4
-	public TalonSRX intakeArmRight = new TalonSRX(8); 
 	
 	public TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
 	public TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6 // 7 is reversed
@@ -65,9 +63,9 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			intakeLeft.set(ControlMode.PercentOutput, -.5*mod);
-			intakeRight.set(ControlMode.PercentOutput, .5*mod);
-			roller.set(ControlMode.PercentOutput, -.5*mod);
+			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft*.5*mod);
+			intakeRight.set(ControlMode.PercentOutput, OI.intRight*.5*mod);
+			roller.set(ControlMode.PercentOutput, OI.rol*-.5*mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
@@ -84,8 +82,8 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			ejectLeft.set(ControlMode.PercentOutput, -.5*mod);
-			ejectRight.set(ControlMode.PercentOutput, .5*mod);
+			ejectLeft.set(ControlMode.PercentOutput, OI.extLeft*.5*mod);
+			ejectRight.set(ControlMode.PercentOutput, OI.extRight*.5*mod);
 		} else {
 			ejectLeft.set(ControlMode.PercentOutput, 0);
 			ejectRight.set(ControlMode.PercentOutput, 0);

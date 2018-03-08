@@ -34,7 +34,16 @@ public class OI {
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
 	public String highLow;
+	public static boolean compBot = false;
 	
+	public int solOne = 0;
+	public int solTwo = 1;
+	
+	public static int intLeft = 1;
+	public static int intRight = 1;
+	public static int extLeft = 1;
+	public static int extRight = 1;
+	public static int rol = 1;
 	
 	// CREATING BUTTONS - OP == OPERATOR; DR == DRIVER
 	Button OP_A = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_A.getValue());
@@ -61,6 +70,8 @@ public class OI {
 		//OP_X.whileHeld(new IntakeCommand(false));
 		//OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
 		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(20, false));
+		SmartDashboard.putBoolean("Competition Robot?", compBot);
+
 	}
 	
 	public void updateOI() {
@@ -69,6 +80,25 @@ public class OI {
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
+		
+		if(compBot) {
+			solOne = 0;
+			solOne = 1;
+			
+			intLeft = -1;
+			intRight = 1;
+			extLeft = -1;
+			extRight = 1;
+			rol = -1;
+		} else {
+			solOne = 6;
+			solTwo = 7;
+			intLeft = -1;
+			intRight = 1;
+			extLeft = -1;
+			extRight = 1;
+			rol = -1;
+		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);
 		SmartDashboard.putNumber("kI", OI.kI);

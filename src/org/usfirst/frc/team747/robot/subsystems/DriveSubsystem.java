@@ -5,13 +5,15 @@ import org.usfirst.frc.team747.robot.commands.DriveCommand;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class DriveSubsystem extends Subsystem {
-	
+	public static Solenoid leftHIGH = new Solenoid(0);
+	public static Solenoid rightHIGH = new Solenoid(1);
     public TalonSRX talonDriveLeftPrimary = new TalonSRX(1);
 
 	//public TalonSRX talonDriveLeftMid = new TalonSRX(1);
