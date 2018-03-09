@@ -16,8 +16,10 @@ import org.usfirst.frc.team747.robot.commands.IntakeCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
-import org.usfirst.frc.team747.robot.commands.SolenoidSwitch;
-import org.usfirst.frc.team747.robot.commands.SolenoidSwitchToggle;
+import org.usfirst.frc.team747.robot.commands.RollerCommand;
+import org.usfirst.frc.team747.robot.commands.ShootGroup;
+import org.usfirst.frc.team747.robot.commands.SolenoidHighGear;
+import org.usfirst.frc.team747.robot.commands.SolenoidLowGear;
 import org.usfirst.frc.team747.robot.maps.ControllerMap;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,11 +33,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+    
+    public static boolean compBot = true;
+    
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
 	public String highLow;
-	public static boolean compBot = true;
 	public static int intLeft = 1;
 	public static int intRight = 1;
 	public static int extLeft = 1;
@@ -47,28 +51,26 @@ public class OI {
 	Button OP_B = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_B.getValue());
 	Button OP_X = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_X.getValue());
 	Button OP_Y = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_Y.getValue());
-	public static Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
+	Button OP_LB = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_LB.getValue());
+	Button OP_RB = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_RB.getValue());
+	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
 	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
 
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
 		
-		/*
-		OP_A.whileHeld(new IntakeCommand(false));
-		OP_B.whileHeld(new EjectCommand(false));
-		OP_X.toggleWhenPressed(new PIDDriveRotateCommand(-180));
-		OP_Y.toggleWhenPressed(new PIDDriveInchesCommand(Robot.distance, false));
-		OP_START.toggleWhenPressed(new PIDDriveRotateCommand(OI.getDegrees()));
-		*/
-		
-		OP_Y.whileHeld(new ForwardGroup());
+		OP_B.whileHeld(new RollerCommand(false));
+		OP_Y.whileHeld(new ShootGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
-		//OP_START.toggleWhenPressed(new SolenoidSwitchToggle());
-		//OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
-		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(20, false));
+		OP_RB.whileHeld(new ForwardGroup());
+		OP_LB.whenPressed(new SolenoidHighGear());
+		OP_LB.whenReleased(new SolenoidLowGear());
 		SmartDashboard.putBoolean("Competition Robot?", compBot);
+
+	    //OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
+        //OP_START.toggleWhenPressed(new PIDDriveInchesCommand(20, false));
 
 	}
 	

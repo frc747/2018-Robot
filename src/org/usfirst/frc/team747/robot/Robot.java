@@ -115,10 +115,10 @@ public class Robot extends TimedRobot {
 	    //above this point is what was written before I modified stuff -Brian 3/5/18
 		pneu.leftHIGH.set(false);
 		pneu.rightHIGH.set(true);
-//		leftLOW.set(true);
-//		rightLOW.set(true);
+
 		Robot.switchb = true;
-        autonomous.startMode();
+        
+		autonomous.startMode();
         if (autonomousCommand != null) {
             autonomousCommand.start();
         }
@@ -145,11 +145,11 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+
 	    pneu.leftHIGH.set(false);
 		pneu.rightHIGH.set(true);
-//		leftLOW.set(true);
-//		rightLOW.set(true);
 		Robot.switchb = true;
+		
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}

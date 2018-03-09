@@ -50,8 +50,8 @@ public class CubeSubsystem extends Subsystem {
 	
 	public void intakeArms(double left, double right) {
 	    //TODO Based on a conversation with (Jeff and George 3/3/2018 2:35), the speeds for intake motors while being controlled by joysticks are unknown. Setting to 75% speeds by default.
-	    intakeLeft.set(ControlMode.PercentOutput, (left * 0.75));
-	    intakeRight.set(ControlMode.PercentOutput, (-right * 0.75));
+	    intakeLeft.set(ControlMode.PercentOutput, (left * 1));
+	    intakeRight.set(ControlMode.PercentOutput, (-right * 1));
 	}
 	
 	public void setIntake(boolean enable, boolean reverse) {
@@ -62,14 +62,13 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft*.5*mod);
-			intakeRight.set(ControlMode.PercentOutput, OI.intRight*.5*mod);
-			roller.set(ControlMode.PercentOutput, OI.rol*-1.0*mod);
+			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 0.5 * mod);
+			intakeRight.set(ControlMode.PercentOutput, OI.intRight * 0.5 * mod);
+//			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
-			roller.set(ControlMode.PercentOutput, 0);
-			
+//			roller.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
@@ -81,13 +80,26 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			ejectLeft.set(ControlMode.PercentOutput, OI.extLeft*.5*mod);
-			ejectRight.set(ControlMode.PercentOutput, OI.extRight*.5*mod);
+			ejectLeft.set(ControlMode.PercentOutput, OI.extLeft * 0.5 * mod);
+			ejectRight.set(ControlMode.PercentOutput, OI.extRight * 0.5 * mod);
 		} else {
 			ejectLeft.set(ControlMode.PercentOutput, 0);
 			ejectRight.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
+	public void setRollers(boolean enable, boolean reverse) {
+        int mod;
+        if (reverse == true) {
+            mod = -1;
+        } else {
+            mod = 1;
+        }
+        if (enable) {
+            roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+        } else {
+            roller.set(ControlMode.PercentOutput, 0);            
+        }
+    }
 }
 
