@@ -65,8 +65,8 @@ public class OI {
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
 		OP_RB.whileHeld(new ForwardGroup());
-		OP_LB.whenPressed(new SolenoidHighGear());
-		OP_LB.whenReleased(new SolenoidLowGear());
+		OP_LB.whenPressed(new SolenoidLowGear());
+		OP_LB.whenReleased(new SolenoidHighGear());
 		SmartDashboard.putBoolean("Competition Robot?", compBot);
 
 	    //OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));

@@ -8,6 +8,7 @@ import org.usfirst.frc.team747.robot.maps.RobotMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoChooserLeft extends CommandGroup {
 	public AutoChooserLeft() {
@@ -19,6 +20,8 @@ public class AutoChooserLeft extends CommandGroup {
 			addSequential(new PIDDriveRotateCommand(90));
 			addSequential(new PIDDriveInchesCommand(37.5, true));
 			addSequential(new EjectTimedCommand(false, 0.5));
+		    SmartDashboard.putString("GameDataValue", "LeftAuto");
+
 			} else if(Robot.gameData.charAt(0) == 'R'){
 			addSequential(new PIDDriveInchesCommand(90-RobotMap.robotLength, true));
 			addSequential(new PIDDriveRotateCommand(90));
@@ -26,6 +29,8 @@ public class AutoChooserLeft extends CommandGroup {
 			addSequential(new PIDDriveRotateCommand(-90));
 			addSequential(new PIDDriveInchesCommand(50, true));
 			addSequential(new EjectTimedCommand(false, 0.5));
+		    SmartDashboard.putString("GameDataValue", "RightAuto");
+
 			}
 		}
 	}

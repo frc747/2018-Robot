@@ -5,6 +5,7 @@ import org.usfirst.frc.team747.robot.maps.RobotMap;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandSlow;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.PauseCommand;
 
@@ -15,9 +16,10 @@ public class CenterRightSideSwitch extends CommandGroup {
         requires(Robot.DRIVE_SUBSYSTEM);
         addSequential(new PIDDriveInchesCommand(90-RobotMap.robotLength, true));
         addSequential(new PIDDriveRotateCommand(90));
-        addSequential(new PIDDriveInchesCommand(81-RobotMap.robotLength, true));
+        addSequential(new PIDDriveInchesCommand(90-RobotMap.robotLength, true));
         addSequential(new PIDDriveRotateCommand(-90));
-        addSequential(new PIDDriveInchesCommand(38, true));
+        addSequential(new PIDDriveInchesCommand(51, true));
+//      addSequential(new PIDDriveInchesCommandSlow(6, true));
         addSequential(new EjectTimedCommand(false, 0.5));
     }
 }
