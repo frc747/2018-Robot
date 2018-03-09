@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class OneCrossAutoLine extends CommandGroup {
+public class CrossAuto extends CommandGroup {
 
-    public OneCrossAutoLine() {
-        addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH-RobotMap.robotLength, false));
+    public CrossAuto() {
+        addSequential(new PIDDriveInchesCommand(ValueConfig.DISTANCE_TO_SWITCH-RobotMap.robotLength-5, false));
     }
 }

@@ -38,7 +38,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
     // Called just before this Command runs the first time
     protected void initialize() {
         
-        Robot.resetNavXAngle();
+        //Robot.resetNavXAngle();
         
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
@@ -57,7 +57,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
         getPIDController().setContinuous(true); //will reset back to the minimum value after reaching the max value
 
         
-        getPIDController().setSetpoint(angleToRotate);
+        getPIDController().setSetpoint(Robot.getNavXAngle()+angleToRotate);
     }
 
     // Called repeatedly when this Command is scheduled to run
