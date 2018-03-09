@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
@@ -28,12 +30,12 @@ import com.kauailabs.navx.frc.AHRS;
 public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
 	public static final CubeSubsystem cube = new CubeSubsystem();
-	
-	public static boolean switchb = false;
+	public static final PneumaticsSubsystem pneu = new PneumaticsSubsystem();
+	public static boolean switchb = true;
 
     public static OI oi = null;
 	
-	//public static String gameData;
+	public static String gameData;
 	private Command autonomousCommand;
 	private Autonomous autonomous;
 //	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -102,7 +104,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//gameData = DriverStation.getInstance().getGameSpecificMessage();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -111,8 +113,8 @@ public class Robot extends TimedRobot {
 		 */
 
 	    //above this point is what was written before I modified stuff -Brian 3/5/18
-		DriveSubsystem.leftHIGH.set(false);
-		DriveSubsystem.rightHIGH.set(true);
+		pneu.leftHIGH.set(false);
+		pneu.rightHIGH.set(true);
 //		leftLOW.set(true);
 //		rightLOW.set(true);
 		Robot.switchb = true;
@@ -143,8 +145,8 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-	    DriveSubsystem.leftHIGH.set(false);
-		DriveSubsystem.rightHIGH.set(true);
+	    pneu.leftHIGH.set(false);
+		pneu.rightHIGH.set(true);
 //		leftLOW.set(true);
 //		rightLOW.set(true);
 		Robot.switchb = true;
@@ -163,6 +165,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		
+
+			
+		
+		
 	}
 
 	/**

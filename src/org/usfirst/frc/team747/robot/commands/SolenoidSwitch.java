@@ -1,7 +1,9 @@
 package org.usfirst.frc.team747.robot.commands;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,21 +16,26 @@ public class SolenoidSwitch extends Command {
 	public boolean pgname = false;
 
 	
-//	Solenoid leftLOW = new Solenoid(2);
-//	Solenoid rightLOW = new Solenoid(3);
+	
 	
     public SolenoidSwitch() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.pneu);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DriveSubsystem.leftHIGH.set(true);
-		DriveSubsystem.rightHIGH.set(false);
-//		leftLOW.set(false);
-//		rightLOW.set(false);
-		Robot.switchb = false;
+		if(OI.operatorController.getRawButton(8)) {
+			if(Robot.switchb) {
+				Robot.pneu.leftHIGH.set(true);
+				Robot.pneu.rightHIGH.set(false);
+				Robot.switchb = false;
+			} else {
+				Robot.pneu.leftHIGH.set(false);
+				Robot.pneu.rightHIGH.set(true);
+				Robot.switchb = true;
+			}
+		}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -49,11 +56,6 @@ public class SolenoidSwitch extends Command {
     // Called once after isFinished returns true
     protected void end() {
 
-		DriveSubsystem.leftHIGH.set(false);
-		DriveSubsystem.rightHIGH.set(true);
-//		leftLOW.set(true);
-//		rightLOW.set(true);
-		Robot.switchb = true;
     }
 
     // Called when another command which requires one or more of the same

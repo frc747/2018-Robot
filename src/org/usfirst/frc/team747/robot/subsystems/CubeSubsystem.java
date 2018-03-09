@@ -52,7 +52,6 @@ public class CubeSubsystem extends Subsystem {
 	    //TODO Based on a conversation with (Jeff and George 3/3/2018 2:35), the speeds for intake motors while being controlled by joysticks are unknown. Setting to 75% speeds by default.
 	    intakeLeft.set(ControlMode.PercentOutput, (left * 0.75));
 	    intakeRight.set(ControlMode.PercentOutput, (-right * 0.75));
-	    roller.set(ControlMode.PercentOutput, (left+right)/2);
 	}
 	
 	public void setIntake(boolean enable, boolean reverse) {
@@ -65,7 +64,7 @@ public class CubeSubsystem extends Subsystem {
 		if (enable) {
 			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft*.5*mod);
 			intakeRight.set(ControlMode.PercentOutput, OI.intRight*.5*mod);
-			roller.set(ControlMode.PercentOutput, OI.rol*-.5*mod);
+			roller.set(ControlMode.PercentOutput, OI.rol*-1.0*mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);

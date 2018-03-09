@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveSubsystem extends Subsystem {
-	public static Solenoid leftHIGH = new Solenoid(0);
-	public static Solenoid rightHIGH = new Solenoid(1);
+	
     public TalonSRX talonDriveLeftPrimary = new TalonSRX(1);
 
 	//public TalonSRX talonDriveLeftMid = new TalonSRX(1);
@@ -22,7 +21,7 @@ public class DriveSubsystem extends Subsystem {
 
 	public TalonSRX talonDriveRightPrimary = new TalonSRX(10);
 
-	//public TalonSRX talonDriveRightMid = new TalonSRX(4);
+		//public TalonSRX talonDriveRightMid = new TalonSRX(4);
 
 	public TalonSRX talonDriveRightFront = new TalonSRX(9);
 

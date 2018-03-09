@@ -17,6 +17,7 @@ import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.SolenoidSwitch;
+import org.usfirst.frc.team747.robot.commands.SolenoidSwitchToggle;
 import org.usfirst.frc.team747.robot.maps.ControllerMap;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -34,11 +35,7 @@ public class OI {
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
 	public String highLow;
-	public static boolean compBot = false;
-	
-	public int solOne = 0;
-	public int solTwo = 1;
-	
+	public static boolean compBot = true;
 	public static int intLeft = 1;
 	public static int intRight = 1;
 	public static int extLeft = 1;
@@ -50,7 +47,7 @@ public class OI {
 	Button OP_B = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_B.getValue());
 	Button OP_X = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_X.getValue());
 	Button OP_Y = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_Y.getValue());
-	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
+	public static Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
 	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
 
@@ -67,7 +64,8 @@ public class OI {
 		
 		OP_Y.whileHeld(new ForwardGroup());
 		OP_A.whileHeld(new ReverseGroup());
-		//OP_X.whileHeld(new IntakeCommand(false));
+		OP_X.whileHeld(new IntakeCommand(false));
+		//OP_START.toggleWhenPressed(new SolenoidSwitchToggle());
 		//OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
 		//OP_START.toggleWhenPressed(new PIDDriveInchesCommand(20, false));
 		SmartDashboard.putBoolean("Competition Robot?", compBot);
@@ -82,22 +80,20 @@ public class OI {
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
 		
 		if(compBot) {
-			solOne = 0;
-			solOne = 1;
+			
+			
+			intLeft = 1;
+			intRight = 1;
+			extLeft = 1;
+			extRight = -1;
+			rol = -1;
+		} else {
 			
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;
 			extRight = 1;
-			rol = -1;
-		} else {
-			solOne = 6;
-			solTwo = 7;
-			intLeft = -1;
-			intRight = 1;
-			extLeft = -1;
-			extRight = 1;
-			rol = -1;
+			rol = 1;
 		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);
