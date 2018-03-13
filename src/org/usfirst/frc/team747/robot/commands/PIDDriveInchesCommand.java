@@ -25,7 +25,7 @@ public class PIDDriveInchesCommand extends Command {
     private static final double MIN_PERCENT_VOLTAGE = 0.0; //was 1.9 (volts perviously, now the input is percent)
 
     //STOP_THRESHOLD_REAL was 3 inches and is now 8 inches in an attempt to cut back on time
-    private final static double STOP_THRESHOLD_REAL = 2; //3.0;
+    private final static double STOP_THRESHOLD_REAL = 5; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     
     private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
