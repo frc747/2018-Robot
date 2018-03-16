@@ -16,7 +16,7 @@ public class CenterRightSideSwitch extends CommandGroup {
         addSequential(new PIDDriveRotateCommand(90));
         addSequential(new PIDDriveInchesCommand(93-RobotMap.robotLength, true));
         addSequential(new PIDDriveRotateCommand(0));//-90
-        addSequential(new PIDDriveInchesCommand(43, true));
+        addSequential(new PIDDriveInchesCommand(40, true));
         addSequential(new EjectTimedCommand(false, 0.5));
     }
 }

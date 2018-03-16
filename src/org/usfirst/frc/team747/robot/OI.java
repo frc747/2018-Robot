@@ -47,6 +47,12 @@ public class OI {
 	public static int extRight = 1;
 	public static int rol = 1;
 	public static int robotLength;
+	
+	public static double PID_VALUE_P;
+	public static double PID_VALUE_I;
+	public static double PID_VALUE_D;
+	public static double PID_VALUE_F;
+	
 	public static double latestAngleRadians;
 	public static double latestDistanceDriven;
 	public static double latestDiagonalDriven;
@@ -95,6 +101,10 @@ public class OI {
 			extRight = -1;
 			rol = -1;
 			robotLength = 39;
+			PID_VALUE_P = 0.5;
+			PID_VALUE_I = 0.0;
+			PID_VALUE_D = 0.1;
+			PID_VALUE_F = 0.199;
 		} else {
 			
 			intLeft = -1;
@@ -103,6 +113,10 @@ public class OI {
 			extRight = 1;
 			rol = 1;
 			robotLength = 32;
+	         PID_VALUE_P = 0.4;
+	         PID_VALUE_I = 0.002;
+	         PID_VALUE_D = 0.1;
+	         PID_VALUE_F = 0.2031;
 		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);

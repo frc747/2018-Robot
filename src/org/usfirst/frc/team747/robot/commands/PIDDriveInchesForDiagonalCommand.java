@@ -47,13 +47,13 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
     //Half a second is being multiplied by the user input to achieve the desired "ON_TARGET_COUNT"
     private final static double ON_TARGET_MINIMUM_COUNT = TARGET_COUNT_ONE_SECOND * .1;
 
-    private double specificDistanceP = 0.4;
+    private double specificDistanceP = OI.PID_VALUE_P;
     
-    private double specificDistanceI = 0.002;
+    private double specificDistanceI = OI.PID_VALUE_I;
     
-    private double specificDistanceD = 0.1;
+    private double specificDistanceD = OI.PID_VALUE_D;
     
-    private double specificDistanceF = 0.2031;
+    private double specificDistanceF = OI.PID_VALUE_F;
     
     public PIDDriveInchesForDiagonalCommand(String side, String mode) {
         requires(Robot.DRIVE_SUBSYSTEM);
@@ -157,10 +157,10 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
         
         if (this.diagonalMode == "diagonal") {
             OI.latestDiagonalDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
-          SmartDashboard.putNumber("Diagonal", OI.latestDiagonalDriven);
+//          SmartDashboard.putNumber("Diagonal", OI.latestDiagonalDriven);
         } else if (this.diagonalMode == "straight") {
             OI.latestDistanceDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
-            SmartDashboard.putNumber("Straight", OI.latestDistanceDriven);
+//            SmartDashboard.putNumber("Straight", OI.latestDistanceDriven);
         }
         
         Robot.DRIVE_SUBSYSTEM.enableVBusControl();

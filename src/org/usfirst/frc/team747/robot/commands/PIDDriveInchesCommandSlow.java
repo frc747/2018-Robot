@@ -23,13 +23,13 @@ public class PIDDriveInchesCommandSlow extends Command {
     private final static double ENCODER_TICKS_PER_REVOLUTION = 4096;
 
     private static final double MAX_PERCENT_VOLTAGE = 1.0; //was 12 (volts previously, now the input is percent)
-    private static final double MIN_PERCENT_VOLTAGE = 0.0; //was 1.9 (volts perviously, now the input is percent)
+    private static final double MIN_PERCENT_VOLTAGE = 0.0; //was 1.9 (volts previously, now the input is percent)
 
     //STOP_THRESHOLD_REAL was 3 inches and is now 8 inches in an attempt to cut back on time
-    private final static double STOP_THRESHOLD_REAL = 1; //3.0;
+    private final static double STOP_THRESHOLD_REAL = 3; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     
-    private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
+//    private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
     
     private final static int allowableCloseLoopError = 1;
     
@@ -40,13 +40,13 @@ public class PIDDriveInchesCommandSlow extends Command {
     //Half a second is being multiplied by the user input to achieve the desired "ON_TARGET_COUNT"
     private final static double ON_TARGET_MINIMUM_COUNT = TARGET_COUNT_ONE_SECOND * .1;
 
-    private double specificDistanceP = 0.4;
+    private double specificDistanceP = OI.PID_VALUE_P;
     
-    private double specificDistanceI = 0.0;
+    private double specificDistanceI = OI.PID_VALUE_I;
     
-    private double specificDistanceD = 0;
+    private double specificDistanceD = OI.PID_VALUE_D;
     
-    private double specificDistanceF = 0.2031;
+    private double specificDistanceF = OI.PID_VALUE_F;
     
     public PIDDriveInchesCommandSlow(double inches, boolean reverse) {
         requires(Robot.DRIVE_SUBSYSTEM);
@@ -102,8 +102,13 @@ public class PIDDriveInchesCommandSlow extends Command {
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs);
         
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
-        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+//        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+//        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+        
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(3500, timeoutMs); //7500, 15500, 7500, 15000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(10500, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(3500, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(10000, timeoutMs);
         
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
     }
@@ -130,6 +135,7 @@ public class PIDDriveInchesCommandSlow extends Command {
 //        SmartDashboard.putNumber("LEFT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getLeftPosition())));
 //        SmartDashboard.putNumber("RIGHT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getRightPosition())));
         OI.latestDistanceDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
+//      SmartDashboard.putNumber("Straight", OI.latestDistanceDriven);
         Robot.DRIVE_SUBSYSTEM.enableVBusControl();
         Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 //      Robot.resetNavXAngle();
