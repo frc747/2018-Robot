@@ -12,6 +12,8 @@ public class PIDDriveInchesCommand extends Command {
     //add a button to Ryan's joystick that will default the drive train back to DriveWithJoystickCommand
     
     private double driveTicks;
+    
+    private double driveInches;
 //    private double driveP;
 //    private double driveI;
 //    private double driveD;
@@ -58,6 +60,8 @@ public class PIDDriveInchesCommand extends Command {
         } else {
             this.driveTicks = Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));
         }
+        
+        this.driveInches = inches;
 //        this.driveP = specificDistanceP;
 //        this.driveI = specificDistanceI;
 //        this.driveD = specificDistanceD;
@@ -104,6 +108,18 @@ public class PIDDriveInchesCommand extends Command {
         
 //        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
 //        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+        
+        if (driveInches > 30) {
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 20500, 7500, 20000
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
+            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
+        } else if (driveInches <= 30) {
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 15500, 7500, 15000
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(15500, timeoutMs);
+            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(15000, timeoutMs);
+        }
 
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
     }

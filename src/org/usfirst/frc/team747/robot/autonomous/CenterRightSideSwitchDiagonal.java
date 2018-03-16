@@ -17,16 +17,16 @@ public class CenterRightSideSwitchDiagonal extends CommandGroup {
         addSequential(new PIDDriveRotateCommand(36));
         addSequential(new PIDDriveInchesForDiagonalCommand("right" , "diagonal"));
         addSequential(new PIDDriveRotateCommand(0));
-        addSequential(new PIDDriveInchesCommand(17.5, true));
+//        addSequential(new PIDDriveInchesCommand(16, true));
         addSequential(new EjectTimedCommand(false, 0.5));
-        addSequential(new PIDDriveInchesCommand(13.5, false));
-        addSequential(new PIDDriveRotateCommand(90));
-        addSequential(new PIDDriveInchesCommand(38, false));
-        addSequential(new IntakeTimedCommand(true, 3)); //was parallel, but is incorrect
-        addSequential(new PIDDriveInchesCommand(38, true));
-        addSequential(new PIDDriveRotateCommand(0));
-        addSequential(new PIDDriveInchesCommand(13.5, true));
-        addSequential(new EjectTimedCommand(false, 0.5));
+//        addSequential(new PIDDriveInchesCommand(12.5, false));
+//        addSequential(new PIDDriveRotateCommand(90));
+//        addParallel(new IntakeTimedCommand(true, 3)); //was parallel, but is incorrect
+//        addSequential(new PIDDriveInchesCommand(38, false));
+//        addSequential(new PIDDriveInchesCommand(38, true));
+//        addSequential(new PIDDriveRotateCommand(0));
+//        addSequential(new PIDDriveInchesCommand(12.5, true));
+//        addSequential(new EjectTimedCommand(false, 0.5));
     }
 }
 
