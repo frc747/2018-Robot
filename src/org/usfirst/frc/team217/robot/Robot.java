@@ -67,8 +67,8 @@ public class Robot extends IterativeRobot {
 
         /* set closed loop gains in slot0 - see documentation */
         _rightBackPrimaryTalon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-        _rightBackPrimaryTalon.config_kF(0, 0.2031, Constants.kTimeoutMs);
-        _rightBackPrimaryTalon.config_kP(0, 0.4, Constants.kTimeoutMs);
+        _rightBackPrimaryTalon.config_kF(0, 0.1990, Constants.kTimeoutMs);
+        _rightBackPrimaryTalon.config_kP(0, 0.5, Constants.kTimeoutMs);
         _rightBackPrimaryTalon.config_kI(0, 0, Constants.kTimeoutMs);
         _rightBackPrimaryTalon.config_kD(0, 0, Constants.kTimeoutMs);
         /* set acceleration and vcruise velocity - see documentation */
@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot {
 
         if (_joy.getRawButton(1)) {
             /* Motion Magic - 4096 ticks/rev * 10 Rotations in either direction */
-            double targetPos = leftYstick * 4096 * 2 * 5.4;
+            double targetPos = leftYstick * 4096 * 3 * 5.4;
             _rightBackPrimaryTalon.set(ControlMode.MotionMagic, targetPos);
 
             /* append more signals to print when in speed mode. */
