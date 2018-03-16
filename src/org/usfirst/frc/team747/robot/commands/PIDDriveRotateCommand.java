@@ -1,5 +1,6 @@
 package org.usfirst.frc.team747.robot.commands;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
@@ -57,7 +58,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
         getPIDController().setContinuous(true); //will reset back to the minimum value after reaching the max value
 
         
-        getPIDController().setSetpoint(Robot.getNavXAngle()+angleToRotate);
+        getPIDController().setSetpoint(angleToRotate);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -78,7 +79,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
     // Called once after isFinished returns true
     protected void end() {
         SmartDashboard.putNumber("Last Known NavX Angle:", Robot.getNavXAngle());
-//        Robot.resetNavXAngle();
+        OI.latestAngleRadians = Math.abs(Robot.getNavXAngleRadians());
     }
 
     // Called when another command which requires one or more of the same

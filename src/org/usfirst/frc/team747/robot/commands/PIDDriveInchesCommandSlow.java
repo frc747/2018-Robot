@@ -1,5 +1,6 @@
 package org.usfirst.frc.team747.robot.commands;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,9 +12,9 @@ public class PIDDriveInchesCommandSlow extends Command {
     //add a button to Ryan's joystick that will default the drive train back to DriveWithJoystickCommand
     
     private double driveTicks;
-    private double driveP;
-    private double driveI;
-    private double driveD;
+//    private double driveP;
+//    private double driveI;
+//    private double driveD;
     
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;
@@ -57,9 +58,9 @@ public class PIDDriveInchesCommandSlow extends Command {
         } else {
             this.driveTicks = Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));
         }
-        this.driveP = specificDistanceP;
-        this.driveI = specificDistanceI;
-        this.driveD = specificDistanceD;
+//        this.driveP = specificDistanceP;
+//        this.driveI = specificDistanceI;
+//        this.driveD = specificDistanceD;
     }
     
         
@@ -102,7 +103,8 @@ public class PIDDriveInchesCommandSlow extends Command {
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configAllowableClosedloopError(slotIdx, allowableCloseLoopError, timeoutMs);
         
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
-
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
+        
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
     }
     
@@ -125,8 +127,9 @@ public class PIDDriveInchesCommandSlow extends Command {
     }
     
     protected void end() {
-        SmartDashboard.putNumber("LEFT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getLeftPosition())));
-        SmartDashboard.putNumber("RIGHT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getRightPosition())));
+//        SmartDashboard.putNumber("LEFT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getLeftPosition())));
+//        SmartDashboard.putNumber("RIGHT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getRightPosition())));
+        OI.latestDistanceDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
         Robot.DRIVE_SUBSYSTEM.enableVBusControl();
         Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 //      Robot.resetNavXAngle();

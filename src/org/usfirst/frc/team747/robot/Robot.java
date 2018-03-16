@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team747.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -68,11 +70,15 @@ public class Robot extends TimedRobot {
 
 	    DRIVE_SUBSYSTEM.changeControlMode(ControlMode.PercentOutput);
 	    
+        UsbCamera ucamera = CameraServer.getInstance().startAutomaticCapture("cam1", 0);
+        ucamera.setResolution(180, 240);
+        
 	    this.autonomous = new Autonomous();
         
         if (oi == null) {
             oi = new OI();
         }
+        
 	}
 
 	/**
@@ -105,14 +111,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-	    //above this point is what was written before I modified stuff -Brian 3/5/18
+		
+		resetNavXAngle();
+		
+		DRIVE_SUBSYSTEM.resetBothEncoders();
+		
 		pneu.leftHIGH.set(false);
 		pneu.rightHIGH.set(true);
 

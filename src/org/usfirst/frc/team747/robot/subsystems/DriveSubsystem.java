@@ -1,11 +1,11 @@
 package org.usfirst.frc.team747.robot.subsystems;
 
+import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -62,10 +62,10 @@ public class DriveSubsystem extends Subsystem {
 
         talonDriveRightPrimary.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeoutMs);
         
-        talonDriveLeftPrimary.configMotionCruiseVelocity(15000, timeoutMs);
-        talonDriveLeftPrimary.configMotionAcceleration(15500, timeoutMs);
-        talonDriveRightPrimary.configMotionCruiseVelocity(15000, timeoutMs);
-        talonDriveRightPrimary.configMotionAcceleration(15000, timeoutMs);
+        talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+        talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
+        talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+        talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
 
         talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
         talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
@@ -119,6 +119,14 @@ public class DriveSubsystem extends Subsystem {
     
     public double applyGearRatio(double original) {
         return original * GEAR_RATIO_MULTIPLIER;
+    }
+    
+    public double undoGearRatio(double original) {
+        return original / GEAR_RATIO_MULTIPLIER;
+    }
+    
+    public double averageInchesDriven() {
+        return convertTicksToInches(undoGearRatio(getCombindedEncoderPosition()));
     }
     
     public void changeControlMode(ControlMode mode) {

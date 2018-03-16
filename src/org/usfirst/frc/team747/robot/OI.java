@@ -10,11 +10,12 @@ package org.usfirst.frc.team747.robot;
 
 //import java.nio.channels.ShutdownChannelGroupException;
 
-import org.usfirst.frc.team747.robot.commands.EjectCommand;
+//import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
+//import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
+
+//import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
-import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
-import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootGroup;
@@ -34,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
     
-    public static boolean compBot = true;
+    public static boolean compBot = false;
     
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
@@ -45,6 +46,10 @@ public class OI {
 	public static int extLeft = 1;
 	public static int extRight = 1;
 	public static int rol = 1;
+	public static int robotLength;
+	public static double latestAngleRadians;
+	public static double latestDistanceDriven;
+	public static double latestDiagonalDriven;
 	
 	// CREATING BUTTONS - OP == OPERATOR; DR == DRIVER
 	Button OP_A = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_A.getValue());
@@ -89,6 +94,7 @@ public class OI {
 			extLeft = 1;
 			extRight = -1;
 			rol = -1;
+			robotLength = 39;
 		} else {
 			
 			intLeft = -1;
@@ -96,6 +102,7 @@ public class OI {
 			extLeft = -1;
 			extRight = 1;
 			rol = 1;
+			robotLength = 32;
 		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);
