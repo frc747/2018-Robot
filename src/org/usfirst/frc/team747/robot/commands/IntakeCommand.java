@@ -13,7 +13,7 @@ public class IntakeCommand extends Command {
 	
     public IntakeCommand(boolean reverse) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+         requires(Robot.cube);
     	
     	rev = reverse;
     }

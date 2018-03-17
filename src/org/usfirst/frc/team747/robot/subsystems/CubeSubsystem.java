@@ -1,6 +1,7 @@
 package org.usfirst.frc.team747.robot.subsystems;
 
 import org.usfirst.frc.team747.robot.OI;
+import org.usfirst.frc.team747.robot.commands.IntakeDriveCommand;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -11,30 +12,46 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class CubeSubsystem extends Subsystem {
-
-	public static TalonSRX intakeArmLeft = new TalonSRX(3); // = new TalonSRX(?); 4
-	public static TalonSRX intakeArmRight = new TalonSRX(8); 
 	
-	public static TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
-	public static TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6 // 7 is reversed
+	public TalonSRX intakeLeft = new TalonSRX(4); // = new TalonSRX(?); 5
+	public TalonSRX intakeRight = new TalonSRX(7); // = new TalonSRX(?); 6 // 7 is reversed
 	
-	public static TalonSRX ejectLeft = new TalonSRX(5); // = new TalonSRX(?); 7
-	public static TalonSRX ejectRight = new TalonSRX(6); // = new TalonSRX(?); 8
+	public TalonSRX ejectLeft = new TalonSRX(5); // = new TalonSRX(?); 7
+	public TalonSRX ejectRight = new TalonSRX(6); // = new TalonSRX(?); 8
 	
-	public static TalonSRX roller = new TalonSRX(11);
+	public TalonSRX roller = new TalonSRX(11);
 	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+    private static final double MAX_PERCENT_VOLTAGE = 1.0;
+    private static final double MIN_PERCENT_VOLTAGE = 0.0;
+    
+    private static final int timeoutMs = 10;
+	
 
 	public CubeSubsystem() {
-		
+		super();
+        this.intakeLeft.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeLeft.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeLeft.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeLeft.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeRight.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeRight.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeRight.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        this.intakeRight.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        this.roller.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.roller.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        this.roller.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        this.roller.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
 	}
 	
+	public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        setDefaultCommand(new IntakeDriveCommand());
+    }
+	
 	public void intakeArms(double left, double right) {
-		//TODO Based on a conversation with (Jeff and George 3/3/2018 2:35), the speeds for intake motors while being controlled by joysticks are unknown. Setting to 75% speeds by default.
-		intakeLeft.set(ControlMode.PercentOutput, (left/4)*3);
-		intakeRight.set(ControlMode.PercentOutput, (-right/4)*3);
-		roller.set(ControlMode.PercentOutput, (left+right)/2);
+	    //TODO Based on a conversation with (Jeff and George 3/3/2018 2:35), the speeds for intake motors while being controlled by joysticks are unknown. Setting to 75% speeds by default.
+	    intakeLeft.set(ControlMode.PercentOutput, (left * 1));
+	    intakeRight.set(ControlMode.PercentOutput, (-right * 1));
 	}
 	
 	public void setIntake(boolean enable, boolean reverse) {
@@ -45,14 +62,13 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			intakeLeft.set(ControlMode.PercentOutput, -.5*mod);
-			intakeRight.set(ControlMode.PercentOutput, .5*mod);
-			roller.set(ControlMode.PercentOutput, -.5*mod);
+			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 0.5 * mod);
+			intakeRight.set(ControlMode.PercentOutput, OI.intRight * 0.5 * mod);
+//			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);
 			intakeRight.set(ControlMode.PercentOutput, 0);
-			roller.set(ControlMode.PercentOutput, 0);
-			
+//			roller.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
@@ -64,17 +80,26 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			ejectLeft.set(ControlMode.PercentOutput, -.5*mod);
-			ejectRight.set(ControlMode.PercentOutput, .5*mod);
+			ejectLeft.set(ControlMode.PercentOutput, OI.extLeft * 0.5 * mod);
+			ejectRight.set(ControlMode.PercentOutput, OI.extRight * 0.5 * mod);
 		} else {
 			ejectLeft.set(ControlMode.PercentOutput, 0);
 			ejectRight.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+	public void setRollers(boolean enable, boolean reverse) {
+        int mod;
+        if (reverse == true) {
+            mod = -1;
+        } else {
+            mod = 1;
+        }
+        if (enable) {
+            roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+        } else {
+            roller.set(ControlMode.PercentOutput, 0);            
+        }
     }
 }
 

@@ -1,8 +1,5 @@
 package org.usfirst.frc.team747.robot.subsystems;
 
-import java.io.IOException;
-
-import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
 
@@ -16,15 +13,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveSubsystem extends Subsystem {
 	
-    public static TalonSRX talonDriveLeftPrimary = new TalonSRX(1);
+    public TalonSRX talonDriveLeftPrimary = new TalonSRX(1);
 
 	//public TalonSRX talonDriveLeftMid = new TalonSRX(1);
 
 	public TalonSRX talonDriveLeftFront = new TalonSRX(2);
 
-	public static TalonSRX talonDriveRightPrimary = new TalonSRX(10);
+	public TalonSRX talonDriveRightPrimary = new TalonSRX(10);
 
-	//public TalonSRX talonDriveRightMid = new TalonSRX(4);
+		//public TalonSRX talonDriveRightMid = new TalonSRX(4);
 
 	public TalonSRX talonDriveRightFront = new TalonSRX(9);
 
@@ -33,8 +30,10 @@ public class DriveSubsystem extends Subsystem {
     
     private static final double ENCODER_TICKS = 4096;
     
-    private static final double GEAR_RATIO_MULTIPLIER = 5.4; //Gear ratio, motor needs to rotate 5.4 times more to achieve one actual rotation
-// 4096 for the mag encoders
+    private static final double GEAR_RATIO_MULTIPLIER = 5.4; 
+    //Gear ratio, motor needs to rotate 5.4 times more to achieve one actual rotation
+    // 4096 for the mag encoders
+    
     private static final double WHEEL_CIRCUMFERNCE = 19.635; //was 18.85 on 2017 robot
     
     private static final double MAX_PERCENT_VOLTAGE = 1.0;
@@ -42,7 +41,7 @@ public class DriveSubsystem extends Subsystem {
   
     //Gear Distance IN REVOLUTIONS 3.7125 (needed like another inch or so; trying 3.725
     
-    private static final double TICKS_PER_INCH = ENCODER_TICKS / WHEEL_CIRCUMFERNCE;
+//    private static final double TICKS_PER_INCH = ENCODER_TICKS / WHEEL_CIRCUMFERNCE;
     
 	StringBuilder sb = new StringBuilder();
 	int loops = 0;
@@ -51,14 +50,11 @@ public class DriveSubsystem extends Subsystem {
         super();
         
         talonDriveLeftPrimary.setInverted(true);
-        this.talonDriveLeftFront.setInverted(true);
+        talonDriveLeftFront.setInverted(true);
         
         talonDriveRightPrimary.setInverted(false);
-        this.talonDriveRightFront.setInverted(false);
+        talonDriveRightFront.setInverted(false);
        
-//        this.talonDriveLeftPrimary.setSensorPhase(true);
-//        this.talonDriveRightPrimary.setSensorPhase(false);
-        
         talonDriveLeftFront.set(ControlMode.Follower, talonDriveLeftPrimary.getDeviceID());
         talonDriveRightFront.set(ControlMode.Follower, talonDriveRightPrimary.getDeviceID());
         
@@ -66,13 +62,10 @@ public class DriveSubsystem extends Subsystem {
 
         talonDriveRightPrimary.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeoutMs);
         
-//        this.talonDriveLeftPrimary.config_kF(pidIdx, 0.1489, timeoutMs);
-//        this.talonDriveRightPrimary.config_kF(pidIdx, 0.1489, timeoutMs);
-        
-        talonDriveLeftPrimary.configMotionCruiseVelocity(2000, timeoutMs); //706
-        talonDriveLeftPrimary.configMotionAcceleration(2000, timeoutMs); //706
-        talonDriveRightPrimary.configMotionCruiseVelocity(2000, timeoutMs); //706
-        talonDriveRightPrimary.configMotionAcceleration(2000, timeoutMs); //706
+        talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+        talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
+        talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+        talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
 
         talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
         talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
@@ -85,6 +78,10 @@ public class DriveSubsystem extends Subsystem {
         
     }
    
+    public void initDefaultCommand() {
+        setDefaultCommand(new DriveCommand());
+    }
+    
     public void set(double left, double right) {
     	
         talonDriveLeftPrimary.set(ControlMode.PercentOutput, left);
@@ -124,6 +121,14 @@ public class DriveSubsystem extends Subsystem {
         return original * GEAR_RATIO_MULTIPLIER;
     }
     
+    public double undoGearRatio(double original) {
+        return original / GEAR_RATIO_MULTIPLIER;
+    }
+    
+    public double averageInchesDriven() {
+        return convertTicksToInches(undoGearRatio(getCombindedEncoderPosition()));
+    }
+    
     public void changeControlMode(ControlMode mode) {
     	talonDriveLeftPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
     	talonDriveRightPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
@@ -153,23 +158,11 @@ public class DriveSubsystem extends Subsystem {
         this.set(left, right);
     }
     
-//    public void talonEnableControl() {
-//        talonDriveLeftPrimary.enableControl();
-//        talonDriveRightPrimary.enableControl();
-//    }
-//    
-//    public void talonDisableControl() {
-//        talonDriveLeftPrimary.disableControl();
-//        talonDriveRightPrimary.disableControl();
-//    }
-    
     public void enablePositionControl() {
         this.changeControlMode(ControlMode.MotionMagic);
-//        this.talonEnableControl();
     }
 
     public void enableVBusControl() {
-//        this.talonDisableControl();
         this.changeControlMode(ControlMode.PercentOutput);
     }
     
@@ -223,32 +216,8 @@ public class DriveSubsystem extends Subsystem {
         return talonDriveRightPrimary.getSelectedSensorPosition(pidIdx);
     }
 
-    public static void resetEncoderPositions() {
-    	talonDriveLeftPrimary.setSelectedSensorPosition(0, 0, 10);
-    	talonDriveRightPrimary.setSelectedSensorPosition(0, 0, 10);
-    }
-    
     public double getCombindedEncoderPosition() {
         return (getLeftEncoderPosition() + getRightEncoderPosition()) / 2;
     }
 
-
-
-	public static void setMotorSpeed(double speedMod) {
-		if(OI.leftStick.getRawAxis(1) > 0.15 || OI.leftStick.getRawAxis(1) < -0.15) {
-			talonDriveLeftPrimary.set(ControlMode.PercentOutput, -OI.leftStick.getRawAxis(1)*speedMod);
-		} else {
-			talonDriveLeftPrimary.set(ControlMode.PercentOutput, 0);
-		}
-		if(OI.rightStick.getRawAxis(1) > 0.15 || OI.rightStick.getRawAxis(1) < -0.15) {
-			talonDriveRightPrimary.set(ControlMode.PercentOutput, OI.rightStick.getRawAxis(1)*-speedMod);
-		} else {
-			talonDriveRightPrimary.set(ControlMode.PercentOutput, 0);
-		}
-	
-	}
-	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		setDefaultCommand(new DriveCommand());
-	}
 }
