@@ -15,11 +15,11 @@ public class CenterRightSideSwitchDiagonal extends CommandGroup {
         //do not modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
-        addSequential(new PIDDriveInchesCommand(19, true));
+        addSequential(new PIDDriveInchesCommand(25, true));
         addSequential(new PIDDriveRotateCommand(36));
         addSequential(new PIDDriveInchesForDiagonalCommand("right" , "diagonal"));
         addSequential(new PIDDriveRotateCommand(0));
-        addSequential(new EjectTimedCommand(false, 0.5));
+        addSequential(new EjectTimedCommand(false, 2));
         // cube is scored at this point
         addSequential(new PIDDriveInchesCommand(11.5, false));
         addSequential(new PIDDriveRotateCommand(90));
