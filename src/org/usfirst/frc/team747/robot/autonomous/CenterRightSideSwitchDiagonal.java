@@ -20,13 +20,14 @@ public class CenterRightSideSwitchDiagonal extends CommandGroup {
         addSequential(new PIDDriveInchesForDiagonalCommand("right" , "diagonal"));
         addSequential(new PIDDriveRotateCommand(0));
         addSequential(new EjectTimedCommand(false, 0.5));
-        
+        // cube is scored at this point
+        addSequential(new PIDDriveInchesCommand(11.5, false));
+        addSequential(new PIDDriveRotateCommand(90));
+        // these two lines above drive the robot away from the switch and then rotate towards the cube pile
         
         //TWO CUBE AUTO TEST OTHERS FIRST
         
         //The routine tested at the shop that was able to corral a cube between the intake arms successfully, but not intake and shoot
-//        addSequential(new PIDDriveInchesCommand(11.5, false));
-//        addSequential(new PIDDriveRotateCommand(90));
 //        addParallel(new ForwardTimedGroup()); //was parallel, but is incorrect
 //        addSequential(new PIDDriveInchesCommandSlow(50, false));
 //        addSequential(new PIDDriveInchesCommand(38, true));

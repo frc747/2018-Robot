@@ -13,8 +13,8 @@ public class Autonomous{
     
     public enum AutoMode{
         AUTOMODE_NONE,
-        AUTOMODE_LEFT,
-        AUTOMODE_RIGHT,
+//        AUTOMODE_LEFT,
+//        AUTOMODE_RIGHT,
         AUTOMODE_CENTER,
         AUTOMODE_CROSS_LINE,
         AUTOMODE_DIAGONAL_CENTER
@@ -26,9 +26,9 @@ public class Autonomous{
         autoChooser1 = new SendableChooser();
         
         autoChooser1.addDefault("No autonomous", AutoMode.AUTOMODE_NONE);
-        autoChooser1.addObject("Adaptive Left", AutoMode.AUTOMODE_LEFT);
+//        autoChooser1.addObject("Adaptive Left", AutoMode.AUTOMODE_LEFT);
         autoChooser1.addObject("Adaptive Center", AutoMode.AUTOMODE_CENTER);
-        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);
+//        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);
         autoChooser1.addObject("Cross Auto Line", AutoMode.AUTOMODE_CROSS_LINE);
         autoChooser1.addObject("Adaptive Diagonal Center", AutoMode.AUTOMODE_DIAGONAL_CENTER);
         
@@ -46,12 +46,12 @@ public class Autonomous{
             case AUTOMODE_CENTER:
                 new AutoChooserCenter().start();
                 break;
-            case AUTOMODE_LEFT:
-            	new AutoChooserLeft().start();
-            	break;
-            case AUTOMODE_RIGHT:
-            	new AutoChooserRight().start();
-            	break;
+//            case AUTOMODE_LEFT:
+//            	new AutoChooserLeft().start();
+//            	break;
+//            case AUTOMODE_RIGHT:
+//            	new AutoChooserRight().start();
+//            	break;
             case AUTOMODE_CROSS_LINE:
             	new CrossAuto().start();
             	break;

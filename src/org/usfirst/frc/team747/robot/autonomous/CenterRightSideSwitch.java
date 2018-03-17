@@ -18,5 +18,9 @@ public class CenterRightSideSwitch extends CommandGroup {
         addSequential(new PIDDriveRotateCommand(0));//-90
         addSequential(new PIDDriveInchesCommand(40, true));
         addSequential(new EjectTimedCommand(false, 0.5));
+        // cube is scored at this point
+        addSequential(new PIDDriveInchesCommand(11.5, false));
+        addSequential(new PIDDriveRotateCommand(90));
+        // these two lines above drive the robot away from the switch and then rotate towards the cube pile
     }
 }

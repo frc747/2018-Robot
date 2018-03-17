@@ -21,13 +21,14 @@ public class CenterLeftSideSwitchDiagonal extends CommandGroup {
         addSequential(new PIDDriveInchesForDiagonalCommand("left" , "diagonal"));
         addSequential(new PIDDriveRotateCommand(0));
         addSequential(new EjectTimedCommand(false, 0.5));
-        
+        // cube is scored at this point
+        addSequential(new PIDDriveInchesCommand(11.5, false));
+        addSequential(new PIDDriveRotateCommand(-90));
+        // these two lines above drive the robot away from the switch and then rotate towards the cube pile
         
         //TWO CUBE AUTO TEST OTHERS FIRST
         
         //values for the right side, adapted for the left side
-//        addSequential(new PIDDriveInchesCommand(11.5, false));
-//        addSequential(new PIDDriveRotateCommand(-90));
 //        addParallel(new ForwardTimedGroup());
 //        addSequential(new PIDDriveInchesCommandSlow(50, false));
 //        addSequential(new PIDDriveInchesCommand(38, true));
