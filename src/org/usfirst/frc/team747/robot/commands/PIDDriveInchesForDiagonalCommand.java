@@ -124,9 +124,9 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
         
         this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(driveDistance * ENCODER_TICKS_PER_REVOLUTION));
         
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(10000, timeoutMs); //10000, 20500, 10000, 20000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(8500, timeoutMs); //10000, 20500, 10000, 20000
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
-        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(10000, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(8500, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
         
         

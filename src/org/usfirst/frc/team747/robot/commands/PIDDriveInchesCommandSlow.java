@@ -105,9 +105,9 @@ public class PIDDriveInchesCommandSlow extends Command {
 //        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
 //        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
         
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(3500, timeoutMs); //7500, 15500, 7500, 15000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(2000, timeoutMs); //7500, 15500, 7500, 15000
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(10500, timeoutMs);
-        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(3500, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(2000, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(10000, timeoutMs);
         
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);

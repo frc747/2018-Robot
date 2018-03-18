@@ -12,12 +12,12 @@ public class AutoChooserCenter extends CommandGroup {
 			if (Robot.gameData.charAt(0) == 'L') {
 				// Snake Auto for Left Side
 			    addSequential(new CenterLeftSideSwitch());
-			    SmartDashboard.putString("GameDataValue", "LeftAuto");
+			    SmartDashboard.putString("GameDataValue", "SnakeLeftAuto");
 			    
 			} else if (Robot.gameData.charAt(0) == 'R') {
 				// Snake Auto for Right Side
 			    addSequential(new CenterRightSideSwitch());
-	            SmartDashboard.putString("GameDataValue", "RightAuto");
+	            SmartDashboard.putString("GameDataValue", "SnakeRightAuto");
 			}
 		}
 	}

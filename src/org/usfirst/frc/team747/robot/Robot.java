@@ -73,6 +73,10 @@ public class Robot extends TimedRobot {
         UsbCamera ucamera = CameraServer.getInstance().startAutomaticCapture("cam1", 0);
         ucamera.setResolution(180, 240);
         
+        pneu.leftHIGH.set(false);
+        pneu.rightHIGH.set(true);
+        Robot.switchb = true;
+        
 	    this.autonomous = new Autonomous();
         
         if (oi == null) {
@@ -88,7 +92,11 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+	    
+        pneu.leftHIGH.set(false);
+        pneu.rightHIGH.set(true);
+        Robot.switchb = true;
+        
 	}
 
 	@Override
@@ -118,7 +126,6 @@ public class Robot extends TimedRobot {
 		
 		pneu.leftHIGH.set(false);
 		pneu.rightHIGH.set(true);
-
 		Robot.switchb = true;
         
 		autonomous.startMode();

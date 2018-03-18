@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class ForwardTimedGroup extends CommandGroup {
 
-    public ForwardTimedGroup() {
-        addParallel(new IntakeTimedCommand(false, 3));
+    public ForwardTimedGroup(double time) {
+        addParallel(new IntakeTimedCommand(false, time));
 //        addParallel(new EjectCommand(false));
-        addParallel(new RollerTimedCommand(false, 3));
+        addParallel(new RollerTimedCommand(false, time));
     }
 }
