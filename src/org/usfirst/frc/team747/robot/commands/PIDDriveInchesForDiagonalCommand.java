@@ -117,9 +117,9 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
         
         if (diagonalMode == "diagonal") {
             driveDistance = (verticalComponent / Math.cos(OI.latestAngleRadians)) - 1.5;
-//            if (switchSide == "left") {
-//                driveDistance -= 4;
-//            }
+            if (switchSide == "left") {
+                driveDistance -= 5;
+            }
         } else if (diagonalMode == "straight") {
             inchesAdjustment = 74 - (Math.cos(OI.latestAngleRadians) * OI.latestDiagonalDriven);
             driveDistance = 10 + inchesAdjustment;

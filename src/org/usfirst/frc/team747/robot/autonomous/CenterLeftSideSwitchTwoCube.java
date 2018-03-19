@@ -25,9 +25,9 @@ public class CenterLeftSideSwitchTwoCube extends CommandGroup {
 //        addSequential(new EjectTimedCommand(false, 1));
         
         
-        addParallel(new PIDDriveInchesCommandSlow(3, true));
+        addParallel(new PIDDriveInchesCommandSlow(6, true));
         addSequential(new EjectTimedCommand(false, 1.0));
-        addSequential(new PIDDriveInchesCommandSlow(12.75, false));
+        addSequential(new PIDDriveInchesCommandSlow(20.25, false));
         
         
         // cube is scored at this point

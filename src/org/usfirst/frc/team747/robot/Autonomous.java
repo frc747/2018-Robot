@@ -32,7 +32,7 @@ public class Autonomous{
 //        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);
         autoChooser1.addObject("Cross Auto Line", AutoMode.AUTOMODE_CROSS_LINE);
         autoChooser1.addObject("Adaptive Diagonal Center", AutoMode.AUTOMODE_DIAGONAL_CENTER);
-        autoChooser1.addObject("TESTING: Adaptive Two Cube Center", AutoMode.AUTOMODE_TWO_CUBE_CENTER);        
+        autoChooser1.addObject("Adaptive Two Cube Center", AutoMode.AUTOMODE_TWO_CUBE_CENTER);        
         SmartDashboard.putData("Auto mode", autoChooser1);
     }
     
