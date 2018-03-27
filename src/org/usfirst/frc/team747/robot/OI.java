@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
     
-    public static boolean compBot = true;
+    public static boolean compBot = false;
     
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
@@ -102,7 +102,7 @@ public class OI {
 			rol = -1;
 			robotLength = 39;
 			PID_VALUE_P = 0.5;
-			PID_VALUE_I = 0.0;
+			PID_VALUE_I = 0.0; 
 			PID_VALUE_D = 0.1;
 			PID_VALUE_F = 0.199;
 		} else {
