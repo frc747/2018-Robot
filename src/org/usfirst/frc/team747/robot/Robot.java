@@ -7,27 +7,32 @@
 
 package org.usfirst.frc.team747.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.cscore.UsbCamera;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import javax.swing.Spring;
+import java.io.FileReader;
 
-import org.usfirst.frc.team747.robot.commands.DriveCommand;
-import org.usfirst.frc.team747.robot.commands.ForwardGroup;
+import org.usfirst.frc.team747.robot.maps.AutonomousMaps;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -39,25 +44,31 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class Robot extends TimedRobot {
 	public static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem();
-	public static OI m_oi;
-	public static int sleepTimer;
-	NetworkTable table;
-	NetworkTableEntry tx;
-	NetworkTableEntry tv;
-	NetworkTableEntry ty; 
-	public static double x;
-	public static double v;
-	public static double y;
-	public static double distance;
-	public static boolean switchb = false;
+	public static final CubeSubsystem cube = new CubeSubsystem();
+	public static final PneumaticsSubsystem pneu = new PneumaticsSubsystem();
+	public static boolean switchb = true;
+	public static int leftCount;
+	public static int rightCount;
+	public static boolean working = true;
+	public static AutonomousMaps AutoMaps = new AutonomousMaps();
+	/*File leftAuto = new File("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\leftAuto.txt");
+	File rightAuto = new File("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\rightAuto.txt");*/
 
-	//public static String gameData;
-	public static Command autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	/*
+	BufferedWriter bfL;
+	BufferedWriter bfR;
 	
-	public static CubeSubsystem cube = new CubeSubsystem();
+	BufferedReader brL;
+	BufferedReader brR;*/
+    public static OI oi = null;
+	
+	public static String gameData;
+	private Command autonomousCommand;
+	private Autonomous autonomous;
+//	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
     private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
+    
     public static double getNavXAngle() {
     	return NAV_X.getYaw();
     }
@@ -68,6 +79,12 @@ public class Robot extends TimedRobot {
     
     public static void resetNavXAngle() {
     	NAV_X.zeroYaw();
+    	try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -75,14 +92,61 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
-//		autoChooser = new SendableChooser<SelectAutonomousCommand>();
-//		autoChooser.addObject("Robot Position 1", new SelectAutonomousCommand(1));
-//		autoChooser.addObject("Robot Position 2", new SelectAutonomousCommand(2));
-//		autoChooser.addObject("Robot Position 3", new SelectAutonomousCommand(3));
-//		SmartDashboard.putData("Autonomous Position Chooser", autoChooser);
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		
+	    DRIVE_SUBSYSTEM.changeControlMode(ControlMode.PercentOutput);
+	    
+	   /* try {
+			bfL = new BufferedWriter(new FileWriter(leftAuto));
+			bfR = new BufferedWriter(new FileWriter(rightAuto));
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+	    
+	  /*  boolean yes = false;
+	    try {
+			brL = new BufferedReader(new FileReader("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\leftAuto.txt"));
+		    brR = new BufferedReader(new FileReader("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\rightAuto.txt"));
+		    yes =  true;
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			yes = false;
+		}
+*/
+	    
+		/*SmartDashboard.putBoolean("Autonomous found?", yes);
+
+	    
+	    if (!leftAuto.exists()) {
+		     try {
+				leftAuto.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  }
+	    if (!rightAuto.exists()) {
+			     try {
+					rightAuto.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  }*/
+        UsbCamera ucamera = CameraServer.getInstance().startAutomaticCapture("cam1", 0);
+        ucamera.setResolution(180, 240);
+        
+        pneu.leftHIGH.set(false);
+        pneu.rightHIGH.set(true);
+        Robot.switchb = true;
+        
+	    this.autonomous = new Autonomous();
+        
+        if (oi == null) {
+            oi = new OI();
+        }
+        
 	}
 
 	/**
@@ -92,7 +156,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+	    
+        pneu.leftHIGH.set(false);
+        pneu.rightHIGH.set(true);
+        Robot.switchb = true;
 	}
 
 	@Override
@@ -114,18 +181,25 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//gameData = DriverStation.getInstance().getGameSpecificMessage();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-		// schedule the autonomous command (example)
-		//autonomousCommand = (Command) autoChooser.getSelected();
-		//autonomousCommand.start();
+		resetNavXAngle();
 		
+		DRIVE_SUBSYSTEM.resetBothEncoders();
+		
+		pneu.leftHIGH.set(false);
+		pneu.rightHIGH.set(true);
+		Robot.switchb = true;
+        
+		autonomous.startMode();
+        if (autonomousCommand != null) {
+            autonomousCommand.start();
+        }
+        
+        if (oi == null) {
+            oi = new OI();
+        }
+        
 	}
 
 	/**
@@ -134,20 +208,42 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		/*try /{
+			String left = brL.readLine();
+			String right = brR.readLine();
+			DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.PercentOutput, Double.parseDouble(left));
+			DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.PercentOutput, Double.parseDouble(right));
+			if(left.equals("FINISHED") || right.equals("FINISHED")) {
+				System.out.println("Finished Routine");
+			}
+		} catch (NumberFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+
 	}
 
 	@Override
 	public void teleopInit() {
+//	    resetNavXAngle();
+	    Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+
+	    pneu.leftHIGH.set(false);
+		pneu.rightHIGH.set(true);
+		Robot.switchb = true;
+		
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
 		
-		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
-		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
+//		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
+//		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
 		
 	}
 
@@ -157,25 +253,28 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		this.table = NetworkTableInstance.getDefault().getTable("limelight");
-		this.tx = this.table.getEntry("tx");
-		this.tv = this.table.getEntry("tv");
-		this.ty = this.table.getEntry("ty");
-		Robot.x = this.tx.getDouble(0);
-		Robot.v = this.tv.getDouble(0);
-		Robot.y = this.ty.getDouble(0);
-		if (Robot.v == 1) {
-			Robot.distance = (11-18)/Math.tan(Math.toRadians(-50+Robot.y));
-		} else {
-			Robot.distance = 0;
+		
+		/*try {
+			bfL.write(Double.toString(OI.leftStick.getRawAxis(1)));
+			bfR.write(Double.toString(OI.rightStick.getRawAxis(1)));
+			
+			bfL.newLine();
+			bfR.newLine();
+		} catch (IOException | NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+			
 		
-		OI.degrees = Math.round(x);
-		
-		if (OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
-			DriveSubsystem.resetEncoderPositions();
-		}
-		
+		if(OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
+			try {
+				bfL.close();
+				bfR.close();
+			} catch (IOException | NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}*/
 	}
 
 	/**
@@ -183,5 +282,22 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
+		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
+		leftCount = AutonomousMaps.left.size();
+		rightCount = AutonomousMaps.right.size();
+		
+		if(OI.operatorController.getRawButton(4)) {
+			AutonomousMaps.ejectButton.add(true);
+		} else {
+			AutonomousMaps.ejectButton.add(false);
+
+		}
+		if(OI.operatorController.getRawButton(6)) {
+			AutonomousMaps.IntakeButton.add(true);
+		} else {
+			AutonomousMaps.IntakeButton.add(false);
+
+		}
 	}
 }

@@ -9,6 +9,7 @@ public class ForwardGroup extends CommandGroup {
 
     public ForwardGroup() {
         addParallel(new IntakeCommand(false));
-        addParallel(new EjectCommand(false));
+//        addParallel(new EjectCommand(false));
+        addParallel(new RollerCommand(false));
     }
 }
