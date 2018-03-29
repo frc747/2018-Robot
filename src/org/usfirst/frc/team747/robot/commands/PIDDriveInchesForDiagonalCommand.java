@@ -33,7 +33,7 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
     private static final double MIN_PERCENT_VOLTAGE = 0.0; //was 1.9 (volts perviously, now the input is percent)
 
     //STOP_THRESHOLD_REAL was 3 inches and is now 8 inches in an attempt to cut back on time
-    private final static double STOP_THRESHOLD_REAL = 5; //3.0;
+    private final static double STOP_THRESHOLD_REAL = 3; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     
     private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
@@ -116,7 +116,10 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
         }
         
         if (diagonalMode == "diagonal") {
-            driveDistance = verticalComponent / Math.cos(OI.latestAngleRadians);
+            driveDistance = (verticalComponent / Math.cos(OI.latestAngleRadians)) - 1.5;
+            if (switchSide == "left") {
+                driveDistance -= 5;
+            }
         } else if (diagonalMode == "straight") {
             inchesAdjustment = 74 - (Math.cos(OI.latestAngleRadians) * OI.latestDiagonalDriven);
             driveDistance = 10 + inchesAdjustment;
@@ -124,9 +127,9 @@ public class PIDDriveInchesForDiagonalCommand extends Command {
         
         this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(driveDistance * ENCODER_TICKS_PER_REVOLUTION));
         
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(10000, timeoutMs); //10000, 20500, 10000, 20000
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
-        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(10000, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(8500, timeoutMs); //8500, 20500, 8500, 20000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs); //test 5000
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(8500, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
         
         

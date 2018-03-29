@@ -17,7 +17,8 @@ public class Autonomous{
 //        AUTOMODE_RIGHT,
         AUTOMODE_CENTER,
         AUTOMODE_CROSS_LINE,
-        AUTOMODE_DIAGONAL_CENTER
+        AUTOMODE_DIAGONAL_CENTER,
+        AUTOMODE_TWO_CUBE_CENTER
     }
     
     private SendableChooser autoChooser1;
@@ -31,7 +32,7 @@ public class Autonomous{
 //        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);
         autoChooser1.addObject("Cross Auto Line", AutoMode.AUTOMODE_CROSS_LINE);
         autoChooser1.addObject("Adaptive Diagonal Center", AutoMode.AUTOMODE_DIAGONAL_CENTER);
-        
+        autoChooser1.addObject("Adaptive Two Cube Center", AutoMode.AUTOMODE_TWO_CUBE_CENTER);        
         SmartDashboard.putData("Auto mode", autoChooser1);
     }
     
@@ -57,6 +58,9 @@ public class Autonomous{
             	break;
             case AUTOMODE_DIAGONAL_CENTER:
                 new AutoChooserDiagonalCenter().start();
+                break;
+            case AUTOMODE_TWO_CUBE_CENTER:
+                new AutoChooserTwoCubeCenter().start();
                 break;
             case AUTOMODE_NONE:
                 //DO NOTHING
