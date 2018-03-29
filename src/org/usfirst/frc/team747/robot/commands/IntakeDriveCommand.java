@@ -37,7 +37,7 @@ public class IntakeDriveCommand extends Command {
     protected void execute() {
         
          double left = -OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_LEFT_Y.getValue());
-         double right = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
+         double right = OI.operatorStickMod * OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
 
          if (Math.abs(left) < 0.1) {
              left = 0;
