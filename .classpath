@@ -10,9 +10,5 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/edu.wpi.first.wpilib.plugins.core_2017.1.1.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/edu.wpi.first.wpilib.plugins.java_2017.1.1.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/edu.wpi.first.wpilib.plugins.riolog_2017.1.1.jar"/>
-	<classpathentry kind="var" path="USERLIBS_DIR/old ctre.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
