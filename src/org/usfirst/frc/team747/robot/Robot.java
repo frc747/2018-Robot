@@ -253,7 +253,23 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
+		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
+		leftCount = AutonomousMaps.left.size();
+		rightCount = AutonomousMaps.right.size();
 		
+		if(OI.operatorController.getRawButton(4)) {
+			AutonomousMaps.ejectButton.add(true);
+		} else {
+			AutonomousMaps.ejectButton.add(false);
+
+		}
+		if(OI.operatorController.getRawButton(6)) {
+			AutonomousMaps.IntakeButton.add(true);
+		} else {
+			AutonomousMaps.IntakeButton.add(false);
+
+		}
 		/*try {
 			bfL.write(Double.toString(OI.leftStick.getRawAxis(1)));
 			bfR.write(Double.toString(OI.rightStick.getRawAxis(1)));
@@ -282,22 +298,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
-		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
-		leftCount = AutonomousMaps.left.size();
-		rightCount = AutonomousMaps.right.size();
 		
-		if(OI.operatorController.getRawButton(4)) {
-			AutonomousMaps.ejectButton.add(true);
-		} else {
-			AutonomousMaps.ejectButton.add(false);
-
-		}
-		if(OI.operatorController.getRawButton(6)) {
-			AutonomousMaps.IntakeButton.add(true);
-		} else {
-			AutonomousMaps.IntakeButton.add(false);
-
-		}
 	}
 }

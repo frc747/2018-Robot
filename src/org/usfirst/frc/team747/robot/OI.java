@@ -119,7 +119,7 @@ public class OI {
 			intRight = 1;
 			extLeft = -1;
 			extRight = 1;
-			rol = 1;
+			rol = -1;
 			robotLength = 32;
 	         PID_VALUE_P = 0.4;
 	         PID_VALUE_I = 0.002;
