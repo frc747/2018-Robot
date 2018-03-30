@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import org.usfirst.frc.team747.robot.Autonomous.AutoMode;
 import org.usfirst.frc.team747.robot.autonomous.*;
+import org.usfirst.frc.team747.robot.commands.JoystickMappingCommand;
 
 
 
@@ -18,7 +19,8 @@ public class Autonomous{
         AUTOMODE_CENTER,
         AUTOMODE_CROSS_LINE,
         AUTOMODE_DIAGONAL_CENTER,
-        AUTOMODE_TWO_CUBE_CENTER
+        AUTOMODE_TWO_CUBE_CENTER,
+        AUTOMODE_SWERVE
     }
     
     private SendableChooser autoChooser1;
@@ -29,6 +31,8 @@ public class Autonomous{
         autoChooser1.addDefault("No autonomous", AutoMode.AUTOMODE_NONE);
 //        autoChooser1.addObject("Adaptive Left", AutoMode.AUTOMODE_LEFT);
         autoChooser1.addObject("Adaptive Center", AutoMode.AUTOMODE_CENTER);
+        autoChooser1.addObject("SWERVE AUTO", AutoMode.AUTOMODE_SWERVE);
+
 //        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);
         autoChooser1.addObject("Cross Auto Line", AutoMode.AUTOMODE_CROSS_LINE);
         autoChooser1.addObject("Adaptive Diagonal Center", AutoMode.AUTOMODE_DIAGONAL_CENTER);
@@ -55,6 +59,9 @@ public class Autonomous{
 //            	break;
             case AUTOMODE_CROSS_LINE:
             	new CrossAuto().start();
+            	break;
+            case AUTOMODE_SWERVE:
+            	new AutoChooserSwerveCenter().start();
             	break;
             case AUTOMODE_DIAGONAL_CENTER:
                 new AutoChooserDiagonalCenter().start();
