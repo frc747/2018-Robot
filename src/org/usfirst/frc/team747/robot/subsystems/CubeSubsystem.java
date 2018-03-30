@@ -62,6 +62,23 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
+			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 1.0 * mod);
+			intakeRight.set(ControlMode.PercentOutput, OI.intRight * 1.0 * mod);
+//			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+		} else {
+			intakeLeft.set(ControlMode.PercentOutput, 0);
+			intakeRight.set(ControlMode.PercentOutput, 0);
+//			roller.set(ControlMode.PercentOutput, 0);
+		}
+	}
+	public void setIntakeAuton(boolean enable, boolean reverse) {
+		int mod;
+		if (reverse == true) {
+			mod = -1;
+		} else {
+			mod = 1;
+		}
+		if (enable) {
 			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 0.75 * mod);
 			intakeRight.set(ControlMode.PercentOutput, OI.intRight * 0.75 * mod);
 //			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
@@ -71,7 +88,6 @@ public class CubeSubsystem extends Subsystem {
 //			roller.set(ControlMode.PercentOutput, 0);
 		}
 	}
-	
 	public void setEject(boolean enable, boolean reverse) {
 		int mod;
 		if (reverse == true) {
@@ -89,6 +105,20 @@ public class CubeSubsystem extends Subsystem {
 	}
 	
 	public void setRollers(boolean enable, boolean reverse) {
+        int mod;
+        if (reverse == true) {
+            mod = -1;
+        } else {
+            mod = 1;
+        }
+        if (enable) {
+            roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+        } else {
+            roller.set(ControlMode.PercentOutput, 0);            
+        }
+    }
+	
+	public void setRollersAuton(boolean enable, boolean reverse) {
         int mod;
         if (reverse == true) {
             mod = -1;
