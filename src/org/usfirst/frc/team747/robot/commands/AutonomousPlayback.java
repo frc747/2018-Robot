@@ -23,10 +23,11 @@ public class AutonomousPlayback extends Command {
 	public static int mainCounter = 0;
 	int minimum;
 	public static boolean fin = false;
-    public AutonomousPlayback() {
+	String folder;
+    public AutonomousPlayback(String loc) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
+    	folder = loc;
     }
 
     // Called just before this Command runs the first time
@@ -39,34 +40,36 @@ public class AutonomousPlayback extends Command {
 
 
 		try {
-			reader = new BufferedReader(new FileReader("/media/sda1/leftAuto.txt"));
+			
+			reader = new BufferedReader(new FileReader("/media/sda1/"+folder+"/leftAuto.txt"));
 			String line = reader.readLine();
 			while (line != null){
 	    	    AutonomousMaps.left.add((Double.parseDouble(line))); 
 	    	    line = reader.readLine();
 	    	}
 			reader.close();
-	    	reader = new BufferedReader(new FileReader("/media/sda1/rightAuto.txt"));
+	    	reader = new BufferedReader(new FileReader("/media/sda1/"+folder+"/rightAuto.txt"));
 			String line2 = reader.readLine();
 			while (line2 != null){
 	    	    AutonomousMaps.right.add(Double.parseDouble(line2));
 	    	    line2 = reader.readLine();
 	    	}
 			reader.close();
-	    	reader = new BufferedReader(new FileReader("/media/sda1/intakeAuto.txt"));
+	    	reader = new BufferedReader(new FileReader("/media/sda1/"+folder+"/intakeAuto.txt"));
 			String line3 = reader.readLine();
 			while (line3 != null){
 	    	    AutonomousMaps.IntakeButton.add(Boolean.parseBoolean((line3)));
 	    	    line3 = reader.readLine();
 	    	}
 			reader.close();
-			reader = new BufferedReader(new FileReader("/media/sda1/ejectAuto.txt"));
+			reader = new BufferedReader(new FileReader("/media/sda1/"+folder+"/ejectAuto.txt"));
 			String line4 = reader.readLine();
 			while (line4 != null){
 	    	    AutonomousMaps.ejectButton.add(Boolean.parseBoolean((line4)));
 	    	    line4 = reader.readLine();
 	    	}
 	    	reader.close();
+	    	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
