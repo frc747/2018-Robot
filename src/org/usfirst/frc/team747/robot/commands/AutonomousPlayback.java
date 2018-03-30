@@ -37,7 +37,7 @@ public class AutonomousPlayback extends Command {
     	AutonomousMaps.ejectButton.clear();
     	AutonomousMaps.IntakeButton.clear();
     	BufferedReader reader;
-
+    	mainCounter = 0;
 
 		try {
 			
@@ -69,7 +69,7 @@ public class AutonomousPlayback extends Command {
 	    	    line4 = reader.readLine();
 	    	}
 	    	reader.close();
-	    	
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,22 +96,28 @@ public class AutonomousPlayback extends Command {
     				Robot.cube.setEject(false, false);
     			}
     			if(AutonomousMaps.IntakeButton.get(mainCounter)) {
-    				Robot.cube.setIntake(true, false);
+    				Robot.cube.setIntakeAuton(true, false);
+    				Robot.cube.setRollersAuton(true, false);
     			} else {
-    				Robot.cube.setIntake(false, false);
+    				Robot.cube.setIntakeAuton(false, false);
+    				Robot.cube.setRollersAuton(false, false);
+
     			}
+
     			OI.leftV = AutonomousMaps.left.get(mainCounter);
     			OI.rightV = AutonomousMaps.right.get(mainCounter);
 
     			OI.i = mainCounter;
+    			mainCounter++;
+
     		} else {
     			fin = true;
     		}
-			mainCounter++;
     	} catch (ArrayIndexOutOfBoundsException e) {
     		e.printStackTrace();
     		fin = true;
     	}
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -121,6 +127,7 @@ public class AutonomousPlayback extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	mainCounter = 0;
     }
 
     // Called when another command which requires one or more of the same
