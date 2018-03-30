@@ -8,26 +8,13 @@
 package org.usfirst.frc.team747.robot;
 
 import edu.wpi.cscore.UsbCamera;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.io.FileReader;
-
-import org.usfirst.frc.team747.robot.maps.AutonomousMaps;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
@@ -47,19 +34,7 @@ public class Robot extends TimedRobot {
 	public static final CubeSubsystem cube = new CubeSubsystem();
 	public static final PneumaticsSubsystem pneu = new PneumaticsSubsystem();
 	public static boolean switchb = true;
-	public static int leftCount;
-	public static int rightCount;
-	public static boolean working = true;
-	public static AutonomousMaps AutoMaps = new AutonomousMaps();
-	/*File leftAuto = new File("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\leftAuto.txt");
-	File rightAuto = new File("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\rightAuto.txt");*/
 
-	/*
-	BufferedWriter bfL;
-	BufferedWriter bfR;
-	
-	BufferedReader brL;
-	BufferedReader brR;*/
     public static OI oi = null;
 	
 	public static String gameData;
@@ -92,48 +67,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		
+
 	    DRIVE_SUBSYSTEM.changeControlMode(ControlMode.PercentOutput);
 	    
-	   /* try {
-			bfL = new BufferedWriter(new FileWriter(leftAuto));
-			bfR = new BufferedWriter(new FileWriter(rightAuto));
-			
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-	    
-	  /*  boolean yes = false;
-	    try {
-			brL = new BufferedReader(new FileReader("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\leftAuto.txt"));
-		    brR = new BufferedReader(new FileReader("C:\\Users\\Sammy\\Desktop\\Robotics\\New folder\\Talking Adventure Game\\2018 Test Code\\rightAuto.txt"));
-		    yes =  true;
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			yes = false;
-		}
-*/
-	    
-		/*SmartDashboard.putBoolean("Autonomous found?", yes);
-
-	    
-	    if (!leftAuto.exists()) {
-		     try {
-				leftAuto.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		  }
-	    if (!rightAuto.exists()) {
-			     try {
-					rightAuto.createNewFile();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		  }*/
         UsbCamera ucamera = CameraServer.getInstance().startAutomaticCapture("cam1", 0);
         ucamera.setResolution(180, 240);
         
@@ -160,6 +96,7 @@ public class Robot extends TimedRobot {
         pneu.leftHIGH.set(false);
         pneu.rightHIGH.set(true);
         Robot.switchb = true;
+        
 	}
 
 	@Override
@@ -182,7 +119,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-
+		
 		resetNavXAngle();
 		
 		DRIVE_SUBSYSTEM.resetBothEncoders();
@@ -208,21 +145,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
-		/*try /{
-			String left = brL.readLine();
-			String right = brR.readLine();
-			DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.PercentOutput, Double.parseDouble(left));
-			DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.PercentOutput, Double.parseDouble(right));
-			if(left.equals("FINISHED") || right.equals("FINISHED")) {
-				System.out.println("Finished Routine");
-			}
-		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-
 	}
 
 	@Override
@@ -253,44 +175,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
-		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
-		leftCount = AutonomousMaps.left.size();
-		rightCount = AutonomousMaps.right.size();
 		
-		if(OI.operatorController.getRawButton(4)) {
-			AutonomousMaps.ejectButton.add(true);
-		} else {
-			AutonomousMaps.ejectButton.add(false);
+		
 
-		}
-		if(OI.operatorController.getRawButton(6)) {
-			AutonomousMaps.IntakeButton.add(true);
-		} else {
-			AutonomousMaps.IntakeButton.add(false);
-
-		}
-		/*try {
-			bfL.write(Double.toString(OI.leftStick.getRawAxis(1)));
-			bfR.write(Double.toString(OI.rightStick.getRawAxis(1)));
-			
-			bfL.newLine();
-			bfR.newLine();
-		} catch (IOException | NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 			
 		
-		if(OI.leftStick.getRawButton(1) || OI.rightStick.getRawButton(1)) {
-			try {
-				bfL.close();
-				bfR.close();
-			} catch (IOException | NullPointerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}*/
+		
 	}
 
 	/**
@@ -298,6 +188,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
 	}
 }

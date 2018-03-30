@@ -16,7 +16,6 @@ package org.usfirst.frc.team747.robot;
 //import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
-import org.usfirst.frc.team747.robot.commands.PrintCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootGroup;
@@ -37,9 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
     
     public static boolean compBot = false;
-    public static double leftV;
-    public static double rightV;
-    public static double i;
+    
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
@@ -50,7 +47,7 @@ public class OI {
 	public static int extRight = 1;
 	public static int rol = 1;
 	public static int robotLength;
-	
+	public static int operatorStickMod = 1;
 	public static double PID_VALUE_P;
 	public static double PID_VALUE_I;
 	public static double PID_VALUE_D;
@@ -70,10 +67,10 @@ public class OI {
 	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
 	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
-	
+
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
-		DR_LEFT_TRIGGER.whenPressed(new PrintCommand());
+		
 		OP_B.whileHeld(new RollerCommand(false));
 		OP_Y.whileHeld(new ShootGroup());
 		OP_A.whileHeld(new ReverseGroup());
@@ -94,15 +91,10 @@ public class OI {
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
-		SmartDashboard.putNumber("Left Count", Robot.leftCount);
-		SmartDashboard.putNumber("Right Count", Robot.rightCount);
-		SmartDashboard.putNumber("Current Count", i);
-		SmartDashboard.putNumber("Left Joystick POS", leftV);
-		SmartDashboard.putNumber("Right Joystick POS", rightV);
-
+		
 		if(compBot) {
 			
-			
+			operatorStickMod = 1;
 			intLeft = 1;
 			intRight = 1;
 			extLeft = 1;
@@ -114,17 +106,17 @@ public class OI {
 			PID_VALUE_D = 0.1;
 			PID_VALUE_F = 0.199;
 		} else {
-			
+			operatorStickMod = -1;
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;
 			extRight = 1;
 			rol = -1;
 			robotLength = 32;
-	         PID_VALUE_P = 0.4;
-	         PID_VALUE_I = 0.002;
-	         PID_VALUE_D = 0.1;
-	         PID_VALUE_F = 0.2031;
+	        PID_VALUE_P = 0.4;
+	        PID_VALUE_I = 0.002;
+	        PID_VALUE_D = 0.1;
+	        PID_VALUE_F = 0.2031;
 		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);
