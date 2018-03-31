@@ -20,7 +20,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         requires(Robot.DRIVE_SUBSYSTEM);
         addSequential(new AutonomousPlayback("auton_part_1/"));
 
-        addSequential(new PIDDriveInchesCommandSlow(24.75, false));
+        addSequential(new PIDDriveInchesCommandSlow(22.75, false));
         
         
         // cube is scored at this point
@@ -33,7 +33,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         //commands for the one movement approach
         addParallel(new ForwardTimedGroup(4.5));
         addSequential(new PIDDriveInchesCommandSlow(48, false));
-        addParallel(new ForwardTimedGroup(4));
+        addParallel(new ForwardTimedGroup(3));
         //addSequential(new PIDDriveInchesCommand(5, true));
         addSequential(new AutonomousPlaybackPart3("auton_part_3/"));
        /* addParallel(new ForwardTimedGroup(2.0));

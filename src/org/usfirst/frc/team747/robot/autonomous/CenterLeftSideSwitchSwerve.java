@@ -3,12 +3,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.AutonomousPlayback;
-import org.usfirst.frc.team747.robot.commands.AutonomousPlaybackPart3Switched;
 import org.usfirst.frc.team747.robot.commands.AutonomousPlaybackSwitched;
-import org.usfirst.frc.team747.robot.commands.CubeCorrectCommandGroup;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
-import org.usfirst.frc.team747.robot.commands.IntakeDriveCommandTimed;
 import org.usfirst.frc.team747.robot.commands.IntakeTimedCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandSlow;
@@ -24,24 +21,21 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         requires(Robot.DRIVE_SUBSYSTEM);
         addSequential(new AutonomousPlaybackSwitched("auton_part_1/"));
         
-        addSequential(new PIDDriveInchesCommandSlow(21.75, false));
+       /* addSequential(new PIDDriveInchesCommandSlow(20.25, false));
         
         
         // cube is scored at this point
 //        addSequential(new PIDDriveInchesCommand(9.75, false));
-        addSequential(new PIDDriveRotateCommand(-89));
+        addSequential(new PIDDriveRotateCommand(-90));
         // these two lines above drive the robot away from the switch and then rotate towards the cube pile
         
         //TWO CUBE AUTO TEST OTHERS FIRST
         
         //commands for the one movement approach
         addParallel(new ForwardTimedGroup(4.5));
-        addSequential(new PIDDriveInchesCommandSlow(62, false));
-        addParallel(new CubeCorrectCommandGroup(0.25, 3));
-        addSequential(new PIDDriveInchesCommandSlow(20, true));
-        addSequential(new AutonomousPlaybackPart3Switched("auton_part_3/"));
-
-      /*  addSequential(new PIDDriveInchesCommand(44, true));
+        addSequential(new PIDDriveInchesCommandSlow(48, false));
+        addParallel(new ForwardTimedGroup(4));
+        addSequential(new PIDDriveInchesCommand(44, true));
         addParallel(new ForwardTimedGroup(2));
         addSequential(new PIDDriveRotateCommand(0));
         addSequential(new PIDDriveInchesCommand(10, true));
