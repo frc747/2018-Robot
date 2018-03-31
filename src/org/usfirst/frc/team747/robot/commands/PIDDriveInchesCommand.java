@@ -40,7 +40,7 @@ public class PIDDriveInchesCommand extends Command {
     private final static int TARGET_COUNT_ONE_SECOND = 50;
     
     //Half a second is being multiplied by the user input to achieve the desired "ON_TARGET_COUNT"
-    private final static double ON_TARGET_MINIMUM_COUNT = TARGET_COUNT_ONE_SECOND * .1;
+    private final static double ON_TARGET_MINIMUM_COUNT = TARGET_COUNT_ONE_SECOND * .01;
 
     private double specificDistanceP = OI.PID_VALUE_P;
     

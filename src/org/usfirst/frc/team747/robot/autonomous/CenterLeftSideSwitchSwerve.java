@@ -3,7 +3,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.AutonomousPlayback;
-import org.usfirst.frc.team747.robot.commands.AutonomousPlaybackSwitched;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeTimedCommand;
@@ -19,9 +18,9 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         //do not modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
-        addSequential(new AutonomousPlaybackSwitched("auton_part_1/"));
+        addSequential(new AutonomousPlayback(""));
         
-       /* addSequential(new PIDDriveInchesCommandSlow(20.25, false));
+        addSequential(new PIDDriveInchesCommandSlow(20.25, false));
         
         
         // cube is scored at this point
@@ -40,7 +39,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         addSequential(new PIDDriveRotateCommand(0));
         addSequential(new PIDDriveInchesCommand(10, true));
         addParallel(new EjectTimedCommand(false, 1.0));
-        addSequential(new PIDDriveInchesCommand(5, true));*/
+        addSequential(new PIDDriveInchesCommand(5, true));
         
         //commands for the two movement approach
 //      addParallel(new ForwardTimedGroup(3.5));
