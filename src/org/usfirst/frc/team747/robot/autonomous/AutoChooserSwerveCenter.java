@@ -2,7 +2,6 @@ package org.usfirst.frc.team747.robot.autonomous;
 
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.AutonomousPlayback;
-import org.usfirst.frc.team747.robot.commands.AutonomousPlaybackPart3Reverse;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,7 @@ public class AutoChooserSwerveCenter extends CommandGroup {
 			    
 			} else if (Robot.gameData.charAt(0) == 'R') {
 				// Two Cube Auto for Right Side
-			    addSequential(new CenterRightSideSwitchSwerve());//CenterRightSideSwitchSwerve());
+			    addSequential(new CenterRightSideSwitchSwerve());
 	            SmartDashboard.putString("GameDataValue", "SwerveRightAuto");
 			}
 		}
