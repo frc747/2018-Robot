@@ -24,7 +24,7 @@ private final static int TARGET_COUNT_ONE_SECOND = 50;
     private final static double MAX_PERCENT_VBUS = 1.0;
     
     private static final double MAX_PERCENT_VOLTAGE = 1.0;
-    private static final double MIN_PERCENT_VOLTAGE = 0.0;
+    private static final double MIN_PERCENT_VOLTAGE = 0.10;
     
     private static final int timeoutMs = 10;
     
