@@ -29,7 +29,7 @@ public class IntakeTimedCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setIntake(false, rev);
+    	Robot.cube.setIntakeAuton(false, rev);
     }
     
 }
