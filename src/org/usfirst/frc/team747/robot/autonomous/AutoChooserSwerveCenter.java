@@ -13,11 +13,14 @@ public class AutoChooserSwerveCenter extends CommandGroup {
 			if (Robot.gameData.charAt(0) == 'L') {
 				// Two Cube Auto for Left Side
 			    addSequential(new CenterLeftSideSwitchSwerve());
+
+
 			    SmartDashboard.putString("GameDataValue", "SwerveLeftAuto");
 			    
 			} else if (Robot.gameData.charAt(0) == 'R') {
 				// Two Cube Auto for Right Side
 			    addSequential(new CenterRightSideSwitchSwerve());
+
 	            SmartDashboard.putString("GameDataValue", "SwerveRightAuto");
 			}
 		}

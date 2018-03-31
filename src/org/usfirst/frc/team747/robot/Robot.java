@@ -253,8 +253,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
 		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
+		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
 		leftCount = AutonomousMaps.left.size();
 		rightCount = AutonomousMaps.right.size();
 		
