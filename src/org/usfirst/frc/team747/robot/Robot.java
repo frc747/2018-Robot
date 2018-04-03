@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
+import org.usfirst.frc.team747.readwrite.BTMain;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
@@ -96,7 +97,7 @@ public class Robot extends TimedRobot {
         pneu.leftHIGH.set(false);
         pneu.rightHIGH.set(true);
         Robot.switchb = true;
-        
+        BTMain.disabledInit();
 	}
 
 	@Override
@@ -128,14 +129,15 @@ public class Robot extends TimedRobot {
 		pneu.rightHIGH.set(true);
 		Robot.switchb = true;
         
-		autonomous.startMode();
-        if (autonomousCommand != null) {
-            autonomousCommand.start();
-        }
-        
-        if (oi == null) {
-            oi = new OI();
-        }
+//		autonomous.startMode();
+//        if (autonomousCommand != null) {
+//            autonomousCommand.start();
+//        }
+//        
+//        if (oi == null) {
+//            oi = new OI();
+//        }
+        BTMain.autonomousInit();
         
 	}
 
@@ -144,7 +146,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+//		Scheduler.getInstance().run();
+		BTMain.autonomousPeriodic();
 	}
 
 	@Override
@@ -164,6 +167,8 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 		
+		BTMain.teleopInit();
+		
 //		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
 //		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
 		
@@ -175,12 +180,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		
-
-			
-		
-		
+		BTMain.teleopPeriodic();
 	}
 
 	/**
