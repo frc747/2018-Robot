@@ -9,6 +9,7 @@ public class ReverseGroup extends CommandGroup {
 
     public ReverseGroup() {
     	addParallel(new IntakeCommand(true));
-        addParallel(new EjectCommand(true));
+//        addParallel(new EjectCommand(true));
+        addParallel(new RollerCommand(true));
     }
 }

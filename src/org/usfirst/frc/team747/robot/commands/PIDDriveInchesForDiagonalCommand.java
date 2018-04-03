@@ -6,17 +6,22 @@ import org.usfirst.frc.team747.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PIDDriveInchesCommand extends Command {
+public class PIDDriveInchesForDiagonalCommand extends Command {
     
     //execute is called every 20ms and isFinished is called right after execute
     //add a button to Ryan's joystick that will default the drive train back to DriveWithJoystickCommand
     
     private double driveTicks;
-    
-    private double driveInches;
 //    private double driveP;
 //    private double driveI;
 //    private double driveD;
+    private String diagonalMode;
+    private String switchSide;
+    private double inchesAdjustment;
+    private double driveDistance;
+    private double horizontalComponent;
+    
+    private double verticalComponent = 74;
     
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;
@@ -31,7 +36,7 @@ public class PIDDriveInchesCommand extends Command {
     private final static double STOP_THRESHOLD_REAL = 3; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     
-//    private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
+    private final static int I_ZONE_IN_REVOLUTIONS = 50; //100;
     
     private final static int allowableCloseLoopError = 1;
     
@@ -50,18 +55,13 @@ public class PIDDriveInchesCommand extends Command {
     
     private double specificDistanceF = OI.PID_VALUE_F;
     
-    public PIDDriveInchesCommand(double inches, boolean reverse) {
+    public PIDDriveInchesForDiagonalCommand(String side, String mode) {
         requires(Robot.DRIVE_SUBSYSTEM);
           
 //      this.driveTicks = inches / ENCODER_TICKS_PER_REVOLUTION;
-    
-        if (reverse) {
-            this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));//input now has to be ticks instead of revolutions which is why we multiply by 4096
-        } else {
-            this.driveTicks = Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));
-        }
-        
-        this.driveInches = inches;
+ 
+        this.diagonalMode = mode;
+        this.switchSide = side;
 //        this.driveP = specificDistanceP;
 //        this.driveI = specificDistanceI;
 //        this.driveD = specificDistanceD;
@@ -109,18 +109,30 @@ public class PIDDriveInchesCommand extends Command {
 //        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
 //        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
         
-        if (driveInches > 30) {
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 20500, 7500, 20000
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs); //test 5000
-            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
-            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
-        } else if (driveInches <= 30) {
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 15500, 7500, 15000
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(15500, timeoutMs);
-            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
-            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(15000, timeoutMs);
+        if (switchSide == "left") {
+            horizontalComponent = 59;
+        } else if(switchSide == "right") {
+            horizontalComponent = 54;
         }
-
+        
+        if (diagonalMode == "diagonal") {
+            driveDistance = (verticalComponent / Math.cos(OI.latestAngleRadians)) - 1.5;
+            if (switchSide == "left") {
+                driveDistance -= 5;
+            }
+        } else if (diagonalMode == "straight") {
+            inchesAdjustment = 74 - (Math.cos(OI.latestAngleRadians) * OI.latestDiagonalDriven);
+            driveDistance = 10 + inchesAdjustment;
+        }
+        
+        this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(driveDistance * ENCODER_TICKS_PER_REVOLUTION));
+        
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(8500, timeoutMs); //8500, 20500, 8500, 20000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs); //test 5000
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(8500, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
+        
+        
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
     }
     
@@ -145,8 +157,15 @@ public class PIDDriveInchesCommand extends Command {
     protected void end() {
 //        SmartDashboard.putNumber("LEFT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getLeftPosition())));
 //        SmartDashboard.putNumber("RIGHT FINAL Drive Distance: Inches", Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertRevsToInches(Robot.DRIVE_SUBSYSTEM.getRightPosition())));
-        OI.latestDistanceDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
-//        SmartDashboard.putNumber("Straight", OI.latestDistanceDriven);
+        
+        if (this.diagonalMode == "diagonal") {
+            OI.latestDiagonalDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
+//          SmartDashboard.putNumber("Diagonal", OI.latestDiagonalDriven);
+        } else if (this.diagonalMode == "straight") {
+            OI.latestDistanceDriven = Math.abs(Robot.DRIVE_SUBSYSTEM.averageInchesDriven());
+//            SmartDashboard.putNumber("Straight", OI.latestDistanceDriven);
+        }
+        
         Robot.DRIVE_SUBSYSTEM.enableVBusControl();
         Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 //      Robot.resetNavXAngle();

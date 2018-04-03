@@ -7,29 +7,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeCommand extends Command {
+public class RollerTimedCommand extends Command {
 	
 	boolean rev;
 	
-    public IntakeCommand(boolean reverse) {
+    public RollerTimedCommand(boolean reverse, double timeOutAmount) {
         // Use requires() here to declare subsystem dependencies
-         requires(Robot.cube);
     	
     	rev = reverse;
+        setTimeout(timeOutAmount);	
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setIntake(true, rev);
+    	Robot.cube.setRollers(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setIntake(false, rev);
+    	Robot.cube.setRollers(false, rev);
     }
     
 }
