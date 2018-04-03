@@ -68,8 +68,8 @@ public class BTMacroPlay {
 				//it is extremely important to set the motors in the SAME ORDER as was recorded in BTMacroRecord
 				//otherwise, motor values will be sent to the wrong motors and the robot will be unpredictable
 				
-				Robot.DRIVE_SUBSYSTEM.talonDriveLeftFront.set(ControlMode.PercentOutput, scanner.nextDouble());
-				Robot.DRIVE_SUBSYSTEM.talonDriveLeftFront.set(ControlMode.PercentOutput, scanner.nextDouble());
+				Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.PercentOutput, -scanner.nextDouble());
+				Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.PercentOutput, -scanner.nextDouble());
 				
 				/*storage.robot.getFrontLeftMotor().setX(scanner.nextDouble());
 				storage.robot.getFrontRightMotor().setX(scanner.nextDouble());
