@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
 	private Autonomous autonomous;
 //	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
+	public static boolean partOneFinish = false;
+	
     private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
     
     public static double getNavXAngle() {
@@ -137,7 +139,7 @@ public class Robot extends TimedRobot {
 //        if (oi == null) {
 //            oi = new OI();
 //        }
-        BTMain.autonomousInit();
+        //BTMain.autonomousInit();
         
 	}
 
@@ -146,8 +148,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-//		Scheduler.getInstance().run();
-		BTMain.autonomousPeriodic();
+		Scheduler.getInstance().run();
+		//BTMain.autonomousPeriodic();
 	}
 
 	@Override

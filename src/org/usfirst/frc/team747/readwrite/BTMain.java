@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.usfirst.frc.team747.robot.OI;
+import org.usfirst.frc.team747.robot.Robot;
 
 
 
@@ -22,8 +23,9 @@ public class BTMain
     }
     
     public static void autonomousInit() {
-    	//during autnomous, create new player object to read recorded file
+    	//during autonomous, create new player object to read recorded file
     	
+    	Robot.partOneFinish = false;
     	
     	//try to create a new player
     	//if there is a file, great - you have a new non-null object "player"
@@ -42,7 +44,8 @@ public class BTMain
 		//and set the motor values to their specific motors
 		if (player != null) {
 			player.play();
-		}
+		} 
+		
     }
 	
     public static void disabledInit() {

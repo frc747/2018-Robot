@@ -95,7 +95,8 @@ public class BTMacroPlay {
 		}
 		//end play, there are no more values to find
 		else
-		{
+		{	
+			Robot.partOneFinish = true;
 			this.end();
 			if (scanner != null) 
 			{
@@ -123,7 +124,7 @@ public class BTMacroPlay {
 //		storage.robot.getRightForkRight().setX(0);
 		//all this mess of a method does is keep the piston in the same state it ended in
 		//if you want it to return to a specific point at the end of auto, change that here
-		
+
 		if (scanner != null)
 		{
 			scanner.close();

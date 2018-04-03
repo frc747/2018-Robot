@@ -52,7 +52,7 @@ public class OI {
 	public static double PID_VALUE_I;
 	public static double PID_VALUE_D;
 	public static double PID_VALUE_F;
-	
+	public static boolean commandFinished = false;
 	public static double latestAngleRadians;
 	public static double latestDistanceDriven;
 	public static double latestDiagonalDriven;
@@ -91,7 +91,9 @@ public class OI {
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
-		
+		SmartDashboard.putBoolean("partOneFinish", Robot.partOneFinish);
+		SmartDashboard.putBoolean("command partOneFinish", commandFinished);
+
 		if(compBot) {
 			
 			operatorStickMod = 1;
