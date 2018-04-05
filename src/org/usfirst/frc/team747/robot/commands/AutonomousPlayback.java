@@ -1,21 +1,15 @@
 package org.usfirst.frc.team747.robot.commands;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
-import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
-import org.usfirst.frc.team747.robot.maps.AutonomousMaps;
 import org.usfirst.frc.team747.robot.readwrite.BTMain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

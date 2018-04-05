@@ -1,11 +1,8 @@
 package org.usfirst.frc.team747.robot.commands;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;

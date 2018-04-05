@@ -9,23 +9,12 @@ package org.usfirst.frc.team747.robot;
 
 import edu.wpi.cscore.UsbCamera;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import java.io.FileReader;
 
 import org.usfirst.frc.team747.robot.maps.AutonomousMaps;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;

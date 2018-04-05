@@ -3,7 +3,6 @@ package org.usfirst.frc.team747.robot.readwrite;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 

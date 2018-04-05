@@ -3,9 +3,7 @@ package org.usfirst.frc.team747.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
-import org.usfirst.frc.team747.robot.Autonomous.AutoMode;
 import org.usfirst.frc.team747.robot.autonomous.*;
-import org.usfirst.frc.team747.robot.commands.JoystickMappingCommand;
 
 
 
