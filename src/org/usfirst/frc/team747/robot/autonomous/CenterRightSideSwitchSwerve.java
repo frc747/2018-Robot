@@ -18,7 +18,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         //do n`ot modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
-        addSequential(new AutonomousPlayback("auton_part_1/"));
+        addSequential(new AutonomousPlayback());
 
         addSequential(new PIDDriveInchesCommandSlow(24.75, false));
         
@@ -32,7 +32,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         
         //commands for the one movement approach
         addParallel(new ForwardTimedGroup(4.5));
-        addSequential(new PIDDriveInchesCommandSlow(44, false));
+        addSequential(new PIDDriveInchesCommandSlow(48, false));
         addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveInchesCommand(40, true));
         addParallel(new ForwardTimedGroup(2));

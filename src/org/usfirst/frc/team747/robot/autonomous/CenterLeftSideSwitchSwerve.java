@@ -19,7 +19,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         //do not modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
-        addSequential(new AutonomousPlaybackLeft("auton_part_1/"));
+        addSequential(new AutonomousPlayback());
         
         addSequential(new PIDDriveInchesCommandSlow(19.75, false));
         
