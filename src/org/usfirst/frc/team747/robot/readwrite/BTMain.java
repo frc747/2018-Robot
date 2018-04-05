@@ -13,10 +13,10 @@ public class BTMain
 	static boolean isRecording = false;
 	//autoNumber defines an easy way to change the file you are recording to/playing from, in case you want to make a
 	//few different auto programs
-	static int autoNumberWrite = 10;
-	static int autoNumberRead;
+	static String autoStringWrite = "L";
+	static String autoStringRead;
 	//autoFile is a global constant that keeps you from recording into a different file than the one you play from
-	public static String autoFileWrite = new String("/home/lvuser/recordedAuto" + autoNumberWrite + ".csv");
+	public static String autoFileWrite = new String("/home/lvuser/recordedAuto" + autoStringWrite + ".csv");
 	public static String autoFileRead;
 	private static BTMacroPlay player = null;
 	private static BTMacroRecord recorder;
@@ -32,12 +32,12 @@ public class BTMain
     	//try to create a new player
     	//if there is a file, great - you have a new non-null object "player"
     	if (Robot.gameData.charAt(0) == 'L') {
-    		autoNumberRead = 10;
+    		autoStringRead = "L";
     	} else if (Robot.gameData.charAt(0) == 'R') {
-    		autoNumberRead = 11;
+    		autoStringRead = "R";
     	}
     	
-    	autoFileRead = new String("/home/lvuser/recordedAuto" + autoNumberRead + ".csv");
+    	autoFileRead = new String("/home/lvuser/recordedAuto" + autoStringRead + ".csv");
     	
     	try {
     		 player = new BTMacroPlay();

@@ -2,6 +2,7 @@ package org.usfirst.frc.team747.robot.subsystems;
 
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
+import org.usfirst.frc.team747.robot.commands.DriveRecordCommand;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -27,6 +28,8 @@ public class DriveSubsystem extends Subsystem {
 
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;
+    
+    public static boolean record = false;
     
     private static final double ENCODER_TICKS = 4096;
     
@@ -79,7 +82,11 @@ public class DriveSubsystem extends Subsystem {
     }
    
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveCommand());
+    	if (record) {
+    		setDefaultCommand(new DriveRecordCommand());
+    	} else {
+    		setDefaultCommand(new DriveCommand());
+    	}
     }
     
     public void set(double left, double right) {
