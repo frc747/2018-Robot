@@ -28,7 +28,7 @@ public class DriveSubsystem extends Subsystem {
     private static final int pidIdx = 0;
     private static final int timeoutMs = 10;
     
-    public static boolean record = false;
+    public static boolean record = true;
     
     private static final double ENCODER_TICKS = 4096;
     

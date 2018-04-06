@@ -47,8 +47,8 @@ public class BTMacroRecord {
 
 			// drive motors
 			writer.append("," + OI.leftStick.getRawAxis(1));
-			writer.append("," + OI.rightStick.getRawAxis(1));
-			writer.append("," + OI.operatorController.getRawButton(4) + "\n");
+			writer.append("," + OI.rightStick.getRawAxis(1) + "\n");
+			//writer.append("," + OI.operatorController.getRawButton(4) + "\n");
 			// writer.append("," + OI.operatorController.getRawButton(6) + "\n");
 			//
 			// //barrel motors
