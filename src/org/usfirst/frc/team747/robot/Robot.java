@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-import org.usfirst.frc.team747.readwrite.BTMain;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
@@ -42,8 +41,6 @@ public class Robot extends TimedRobot {
 	private Command autonomousCommand;
 	private Autonomous autonomous;
 //	SendableChooser<Command> m_chooser = new SendableChooser<>();
-	
-	public static boolean partOneFinish = false;
 	
     private static final AHRS NAV_X = new AHRS (SPI.Port.kMXP);
     
@@ -99,7 +96,7 @@ public class Robot extends TimedRobot {
         pneu.leftHIGH.set(false);
         pneu.rightHIGH.set(true);
         Robot.switchb = true;
-        BTMain.disabledInit();
+        
 	}
 
 	@Override
@@ -131,15 +128,14 @@ public class Robot extends TimedRobot {
 		pneu.rightHIGH.set(true);
 		Robot.switchb = true;
         
-//		autonomous.startMode();
-//        if (autonomousCommand != null) {
-//            autonomousCommand.start();
-//        }
-//        
-//        if (oi == null) {
-//            oi = new OI();
-//        }
-        //BTMain.autonomousInit();
+		autonomous.startMode();
+        if (autonomousCommand != null) {
+            autonomousCommand.start();
+        }
+        
+        if (oi == null) {
+            oi = new OI();
+        }
         
 	}
 
@@ -149,7 +145,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//BTMain.autonomousPeriodic();
 	}
 
 	@Override
@@ -169,8 +164,6 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 		
-		BTMain.teleopInit();
-		
 //		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
 //		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
 		
@@ -182,7 +175,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		BTMain.teleopPeriodic();
+		
+		
+
+			
+		
+		
 	}
 
 	/**
