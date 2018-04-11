@@ -13,6 +13,7 @@ import jaci.pathfinder.Trajectory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 import java.io.File;
@@ -80,7 +81,7 @@ public class MoveOnPathCommand extends Command {
         if (trajectoryL != null) {
             TRAJECTORY_SIZE = trajectoryL.length();
 
-            log.info(getName() + " construced: " + TRAJECTORY_SIZE);
+            log.info(getName() + " constructed: " + TRAJECTORY_SIZE);
         } else {
             TRAJECTORY_SIZE = 0;
             log.info(getName() + " could not be constructed!");
@@ -97,7 +98,7 @@ public class MoveOnPathCommand extends Command {
 		
 		// Configure PID values
 		//double[] pid = DriveTrainSettings.getPIDValues("moveOnPath");
-		configurePID(0.1, 0.0, 0.0, Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
+		configurePID(OI.PID_VALUE_P, OI.PID_VALUE_I, OI.PID_VALUE_D, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
 		
 		// Change motion control frame period
 		left.changeMotionControlFramePeriod(10);
@@ -224,5 +225,9 @@ public class MoveOnPathCommand extends Command {
         right.clearMotionProfileTrajectories();
 
         log.log(Level.INFO, "Cleared trajectories; check: " + statusLeft.btmBufferCnt);
+    }
+    
+    protected void interrupted() {
+        end();
     }
 }
