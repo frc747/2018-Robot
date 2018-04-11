@@ -26,7 +26,7 @@ public class DriveSubsystem extends Subsystem {
 	public TalonSRX talonDriveRightFront = new TalonSRX(9);
 
     private static final int pidIdx = 0;
-    private static final int timeoutMs = 10;
+    public static final int timeoutMs = 10;
     
     private static final double ENCODER_TICKS = 4096;
     
@@ -128,6 +128,16 @@ public class DriveSubsystem extends Subsystem {
     public double averageInchesDriven() {
         return convertTicksToInches(undoGearRatio(getCombindedEncoderPosition()));
     }
+    
+    public double revsPerMinuteToTicksPerTenth(double revsPerMinute) {
+        return revsPerMinute * ENCODER_TICKS / 600;
+    }
+    
+    public double getFeedForward(double rpm) {
+		final double MAX_MOTOR_OUTPUT = 1023;
+		final double NATIVE_UNITS_PER_100 = rpm / 600 * DriveSubsystem.ENCODER_TICKS;
+		return MAX_MOTOR_OUTPUT/NATIVE_UNITS_PER_100;
+	}
     
     public void changeControlMode(ControlMode mode) {
     	talonDriveLeftPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
