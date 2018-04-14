@@ -25,9 +25,9 @@ public class Autonomous{
     
     public Autonomous(){
         autoChooser1 = new SendableChooser();
-        autoChooser1.addDefault("Adaptive Two Cube Center", AutoMode.AUTOMODE_TWO_CUBE_CENTER);        
+        autoChooser1.addObject("Adaptive Two Cube Center", AutoMode.AUTOMODE_TWO_CUBE_CENTER);        
 
-        autoChooser1.addObject("No autonomous", AutoMode.AUTOMODE_NONE);
+        autoChooser1.addDefault("No autonomous", AutoMode.AUTOMODE_NONE);
 //        autoChooser1.addObject("Adaptive Left", AutoMode.AUTOMODE_LEFT);
         autoChooser1.addObject("Adaptive Center", AutoMode.AUTOMODE_CENTER);
 //        autoChooser1.addObject("Adaptive Right", AutoMode.AUTOMODE_RIGHT);

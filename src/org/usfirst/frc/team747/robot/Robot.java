@@ -123,7 +123,17 @@ public class Robot extends TimedRobot {
 		resetNavXAngle();
 		
 		DRIVE_SUBSYSTEM.resetBothEncoders();
-		
+
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.clearMotionProfileTrajectories();
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.clearMotionProfileTrajectories();
+        
+        try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
 		pneu.leftHIGH.set(false);
 		pneu.rightHIGH.set(true);
 		Robot.switchb = true;

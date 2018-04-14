@@ -8,11 +8,12 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.Level;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
@@ -26,9 +27,7 @@ import java.io.File;
  */
 public class MoveOnPathCommand extends Command {
 
-	private static Logger log = LogManager.getLogger(MoveOnPathCommand.class);
-	private TalonSRX left;
-	private TalonSRX right;
+	//private static Logger log = LogManager.getLogger(MoveOnPathCommand.class);
 
 	private final int TRAJECTORY_SIZE;
 
@@ -48,10 +47,7 @@ public class MoveOnPathCommand extends Command {
     public MoveOnPathCommand(String name, Direction direction) {
         requires(Robot.DRIVE_SUBSYSTEM);
         setName("MoveOnPath-" + name);
-        log.info(getName() + " Beginning constructor");
-
-        left = Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary;
-        right = Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary;
+        //log.info(getName() + " Beginning constructor");
 
         switch(direction) {
             case BACKWARD:
@@ -70,8 +66,8 @@ public class MoveOnPathCommand extends Command {
 
         if (trajectoryProcessor == null) {
             trajectoryProcessor = new Notifier(() -> {
-                left.processMotionProfileBuffer();
-                right.processMotionProfileBuffer();
+            	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.processMotionProfileBuffer();
+            	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.processMotionProfileBuffer();
             });
         }
 
@@ -81,10 +77,10 @@ public class MoveOnPathCommand extends Command {
         if (trajectoryL != null) {
             TRAJECTORY_SIZE = trajectoryL.length();
 
-            log.info(getName() + " constructed: " + TRAJECTORY_SIZE);
+            //log.info(getName() + " constructed: " + TRAJECTORY_SIZE);
         } else {
             TRAJECTORY_SIZE = 0;
-            log.info(getName() + " could not be constructed!");
+            //log.info(getName() + " could not be constructed!");
             end();
         }
 	}
@@ -98,11 +94,11 @@ public class MoveOnPathCommand extends Command {
 		
 		// Configure PID values
 		//double[] pid = DriveTrainSettings.getPIDValues("moveOnPath");
-		configurePID(OI.PID_VALUE_P, OI.PID_VALUE_I, OI.PID_VALUE_D, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
+		configurePID(OI.PID_VALUE_P, 0, OI.PID_VALUE_D, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
 		
 		// Change motion control frame period
-		left.changeMotionControlFramePeriod(10);
-		right.changeMotionControlFramePeriod(10);
+		Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.changeMotionControlFramePeriod(10);
+		Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.changeMotionControlFramePeriod(10);
 		
 		// Fill TOP (API-level) buffer
 		fillTopBuffer();
@@ -110,20 +106,20 @@ public class MoveOnPathCommand extends Command {
 		// Start processing
 		// i.e.: moving API points to RAM
 		trajectoryProcessor.startPeriodic(0.005);
-		log.info(getName() + " Initialized");
+		//log.info(getName() + " Initialized");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	left.getMotionProfileStatus(statusLeft);
-        right.getMotionProfileStatus(statusRight);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.getMotionProfileStatus(statusLeft);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.getMotionProfileStatus(statusRight);
 
         // Give a slight buffer when we process to make sure we don't bite off more than
         // we can chew or however that metaphor goes.
         if (!isRunning && statusLeft.btmBufferCnt >= 5 && statusRight.btmBufferCnt >= 5) {
             setMotionProfileMode(SetValueMotionProfile.Enable);
 
-            log.log(Level.INFO, "Starting motion profile...");
+            //log.log(Level.INFO, "Starting motion profile...");
 
             isRunning = true;
         }
@@ -146,12 +142,12 @@ public class MoveOnPathCommand extends Command {
         // Stop processing trajectories
         trajectoryProcessor.stop();
 
-		left.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10, DriveSubsystem.timeoutMs);
-        right.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General, 10, DriveSubsystem.timeoutMs);
 
         Robot.DRIVE_SUBSYSTEM.stop();
 
-        log.log(Level.INFO, "Finished running");
+        //log.log(Level.INFO, "Finished running");
     }
     private void fillTopBuffer() {
 	    for (int i = 0; i < TRAJECTORY_SIZE; i++) {
@@ -159,8 +155,8 @@ public class MoveOnPathCommand extends Command {
             TrajectoryPoint trajPointR = new TrajectoryPoint();
 
 	        // NOTE: Encoder ticks are backwards, we need to work with that.
-            double currentPosL = -trajectoryL.segments[i].position * dir;
-            double currentPosR = -trajectoryR.segments[i].position * dir;
+            double currentPosL = -trajectoryL.segments[i].position * dir *5;
+            double currentPosR = -trajectoryR.segments[i].position * dir *5;
 
             double velocityL = trajectoryL.segments[i].velocity;
             double velocityR = trajectoryR.segments[i].velocity;
@@ -190,28 +186,30 @@ public class MoveOnPathCommand extends Command {
             trajPointR.isLastPoint = isLastPointR;
 
             // Push to API level buffer
-            left.pushMotionProfileTrajectory(trajPointL);
-            right.pushMotionProfileTrajectory(trajPointR);
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.pushMotionProfileTrajectory(trajPointL);
+            Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.pushMotionProfileTrajectory(trajPointR);
+            
+            SmartDashboard.putNumber("Motion Profile Tick:", i);
         }
     }
 
     private void configurePID(double p, double i, double d, double f) {
-        left.config_kP(0, p, DriveSubsystem.timeoutMs);
-        right.config_kP(0, p, DriveSubsystem.timeoutMs);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kP(0, p, DriveSubsystem.timeoutMs);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kP(0, p, DriveSubsystem.timeoutMs);
 
-        left.config_kI(0, i, DriveSubsystem.timeoutMs);
-        right.config_kI(0, i, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kI(0, i, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kI(0, i, DriveSubsystem.timeoutMs);
 
-        left.config_kD(0, d, DriveSubsystem.timeoutMs);
-        right.config_kD(0, d, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kD(0, d, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kD(0, d, DriveSubsystem.timeoutMs);
 
-        left.config_kF(0, f, DriveSubsystem.timeoutMs);
-        right.config_kF(0, f, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_kF(0, f, DriveSubsystem.timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_kF(0, f, DriveSubsystem.timeoutMs);
     }
 
     private void setMotionProfileMode(SetValueMotionProfile value) {
-        left.set(ControlMode.MotionProfile, value.value);
-        right.set(ControlMode.MotionProfile, value.value);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.MotionProfile, value.value);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.MotionProfile, value.value);
     }
 
     private void reset() {
@@ -221,13 +219,14 @@ public class MoveOnPathCommand extends Command {
         Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 
         // Clear the trajectory buffer
-        left.clearMotionProfileTrajectories();
-        right.clearMotionProfileTrajectories();
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.clearMotionProfileTrajectories();
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.clearMotionProfileTrajectories();
 
-        log.log(Level.INFO, "Cleared trajectories; check: " + statusLeft.btmBufferCnt);
+        //log.log(Level.INFO, "Cleared trajectories; check: " + statusLeft.btmBufferCnt);
     }
     
     protected void interrupted() {
+    	reset();
         end();
     }
 }

@@ -124,7 +124,7 @@ public class DriveSubsystem extends Subsystem {
     public double undoGearRatio(double original) {
         return original / GEAR_RATIO_MULTIPLIER;
     }
-    
+
     public double averageInchesDriven() {
         return convertTicksToInches(undoGearRatio(getCombindedEncoderPosition()));
     }
