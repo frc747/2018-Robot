@@ -59,10 +59,10 @@ public class MoveOnPathCommand extends Command {
                 break;
         }
         
-        trajectoryL = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_left_detailed.traj"));
-        trajectoryR = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_right_detailed.traj"));
-//        trajectoryL = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_left_detailed.csv"));
-//        trajectoryR = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_right_detailed.csv"));
+//        trajectoryL = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_left_detailed.traj"));
+//        trajectoryR = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_right_detailed.traj"));
+        trajectoryL = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_left_detailed.csv"));
+        trajectoryR = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_right_detailed.csv"));
 
         if (trajectoryProcessor == null) {
             trajectoryProcessor = new Notifier(() -> {
@@ -94,7 +94,7 @@ public class MoveOnPathCommand extends Command {
 		
 		// Configure PID values
 		//double[] pid = DriveTrainSettings.getPIDValues("moveOnPath");
-		configurePID(OI.PID_VALUE_P, 0, OI.PID_VALUE_D, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
+		configurePID(OI.PID_VALUE_P, 0, 0, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
 		
 		// Change motion control frame period
 		Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.changeMotionControlFramePeriod(10);
@@ -102,6 +102,8 @@ public class MoveOnPathCommand extends Command {
 		
 		// Fill TOP (API-level) buffer
 		fillTopBuffer();
+		
+		
 		
 		// Start processing
 		// i.e.: moving API points to RAM
@@ -174,8 +176,8 @@ public class MoveOnPathCommand extends Command {
             trajPointR.profileSlotSelect0 = 0;
 
             // Sets the duration of each trajectory point to 20ms
-            trajPointL.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
-            trajPointR.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
+            trajPointL.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_10ms;
+            trajPointR.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_10ms;
 
             // Set these to true on the first point
             trajPointL.zeroPos = isZero;
@@ -208,8 +210,8 @@ public class MoveOnPathCommand extends Command {
     }
 
     private void setMotionProfileMode(SetValueMotionProfile value) {
-    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.MotionProfile, value.value);
     	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.MotionProfile, value.value);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.MotionProfile, value.value);
     }
 
     private void reset() {
@@ -221,6 +223,13 @@ public class MoveOnPathCommand extends Command {
         // Clear the trajectory buffer
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.clearMotionProfileTrajectories();
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.clearMotionProfileTrajectories();
+        
+        try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         //log.log(Level.INFO, "Cleared trajectories; check: " + statusLeft.btmBufferCnt);
     }

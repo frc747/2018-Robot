@@ -62,10 +62,10 @@ public class DriveSubsystem extends Subsystem {
 
         talonDriveRightPrimary.configSelectedFeedbackSensor(com.ctre.phoenix.motorcontrol.FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeoutMs);
         
-        talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs);
-        talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
-        talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
-        talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
+//        talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+//        talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs);
+//        talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
+//        talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
 
         talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
         talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
@@ -178,7 +178,8 @@ public class DriveSubsystem extends Subsystem {
     
     public void resetLeftEncoder() {
         this.enableVBusControl();
-        talonDriveLeftPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
+        //talonDriveLeftPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
+        talonDriveLeftPrimary.getSensorCollection().setQuadraturePosition(0, timeoutMs);
     	try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -189,7 +190,8 @@ public class DriveSubsystem extends Subsystem {
     
     public void resetRightEncoder() {
         this.enableVBusControl();
-        talonDriveRightPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
+        //talonDriveRightPrimary.setSelectedSensorPosition(0, pidIdx, timeoutMs);
+        talonDriveRightPrimary.getSensorCollection().setQuadraturePosition(0, timeoutMs);
     	try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {

@@ -187,7 +187,10 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		
 		
-
+		if(OI.rightStick.getRawButton(2)) {
+			resetNavXAngle();
+			DRIVE_SUBSYSTEM.resetBothEncoders();
+		}
 			
 		
 		
