@@ -33,6 +33,9 @@ public class AutonomousPlayback extends Command {
 		// create a scanner to read the file created during BTMacroRecord
 		// scanner is able to read out the doubles recorded into recordedAuto.csv (as of
 		// 2015)
+		
+		BTMain.autoFileRead = new String("/home/lvuser/recordedAuto" + Robot.gameData.charAt(0) + ".csv");
+
 		try {
 			scanner = new Scanner(new File(BTMain.autoFileRead));
 		} catch (FileNotFoundException e) {

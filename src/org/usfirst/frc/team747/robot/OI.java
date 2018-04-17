@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
     
-    public static boolean compBot = true;
+    public static boolean compBot = false;
     public static double leftV;
     public static double rightV;
     public static double i;

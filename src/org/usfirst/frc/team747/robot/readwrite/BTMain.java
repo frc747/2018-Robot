@@ -30,13 +30,8 @@ public class BTMain
     	
     	//try to create a new player
     	//if there is a file, great - you have a new non-null object "player"
-    	if (Robot.gameData.charAt(0) == 'L') {
-    		autoStringRead = "L";
-    	} else if (Robot.gameData.charAt(0) == 'R') {
-    		autoStringRead = "R";
-    	}
     	
-    	autoFileRead = new String("/home/lvuser/recordedAuto" + autoStringRead + ".csv");
+    	autoFileRead = new String("/home/lvuser/recordedAuto" + Robot.gameData.charAt(0) + ".csv");
     	
     	try {
     		 player = new BTMacroPlay();
