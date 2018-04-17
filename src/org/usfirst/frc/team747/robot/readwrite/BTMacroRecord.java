@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.usfirst.frc.team747.robot.OI;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /*
 *This macro records all the movements you make in teleop and saves them to the file you specify.
 *make sure you record every variable you need, if you dont record the value from a motor or a solenoid,
@@ -46,6 +48,8 @@ public class BTMacroRecord {
 			// the 2015 robot used the following motors during auto
 
 			// drive motors
+			SmartDashboard.putString("Recording", "YES");
+			
 			writer.append("," + OI.leftStick.getRawAxis(1));
 			writer.append("," + OI.rightStick.getRawAxis(1) + "\n");
 			//writer.append("," + OI.operatorController.getRawButton(4) + "\n");

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -124,7 +125,7 @@ public class BTMacroPlay {
 //		storage.robot.getRightForkRight().setX(0);
 		//all this mess of a method does is keep the piston in the same state it ended in
 		//if you want it to return to a specific point at the end of auto, change that here
-
+		OI.finished = true;
 		if (scanner != null)
 		{
 			scanner.close();

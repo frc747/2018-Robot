@@ -3,6 +3,7 @@ package org.usfirst.frc.team747.robot.readwrite;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 
@@ -24,6 +25,7 @@ public class BTMain
     }
     
     public static void autonomousInit() {
+    	OI.finished = false;
     	//during autonomous, create new player object to read recorded file
     	
     	//Robot.partOneFinish = false;

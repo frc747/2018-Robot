@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 import org.usfirst.frc.team747.robot.maps.AutonomousMaps;
+import org.usfirst.frc.team747.robot.readwrite.BTMain;
 import org.usfirst.frc.team747.robot.subsystems.CubeSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team747.robot.subsystems.PneumaticsSubsystem;
@@ -149,6 +150,8 @@ public class Robot extends TimedRobot {
         pneu.leftHIGH.set(false);
         pneu.rightHIGH.set(true);
         Robot.switchb = true;
+        
+        BTMain.disabledInit();
 	}
 
 	@Override
@@ -183,7 +186,9 @@ public class Robot extends TimedRobot {
 		autonomous.startMode();
         if (autonomousCommand != null) {
             autonomousCommand.start();
-        }
+       }
+        
+        BTMain.autonomousInit();
         
         if (oi == null) {
             oi = new OI();
@@ -198,9 +203,11 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
+		//BTMain.autonomousPeriodic();
+		
 		/*try /{
-			String left = brL.readLine();
-			String right = brR.readLine();
+			String left = brL.readLine12();
+			String right = br.readLine();
 			DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.PercentOutput, Double.parseDouble(left));
 			DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.PercentOutput, Double.parseDouble(right));
 			if(left.equals("FINISHED") || right.equals("FINISHED")) {
@@ -230,6 +237,8 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		
+		BTMain.teleopInit();
 		
 //		DriveSubsystem.talonDriveLeftPrimary.enableCurrentLimit(false);
 //		DriveSubsystem.talonDriveRightPrimary.enableCurrentLimit(false);
@@ -282,6 +291,8 @@ public class Robot extends TimedRobot {
 				e.printStackTrace();
 			}
 		}*/
+		
+		BTMain.teleopPeriodic();
 	}
 
 	/**

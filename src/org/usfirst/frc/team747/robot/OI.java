@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-    
+    public static boolean finished = false;
     public static boolean compBot = false;
     public static double leftV;
     public static double rightV;

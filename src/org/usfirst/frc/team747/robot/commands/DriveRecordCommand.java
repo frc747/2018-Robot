@@ -70,8 +70,8 @@ public class DriveRecordCommand extends Command{
 			try {
 				writer.append("" + (System.currentTimeMillis() - startTime));
 				writer.append("," + OI.leftStick.getRawAxis(1));
-				writer.append("," + OI.rightStick.getRawAxis(1));
-				writer.append("," + OI.operatorController.getRawButton(4) + "\n");
+				writer.append("," + OI.rightStick.getRawAxis(1) + "\n");
+				//writer.append("," + OI.operatorController.getRawButton(4) + "\n");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
