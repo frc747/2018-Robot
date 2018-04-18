@@ -59,10 +59,10 @@ public class MoveOnPathCommand extends Command {
                 break;
         }
         
-//        trajectoryL = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_left_detailed.traj"));
-//        trajectoryR = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_right_detailed.traj"));
-        trajectoryL = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_left_detailed.csv"));
-        trajectoryR = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_right_detailed.csv"));
+        trajectoryL = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_left_detailed.traj"));
+        trajectoryR = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_right_detailed.traj"));
+//        trajectoryL = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_left_detailed.csv"));
+//        trajectoryR = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_right_detailed.csv"));
 
         if (trajectoryProcessor == null) {
             trajectoryProcessor = new Notifier(() -> {
@@ -94,7 +94,7 @@ public class MoveOnPathCommand extends Command {
 		
 		// Configure PID values
 		//double[] pid = DriveTrainSettings.getPIDValues("moveOnPath");
-		configurePID(OI.PID_VALUE_P, 0, 0, OI.PID_VALUE_F);//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
+		configurePID(.4, 0, 0, Robot.DRIVE_SUBSYSTEM.getFeedForward(2056));//Robot.DRIVE_SUBSYSTEM.getFeedForward(2055)); //205.56 in/s = 34.26 rps = 2055.6 rpm
 		
 		// Change motion control frame period
 		Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.changeMotionControlFramePeriod(10);
@@ -157,8 +157,8 @@ public class MoveOnPathCommand extends Command {
             TrajectoryPoint trajPointR = new TrajectoryPoint();
 
 	        // NOTE: Encoder ticks are backwards, we need to work with that.
-            double currentPosL = -trajectoryL.segments[i].position * dir *5;
-            double currentPosR = -trajectoryR.segments[i].position * dir *5;
+            double currentPosL = -trajectoryL.segments[i].position * dir;
+            double currentPosR = -trajectoryR.segments[i].position * dir;
 
             double velocityL = trajectoryL.segments[i].velocity;
             double velocityR = trajectoryR.segments[i].velocity;
@@ -176,8 +176,8 @@ public class MoveOnPathCommand extends Command {
             trajPointR.profileSlotSelect0 = 0;
 
             // Sets the duration of each trajectory point to 20ms
-            trajPointL.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_10ms;
-            trajPointR.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_10ms;
+            trajPointL.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
+            trajPointR.timeDur = TrajectoryPoint.TrajectoryDuration.Trajectory_Duration_20ms;
 
             // Set these to true on the first point
             trajPointL.zeroPos = isZero;
