@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class AutonomousPlayback extends Command {
 	public static int mainCounter = 0;
 	int minimum;
+	private static final double MAX_PERCENT_VOLTAGE = 1.0;
+    private static final double MIN_PERCENT_VOLTAGE = 0.0;
+	int timeoutMs = 10;
 	public static boolean fin = false;
 	String folder;
     public AutonomousPlayback(String loc) {
@@ -32,6 +35,24 @@ public class AutonomousPlayback extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftFront.enableCurrentLimit(false);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveRightFront.enableCurrentLimit(false);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.enableCurrentLimit(false);
+    	Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.enableCurrentLimit(false);
+
+    	Robot.DRIVE_SUBSYSTEM.changeControlMode(ControlMode.PercentOutput);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configPeakOutputForward(+MAX_PERCENT_VOLTAGE, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
+    	
+    	
+    	
     	AutonomousMaps.left.clear();
     	AutonomousMaps.right.clear();
     	AutonomousMaps.ejectButton.clear();

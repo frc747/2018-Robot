@@ -19,7 +19,7 @@ public class RollerTimedCommand extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setRollersAuton(true, rev);
+    	Robot.cube.setRollers(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,7 +29,7 @@ public class RollerTimedCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setRollersAuton(false, rev);
+    	Robot.cube.setRollers(false, rev);
     }
     
 }

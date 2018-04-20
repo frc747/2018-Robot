@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -253,8 +254,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
 		AutonomousMaps.left.add(OI.leftStick.getRawAxis(1));
+		AutonomousMaps.right.add(OI.rightStick.getRawAxis(1));
 		leftCount = AutonomousMaps.left.size();
 		rightCount = AutonomousMaps.right.size();
 		
@@ -270,6 +271,8 @@ public class Robot extends TimedRobot {
 			AutonomousMaps.IntakeButton.add(false);
 
 		}
+		
+		
 		/*try {
 			bfL.write(Double.toString(OI.leftStick.getRawAxis(1)));
 			bfR.write(Double.toString(OI.rightStick.getRawAxis(1)));

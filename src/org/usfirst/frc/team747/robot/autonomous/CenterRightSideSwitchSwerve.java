@@ -32,7 +32,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         
         //commands for the one movement approach
         addParallel(new ForwardTimedGroup(4.5));
-        addSequential(new PIDDriveInchesCommandSlow(48, false));
+        addSequential(new PIDDriveInchesCommandSlow(44, false));
         addParallel(new ForwardTimedGroup(4));
         //addSequential(new PIDDriveInchesCommand(5, true));
         addSequential(new AutonomousPlaybackPart3("auton_part_3/"));

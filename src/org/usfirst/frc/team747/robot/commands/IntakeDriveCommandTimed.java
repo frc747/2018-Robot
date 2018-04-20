@@ -13,6 +13,7 @@ public class IntakeDriveCommandTimed extends Command {
 
     private static final int timeoutMs = 10;
     public IntakeDriveCommandTimed(double seconds) {
+        requires(Robot.cube);
         setTimeout(seconds);
     }
 
@@ -35,22 +36,28 @@ public class IntakeDriveCommandTimed extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         
-      
+         double left = 	OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_LEFT_Y.getValue());
+         double right = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
+
+         if (Math.abs(left) < 0.1) {
+             left = 0;
+         }
+         if (Math.abs(right) < 0.1) {
+             right = 0;
+         }
          
          double speed = 1;
          
-         Robot.cube.intakeArms(-1.0 * speed, -0.5 * speed);         
+         Robot.cube.intakeArms(left * speed, right * speed);         
     }
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.cube.intakeArms(0.0 , 0.0);         
-
     }
 
     // Called when another command which requires one or more of the same
