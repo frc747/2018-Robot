@@ -22,13 +22,12 @@ public class ReadMemoryTestCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//left[0];
-    	//right[0];
+    	 
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (i < 139) {
+    	if (i < 140) {
     		Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.set(ControlMode.PercentOutput, left[i]);
     		Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.set(ControlMode.PercentOutput, right[i]);
     	}
