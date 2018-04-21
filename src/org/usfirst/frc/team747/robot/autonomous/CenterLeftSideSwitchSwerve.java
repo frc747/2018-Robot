@@ -5,6 +5,7 @@ import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.AutonomousPlayback;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
+import org.usfirst.frc.team747.robot.commands.PIDDriveArcLeftCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandSlow;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
@@ -15,7 +16,8 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         //do not modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
-        addSequential(new AutonomousPlayback());
+       // addSequential(new AutonomousPlayback());
+        addSequential(new PIDDriveArcLeftCommand(70, true));
         
         addSequential(new PIDDriveInchesCommandSlow(19.75, false));
         
