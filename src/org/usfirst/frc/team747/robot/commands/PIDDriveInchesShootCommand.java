@@ -28,7 +28,7 @@ public class PIDDriveInchesShootCommand extends Command {
 
     //STOP_THRESHOLD_REAL was 3 inches and is now 8 inches in an attempt to cut back on time
     private final static double STOP_THRESHOLD_REAL = 12; //3.0;
-    private final static double SHOOT_THRESHOLD_REAL = 15; //3.0;
+    private final static double SHOOT_THRESHOLD_REAL = 5; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     private final static double SHOOT_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(SHOOT_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     

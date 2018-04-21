@@ -35,12 +35,11 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         addSequential(new PIDDriveInchesCommandSlow(58, false));
         addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveInchesCommand(58, true));
-        addParallel(new ForwardTimedGroup(2));
+        addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveRotateCommand(0));
-        addParallel(new ForwardTimedGroup(2));
-        addSequential(new PIDDriveInchesShootCommand(15, true));
-        addParallel(new ForwardTimedGroup(2));
-        
+        addParallel(new ForwardTimedGroup(4));
+        addSequential(new PIDDriveInchesCommand(20, true));
+        addSequential(new EjectTimedCommand(false, 0.5));        
         
         addSequential(new PIDDriveInchesCommandSlow(7.75, false));
         addSequential(new PIDDriveRotateCommand(90));
