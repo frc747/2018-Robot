@@ -5,7 +5,7 @@ import org.usfirst.frc.team747.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PIDDriveArcRightCommand extends Command {
+public class PIDDriveInchesShootCommand extends Command {
     
     //execute is called every 20ms and isFinished is called right after execute
     //add a button to Ryan's joystick that will default the drive train back to DriveWithJoystickCommand
@@ -28,7 +28,7 @@ public class PIDDriveArcRightCommand extends Command {
 
     //STOP_THRESHOLD_REAL was 3 inches and is now 8 inches in an attempt to cut back on time
     private final static double STOP_THRESHOLD_REAL = 12; //3.0;
-    private final static double SHOOT_THRESHOLD_REAL = 30; //3.0;
+    private final static double SHOOT_THRESHOLD_REAL = 15; //3.0;
     private final static double STOP_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(STOP_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     private final static double SHOOT_THRESHOLD_ADJUSTED = Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(SHOOT_THRESHOLD_REAL * ENCODER_TICKS_PER_REVOLUTION);
     
@@ -51,12 +51,11 @@ public class PIDDriveArcRightCommand extends Command {
     
     private double specificDistanceF = OI.PID_VALUE_F;
     
-    public PIDDriveArcRightCommand(double inches, boolean reverse) {
+    public PIDDriveInchesShootCommand(double inches, boolean reverse) {
         requires(Robot.DRIVE_SUBSYSTEM);
         requires(Robot.cube);
           
 //      this.driveTicks = inches / ENCODER_TICKS_PER_REVOLUTION;
-        setTimeout(3.5);
         if (reverse) {
             this.driveTicks = -Robot.DRIVE_SUBSYSTEM.applyGearRatio(Robot.DRIVE_SUBSYSTEM.convertInchesToRevs(inches * ENCODER_TICKS_PER_REVOLUTION));//input now has to be ticks instead of revolutions which is why we multiply by 4096
         } else {
@@ -113,7 +112,7 @@ public class PIDDriveArcRightCommand extends Command {
         
         if (driveInches > 30) {
             Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 20500, 7500, 20000
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(11750, timeoutMs); //test 5000
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(20500, timeoutMs); //test 5000
             Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
             Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
         } else if (driveInches <= 30) {
@@ -131,7 +130,7 @@ public class PIDDriveArcRightCommand extends Command {
         if (Math.abs(averagePosition) > ((Math.abs(driveTicks) - SHOOT_THRESHOLD_ADJUSTED))) {
         		Robot.cube.setEject(true, false);
             } else {
-                Robot.cube.setEject(false, false);
+                //Robot.cube.setEject(false, false);
             }
             
     	
@@ -149,7 +148,7 @@ public class PIDDriveArcRightCommand extends Command {
             onTargetCount = 0;
         }
         
-        return (onTargetCount > ON_TARGET_MINIMUM_COUNT) || isTimedOut();
+        return (onTargetCount > ON_TARGET_MINIMUM_COUNT);
     }
     
     protected void end() {

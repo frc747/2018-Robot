@@ -8,12 +8,13 @@ import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
 import org.usfirst.frc.team747.robot.commands.PIDDriveArcRightCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandSlow;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesShootCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 
 public class CenterRightSideSwitchSwerve extends CommandGroup {
     
     public  CenterRightSideSwitchSwerve() {
-        //do n`ot modify the length of the diagonal drive, modify the distance driven forward beforehand
+        //do not modify the length of the diagonal drive, modify the distance driven forward beforehand
         
         requires(Robot.DRIVE_SUBSYSTEM);
         //addSequential(new AutonomousPlayback());
@@ -38,10 +39,16 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         addSequential(new PIDDriveInchesCommand(40, true));
         addParallel(new ForwardTimedGroup(2));
         addSequential(new PIDDriveRotateCommand(0));
-        addSequential(new PIDDriveInchesCommand(10, true));
-        addParallel(new EjectTimedCommand(false, 1.0));
-        addSequential(new PIDDriveInchesCommand(5, true));
-        addSequential(new PIDDriveInchesCommand(20, false));
+        addParallel(new ForwardTimedGroup(2));
+        addSequential(new PIDDriveInchesShootCommand(10, true));
+        addParallel(new ForwardTimedGroup(2));
+        
+        addSequential(new PIDDriveInchesCommandSlow(7.75, false));
+        addSequential(new PIDDriveRotateCommand(-90));
+//        addSequential(new PIDDriveInchesCommand(10, true));
+//        addParallel(new EjectTimedCommand(false, 1.0));
+//        addSequential(new PIDDriveInchesCommand(5, true));
+//        addSequential(new PIDDriveInchesCommand(20, false));
         
         //addSequential(new PIDDriveInchesCommand(5, true));
 //        addSequential(new AutonomousPlaybackPart3("auton_part_3/"));

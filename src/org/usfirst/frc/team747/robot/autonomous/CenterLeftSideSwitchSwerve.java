@@ -8,6 +8,7 @@ import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
 import org.usfirst.frc.team747.robot.commands.PIDDriveArcLeftCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandSlow;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesShootCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 
 public class CenterLeftSideSwitchSwerve extends CommandGroup {
@@ -17,9 +18,9 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         
         requires(Robot.DRIVE_SUBSYSTEM);
        // addSequential(new AutonomousPlayback());
-        addSequential(new PIDDriveArcLeftCommand(70, true));
-        
-        addSequential(new PIDDriveInchesCommandSlow(19.75, false));
+        addSequential(new PIDDriveArcLeftCommand(116, true));
+        //addParallel(new EjectTimedCommand(false, 1)); //remove after testing
+        addSequential(new PIDDriveInchesCommandSlow(24.5, false));
         
         
         // cube is scored at this point
@@ -36,22 +37,19 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         addSequential(new PIDDriveInchesCommand(58, true));
         addParallel(new ForwardTimedGroup(2));
         addSequential(new PIDDriveRotateCommand(0));
-        addSequential(new PIDDriveInchesCommand(10, true));
-        addParallel(new EjectTimedCommand(false, 1.0));
-        addSequential(new PIDDriveInchesCommand(5, true));
-        addSequential(new PIDDriveInchesCommand(20, false));
-        
-        //commands for the two movement approach
-//      addParallel(new ForwardTimedGroup(3.5));
-//      addSequential(new PIDDriveInchesCommand(30, true));
-//      addSequential(new PIDDriveInchesCommandSlow(10, false));
-//      addParallel(new ForwardTimedGroup(3));
-//      addSequential(new PIDDriveInchesCommand(34, true));
-//      addSequential(new PIDDriveRotateCommand(0));
-//      addParallel(new EjectTimedCommand(false, 1.0));
-//      addSequential(new PIDDriveInchesCommand(5, true));        
+        addParallel(new ForwardTimedGroup(2));
+        addSequential(new PIDDriveInchesShootCommand(15, true));
+        addParallel(new ForwardTimedGroup(2));
         
         
-        
+        addSequential(new PIDDriveInchesCommandSlow(7.75, false));
+        addSequential(new PIDDriveRotateCommand(90));
+//        addParallel(new ForwardTimedGroup(4.5));
+//        addSequential(new PIDDriveInchesCommandSlow(58, false));
+//        addParallel(new ForwardTimedGroup(4));
+//        addSequential(new PIDDriveInchesCommand(58, true));
+//        addParallel(new ForwardTimedGroup(2));
+//        addSequential(new PIDDriveRotateCommand(0));
+//        addSequential(new PIDDriveInchesShootCommand(15, true));
     }
 }
