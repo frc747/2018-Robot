@@ -18,9 +18,10 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         requires(Robot.DRIVE_SUBSYSTEM);
         //addSequential(new AutonomousPlayback());
         
-        addSequential(new PIDDriveArcRightCommand(140, true));
-
+        addSequential(new PIDDriveArcRightCommand(110, true));
+        addParallel(new EjectTimedCommand(false, 1));
         addSequential(new PIDDriveInchesCommandSlow(24.75, false));
+        
         
         
         // cube is scored at this point
