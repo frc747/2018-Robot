@@ -18,7 +18,7 @@ public class RollerCommand extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setRollersAuton(true, rev);
+    	Robot.cube.setRollers(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()

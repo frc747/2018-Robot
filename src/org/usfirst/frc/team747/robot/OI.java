@@ -49,8 +49,8 @@ public class OI {
 	public static int extLeft = 1;
 	public static int extRight = 1;
 	public static int rol = 1;
-	public static int intakeRightArm = 1;
-	
+	public static int leftIntakeArm = 1;
+	public static int rightIntakeArm = 1;
 	public static int robotLength;
 	
 	public static double PID_VALUE_P;
@@ -104,7 +104,8 @@ public class OI {
 
 		if(compBot) {
 			
-			intakeRightArm = 1;
+			leftIntakeArm = 1;
+			rightIntakeArm = 1;
 			intLeft = 1;
 			intRight = 1;
 			extLeft = 1;
@@ -117,7 +118,8 @@ public class OI {
 			PID_VALUE_F = 0.199;
 		} else {
 			
-			intakeRightArm = -1;
+			leftIntakeArm = 1;
+			rightIntakeArm = 1;
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;

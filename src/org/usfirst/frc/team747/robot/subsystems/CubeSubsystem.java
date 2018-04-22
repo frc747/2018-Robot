@@ -21,6 +21,10 @@ public class CubeSubsystem extends Subsystem {
 	
 	public TalonSRX roller = new TalonSRX(11);
 	
+	public TalonSRX leftIntakeArm = new TalonSRX(12);
+	public TalonSRX rightIntakeArm = new TalonSRX(13);
+
+	
     private static final double MAX_PERCENT_VOLTAGE = 1.0;
     private static final double MIN_PERCENT_VOLTAGE = 0.0;
     
@@ -48,10 +52,22 @@ public class CubeSubsystem extends Subsystem {
         setDefaultCommand(new IntakeDriveCommand());
     }
 	
-	public void intakeArms(double left, double right) {
-	    //TODO Based on a conversation with (Jeff and George 3/3/2018 2:35), the speeds for intake motors while being controlled by joysticks are unknown. Setting to 75% speeds by default.
-	    intakeLeft.set(ControlMode.PercentOutput, (left * 1));
-	    intakeRight.set(ControlMode.PercentOutput, (-right * 1));
+	public void setIntakeArms(boolean enable, boolean reverse) {
+		int mod;
+		if (reverse == true) {
+			mod = -1;
+		} else {
+			mod = 1;
+		}
+		if (enable) {
+			leftIntakeArm.set(ControlMode.PercentOutput, OI.intLeft * 1.0 * mod);
+			rightIntakeArm.set(ControlMode.PercentOutput, OI.intRight * 1.0 * mod);
+//			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+		} else {
+			intakeLeft.set(ControlMode.PercentOutput, 0);
+			intakeRight.set(ControlMode.PercentOutput, 0);
+//			roller.set(ControlMode.PercentOutput, 0);
+		}
 	}
 	
 	public void setIntake(boolean enable, boolean reverse) {
@@ -71,23 +87,7 @@ public class CubeSubsystem extends Subsystem {
 //			roller.set(ControlMode.PercentOutput, 0);
 		}
 	}
-	public void setIntakeAuton(boolean enable, boolean reverse) {
-		int mod;
-		if (reverse == true) {
-			mod = -1;
-		} else {
-			mod = 1;
-		}
-		if (enable) {
-			intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 0.75 * mod);
-			intakeRight.set(ControlMode.PercentOutput, OI.intRight * 0.75 * mod);
-//			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
-		} else {
-			intakeLeft.set(ControlMode.PercentOutput, 0);
-			intakeRight.set(ControlMode.PercentOutput, 0);
-//			roller.set(ControlMode.PercentOutput, 0);
-		}
-	}
+	
 	public void setEject(boolean enable, boolean reverse) {
 		int mod;
 		if (reverse == true) {
@@ -113,20 +113,6 @@ public class CubeSubsystem extends Subsystem {
         }
         if (enable) {
             roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
-        } else {
-            roller.set(ControlMode.PercentOutput, 0);            
-        }
-    }
-	
-	public void setRollersAuton(boolean enable, boolean reverse) {
-        int mod;
-        if (reverse == true) {
-            mod = -1;
-        } else {
-            mod = 1;
-        }
-        if (enable) {
-            roller.set(ControlMode.PercentOutput, OI.rol * -0.75 * mod);
         } else {
             roller.set(ControlMode.PercentOutput, 0);            
         }
