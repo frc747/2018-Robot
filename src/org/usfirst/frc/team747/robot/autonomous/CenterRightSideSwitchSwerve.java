@@ -20,7 +20,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         
         addSequential(new PIDDriveArcRightCommand(110, true));
         addParallel(new EjectTimedCommand(false, 1));
-        addSequential(new PIDDriveInchesCommandSlow(24.75, false));
+        addSequential(new PIDDriveInchesCommandSlow(23.75, false));
         
         
         

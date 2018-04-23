@@ -19,7 +19,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
        // addSequential(new AutonomousPlayback());
         addSequential(new PIDDriveArcLeftCommand(116, true));
         //addParallel(new EjectTimedCommand(false, 1)); //remove after testing
-        addSequential(new PIDDriveInchesCommandSlow(24.5, false));
+        addSequential(new PIDDriveInchesCommandSlow(25.5, false));
         
         
         // cube is scored at this point
