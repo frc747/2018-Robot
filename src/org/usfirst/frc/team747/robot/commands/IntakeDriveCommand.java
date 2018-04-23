@@ -4,6 +4,8 @@ import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.maps.ControllerMap;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 public class IntakeDriveCommand extends Command {
@@ -17,7 +19,7 @@ public class IntakeDriveCommand extends Command {
         requires(Robot.cube);
     }
 
-    // Called just before this Command runs the first time
+    // Called just befoe this Command runs the first time
     protected void initialize() {
         Robot.cube.intakeLeft.configNominalOutputForward(+MIN_PERCENT_VOLTAGE, timeoutMs);
         Robot.cube.intakeLeft.configNominalOutputReverse(-MIN_PERCENT_VOLTAGE, timeoutMs);
@@ -46,9 +48,12 @@ public class IntakeDriveCommand extends Command {
              right = 0;
          }
          
+         
          double speed = 1;
          
-         Robot.cube.intakeArms(left * speed, right * speed);         
+         Robot.cube.leftIntakeArm.set(ControlMode.PercentOutput, -left * speed);     
+         Robot.cube.rightIntakeArm.set(ControlMode.PercentOutput, right * speed);         
+
     }
     
     // Make this return true when this Command no longer needs to run execute()

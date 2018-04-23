@@ -16,6 +16,7 @@ package org.usfirst.frc.team747.robot;
 //import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
+import org.usfirst.frc.team747.robot.commands.PrintCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootGroup;
@@ -46,8 +47,11 @@ public class OI {
 	public static int extLeft = 1;
 	public static int extRight = 1;
 	public static int rol = 1;
+	public static int leftIntakeArm = 1;
+	public static int rightIntakeArm = 1;
 	public static int robotLength;
 	public static int operatorStickMod = 1;
+	
 	public static double PID_VALUE_P;
 	public static double PID_VALUE_I;
 	public static double PID_VALUE_D;
@@ -91,10 +95,11 @@ public class OI {
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
-		
 		if(compBot) {
 			
 			operatorStickMod = 1;
+			leftIntakeArm = 1;
+			rightIntakeArm = 1;
 			intLeft = 1;
 			intRight = 1;
 			extLeft = 1;
@@ -107,6 +112,8 @@ public class OI {
 			PID_VALUE_F = 0.199;
 		} else {
 			operatorStickMod = -1;
+			leftIntakeArm = 1;
+			rightIntakeArm = 1;
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;

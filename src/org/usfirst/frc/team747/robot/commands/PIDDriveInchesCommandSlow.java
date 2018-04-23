@@ -4,7 +4,6 @@ import org.usfirst.frc.team747.robot.OI;
 import org.usfirst.frc.team747.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PIDDriveInchesCommandSlow extends Command {
     
@@ -105,9 +104,9 @@ public class PIDDriveInchesCommandSlow extends Command {
 //        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
 //        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.config_IntegralZone(slotIdx, I_ZONE_IN_REVOLUTIONS, timeoutMs);
         
-        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(2000, timeoutMs); //2000, 15500, 2000, 15000
+        Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(3000, timeoutMs); //2000, 15500, 2000, 15000
         Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(10500, timeoutMs);
-        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(2000, timeoutMs);
+        Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(3000, timeoutMs);
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(10000, timeoutMs);
         
         Robot.DRIVE_SUBSYSTEM.setPID(driveTicks, driveTicks);
