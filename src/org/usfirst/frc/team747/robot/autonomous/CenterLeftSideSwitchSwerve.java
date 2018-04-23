@@ -2,7 +2,6 @@ package org.usfirst.frc.team747.robot.autonomous;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team747.robot.Robot;
-import org.usfirst.frc.team747.robot.commands.AutonomousPlayback;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
 import org.usfirst.frc.team747.robot.commands.PIDDriveArcLeftCommand;
