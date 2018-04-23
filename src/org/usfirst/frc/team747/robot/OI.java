@@ -96,9 +96,8 @@ public class OI {
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
 		if(compBot) {
 			
-			operatorStickMod = 1;
 			leftIntakeArm = 1;
-			rightIntakeArm = 1;
+			rightIntakeArm = -1;
 			intLeft = 1;
 			intRight = 1;
 			extLeft = 1;
@@ -110,9 +109,8 @@ public class OI {
 			PID_VALUE_D = 0.1;
 			PID_VALUE_F = 0.199;
 		} else {
-			operatorStickMod = -1;
 			leftIntakeArm = 1;
-			rightIntakeArm = 1;
+			rightIntakeArm = -1;
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;

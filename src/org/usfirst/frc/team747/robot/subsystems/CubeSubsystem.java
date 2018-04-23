@@ -60,8 +60,8 @@ public class CubeSubsystem extends Subsystem {
 			mod = 1;
 		}
 		if (enable) {
-			leftIntakeArm.set(ControlMode.PercentOutput, OI.intLeft * 1.0 * mod);
-			rightIntakeArm.set(ControlMode.PercentOutput, OI.intRight * 1.0 * mod);
+			leftIntakeArm.set(ControlMode.PercentOutput, OI.leftIntakeArm * 1.0 * mod);
+			rightIntakeArm.set(ControlMode.PercentOutput, OI.rightIntakeArm * 1.0 * mod);
 //			roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
 		} else {
 			intakeLeft.set(ControlMode.PercentOutput, 0);

@@ -20,7 +20,7 @@ public class IntakeTimedCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.cube.setIntake(true, rev);
-    	Robot.cube.setIntakeArms(true, !rev);
+    	Robot.cube.setIntakeArms(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,7 +31,7 @@ public class IntakeTimedCommand extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.cube.setIntake(false, rev);
-    	Robot.cube.setIntakeArms(false, !rev);
+    	Robot.cube.setIntakeArms(false, rev);
 
     }
     
