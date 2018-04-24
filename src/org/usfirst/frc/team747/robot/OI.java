@@ -35,7 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
     
-    public static boolean compBot = true;
+    public static boolean compBot = false;
     
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
@@ -46,7 +46,10 @@ public class OI {
 	public static int extLeft = 1;
 	public static int extRight = 1;
 	public static int rol = 1;
+	public static int leftIntakeArm = 1;
+	public static int rightIntakeArm = 1;
 	public static int robotLength;
+	public static int operatorStickMod = 1;
 	
 	public static double PID_VALUE_P;
 	public static double PID_VALUE_I;
@@ -91,10 +94,10 @@ public class OI {
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
-		
 		if(compBot) {
 			
-			
+			leftIntakeArm = 1;
+			rightIntakeArm = -1;
 			intLeft = 1;
 			intRight = 1;
 			extLeft = 1;
@@ -106,17 +109,18 @@ public class OI {
 			PID_VALUE_D = 0.1;
 			PID_VALUE_F = 0.199;
 		} else {
-			
+			leftIntakeArm = 1;
+			rightIntakeArm = -1;
 			intLeft = -1;
 			intRight = 1;
 			extLeft = -1;
 			extRight = 1;
-			rol = 1;
+			rol = -1;
 			robotLength = 32;
-	         PID_VALUE_P = 0.4;
-	         PID_VALUE_I = 0.002;
-	         PID_VALUE_D = 0.1;
-	         PID_VALUE_F = 0.2031;
+	        PID_VALUE_P = 0.4;
+	        PID_VALUE_I = 0.002;
+	        PID_VALUE_D = 0.1;
+	        PID_VALUE_F = 0.2031;
 		}
 		/*
 		SmartDashboard.putNumber("kP", OI.kP);

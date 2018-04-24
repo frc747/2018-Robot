@@ -9,7 +9,7 @@ public class ReverseTimedGroup extends CommandGroup {
 
     public ReverseTimedGroup(double time) {
         addParallel(new IntakeTimedCommand(true, time));
-//        addParallel(new EjectCommand(false));
+//        addParallel(new EjectCommand(true));
         addParallel(new RollerTimedCommand(true, time));
     }
 }

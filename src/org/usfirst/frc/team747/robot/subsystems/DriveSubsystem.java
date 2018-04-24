@@ -1,6 +1,5 @@
 package org.usfirst.frc.team747.robot.subsystems;
 
-import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.DriveCommand;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
