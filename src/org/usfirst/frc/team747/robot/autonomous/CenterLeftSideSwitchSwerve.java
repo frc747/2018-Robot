@@ -18,7 +18,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         requires(Robot.DRIVE_SUBSYSTEM);
        // addSequential(new AutonomousPlayback());
         addSequential(new PIDDriveArcLeftCommand(116, true));
-        //addParallel(new EjectTimedCommand(false, 1)); //remove after testing
+        addParallel(new EjectTimedCommand(false, 1));
         addSequential(new PIDDriveInchesCommandSlow(25.5, false));
         
         

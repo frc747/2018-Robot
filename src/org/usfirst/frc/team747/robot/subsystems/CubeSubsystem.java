@@ -21,8 +21,8 @@ public class CubeSubsystem extends Subsystem {
 	
 	public TalonSRX roller = new TalonSRX(11);
 	
-	public TalonSRX leftIntakeArm = new TalonSRX(12);
-	public TalonSRX rightIntakeArm = new TalonSRX(13);
+	public TalonSRX leftIntakeArm = new TalonSRX(12); //Looks like this one is motor 3
+	public TalonSRX rightIntakeArm = new TalonSRX(13); //Looks like this one is motor 8
 
 	
     private static final double MAX_PERCENT_VOLTAGE = 1.0;

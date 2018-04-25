@@ -130,8 +130,10 @@ public class PIDDriveArcLeftCommand extends Command {
         double averagePosition = Robot.DRIVE_SUBSYSTEM.getCombindedEncoderPosition();
         if (Math.abs(averagePosition) > ((Math.abs(driveTicks) - SHOOT_THRESHOLD_ADJUSTED))) {
         		Robot.cube.setEject(true, false);
+        		Robot.cube.setIntake(true, true);
             } else {
                 Robot.cube.setEject(false, false);
+                Robot.cube.setIntake(false, false);
             }
             
     	
@@ -161,6 +163,7 @@ public class PIDDriveArcLeftCommand extends Command {
         Robot.DRIVE_SUBSYSTEM.resetBothEncoders();
 //      Robot.resetNavXAngle();
         Robot.cube.setEject(false, false);
+        Robot.cube.setIntake(false, false);
         Robot.DRIVE_SUBSYSTEM.stop();
     }
     
