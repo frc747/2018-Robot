@@ -3,6 +3,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 import org.usfirst.frc.team747.robot.Robot;
 import org.usfirst.frc.team747.robot.commands.EjectTimedCommand;
+import org.usfirst.frc.team747.robot.commands.ForwardSlowTimedGroup;
 import org.usfirst.frc.team747.robot.commands.ForwardTimedGroup;
 import org.usfirst.frc.team747.robot.commands.PIDDriveArcLeftCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
@@ -17,7 +18,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         
         requires(Robot.DRIVE_SUBSYSTEM);
        // addSequential(new AutonomousPlayback());
-        addSequential(new PIDDriveArcLeftCommand(116, true));
+        addSequential(new PIDDriveArcLeftCommand(122, true)); //was 116 //changed to 122 (with old wheels)
         addParallel(new EjectTimedCommand(false, 1));
         addSequential(new PIDDriveInchesCommandSlow(25.5, false));
         
@@ -37,7 +38,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveRotateCommand(0));
         addParallel(new ForwardTimedGroup(4));
-        addSequential(new PIDDriveInchesCommand(20, true));
+        addSequential(new PIDDriveInchesCommand(28, true)); //was 20 //changed to 28 (with old wheels)
         addSequential(new EjectTimedCommand(false, 0.5));        
         
         addSequential(new PIDDriveInchesCommandSlow(7.75, false));

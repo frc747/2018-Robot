@@ -88,6 +88,42 @@ public class CubeSubsystem extends Subsystem {
 		}
 	}
 	
+	   public void setIntakeArmsSlow(boolean enable, boolean reverse) {
+	        int mod;
+	        if (reverse == true) {
+	            mod = -1;
+	        } else {
+	            mod = 1;
+	        }
+	        if (enable) {
+	            leftIntakeArm.set(ControlMode.PercentOutput, OI.leftIntakeArm * 0.75 * mod);
+	            rightIntakeArm.set(ControlMode.PercentOutput, OI.rightIntakeArm * 0.75 * mod);
+//	          roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+	        } else {
+	            intakeLeft.set(ControlMode.PercentOutput, 0);
+	            intakeRight.set(ControlMode.PercentOutput, 0);
+//	          roller.set(ControlMode.PercentOutput, 0);
+	        }
+	    }
+	   
+	    public void setIntakeSlow(boolean enable, boolean reverse) {
+	        int mod;
+	        if (reverse == true) {
+	            mod = -1;
+	        } else {
+	            mod = 1;
+	        }
+	        if (enable) {
+	            intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * 0.75 * mod);
+	            intakeRight.set(ControlMode.PercentOutput, OI.intRight * 0.75 * mod);
+//	          roller.set(ControlMode.PercentOutput, OI.rol * -1.0 * mod);
+	        } else {
+	            intakeLeft.set(ControlMode.PercentOutput, 0);
+	            intakeRight.set(ControlMode.PercentOutput, 0);
+//	          roller.set(ControlMode.PercentOutput, 0);
+	        }
+	    }
+	
 	public void setEject(boolean enable, boolean reverse) {
 		int mod;
 		if (reverse == true) {

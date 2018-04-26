@@ -38,8 +38,8 @@ public class IntakeDriveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         
-         double left = OI.leftIntakeArm * OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_LEFT_Y.getValue());
-         double right = OI.rightIntakeArm * OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
+         double left = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_LEFT_Y.getValue());
+         double right = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
 
          if (Math.abs(left) < 0.1) {
              left = 0;
@@ -51,9 +51,12 @@ public class IntakeDriveCommand extends Command {
          
          double speed = 1;
          
-         Robot.cube.leftIntakeArm.set(ControlMode.PercentOutput, left * speed);     
-         Robot.cube.rightIntakeArm.set(ControlMode.PercentOutput, right * speed);         
-
+         Robot.cube.leftIntakeArm.set(ControlMode.PercentOutput, OI.leftIntakeArm * left * speed);     
+         Robot.cube.rightIntakeArm.set(ControlMode.PercentOutput, OI.rightIntakeArm * right * speed);
+         Robot.cube.intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * left * speed);     
+         Robot.cube.intakeRight.set(ControlMode.PercentOutput, OI.intRight * right * speed);
+         Robot.cube.ejectLeft.set(ControlMode.PercentOutput, OI.extLeft * left * speed);     
+         Robot.cube.ejectRight.set(ControlMode.PercentOutput, OI.extRight * right * speed);
     }
     
     // Make this return true when this Command no longer needs to run execute()
