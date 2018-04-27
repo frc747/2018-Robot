@@ -18,9 +18,9 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         
         requires(Robot.DRIVE_SUBSYSTEM);
        // addSequential(new AutonomousPlayback());
-        addSequential(new PIDDriveArcLeftCommand(122, true)); //was 116 //changed to 122 (with old wheels)
+        addSequential(new PIDDriveArcLeftCommand(126, true)); //was 116 //changed to 122 (with old wheels)
         addParallel(new EjectTimedCommand(false, 1));
-        addSequential(new PIDDriveInchesCommandSlow(25.5, false));
+        addSequential(new PIDDriveInchesCommandSlow(27, false));
         
         
         // cube is scored at this point
@@ -38,7 +38,7 @@ public class CenterLeftSideSwitchSwerve extends CommandGroup {
         addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveRotateCommand(0));
         addParallel(new ForwardTimedGroup(4));
-        addSequential(new PIDDriveInchesCommand(28, true)); //was 20 //changed to 28 (with old wheels)
+        addSequential(new PIDDriveInchesCommand(26, true)); //was 20 //changed to 28 (with old wheels)
         addSequential(new EjectTimedCommand(false, 0.5));        
         
         addSequential(new PIDDriveInchesCommandSlow(7.75, false));

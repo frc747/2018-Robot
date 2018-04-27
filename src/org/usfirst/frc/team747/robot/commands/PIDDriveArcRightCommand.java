@@ -113,7 +113,7 @@ public class PIDDriveArcRightCommand extends Command {
         
         if (driveInches > 30) {
             Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionCruiseVelocity(7500, timeoutMs); //7500, 20500, 7500, 20000
-            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(11750, timeoutMs); //test 5000
+            Robot.DRIVE_SUBSYSTEM.talonDriveLeftPrimary.configMotionAcceleration(10750, timeoutMs); //was 11750
             Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionCruiseVelocity(7500, timeoutMs);
             Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configMotionAcceleration(20000, timeoutMs);
         } else if (driveInches <= 30) {

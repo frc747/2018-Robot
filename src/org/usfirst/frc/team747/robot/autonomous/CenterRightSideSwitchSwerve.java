@@ -17,9 +17,9 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         
         requires(Robot.DRIVE_SUBSYSTEM);
         //addSequential(new AutonomousPlayback());
-        addSequential(new PIDDriveArcRightCommand(116, true)); //was 110 //changed to 116 (with old wheels)
+        addSequential(new PIDDriveArcRightCommand(113, true)); //was 110 //changed to 116 (with old wheels)
         addParallel(new EjectTimedCommand(false, 1));
-        addSequential(new PIDDriveInchesCommandSlow(23.75, false));
+        addSequential(new PIDDriveInchesCommandSlow(25, false)); //23.75
         
         
         
@@ -38,7 +38,7 @@ public class CenterRightSideSwitchSwerve extends CommandGroup {
         addParallel(new ForwardTimedGroup(4));
         addSequential(new PIDDriveRotateCommand(0));
         addParallel(new ForwardTimedGroup(4));
-        addSequential(new PIDDriveInchesCommand(26, true)); //was 20 //changed to 26 (with old wheels)
+        addSequential(new PIDDriveInchesCommand(22, true)); //was 20 //changed to 26 (with old wheels)
         addSequential(new EjectTimedCommand(false, 0.5));
         
         addSequential(new PIDDriveInchesCommandSlow(7.75, false));

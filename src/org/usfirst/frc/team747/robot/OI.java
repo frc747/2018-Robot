@@ -18,6 +18,7 @@ import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
+import org.usfirst.frc.team747.robot.commands.ShootFastGroup;
 import org.usfirst.frc.team747.robot.commands.ShootGroup;
 import org.usfirst.frc.team747.robot.commands.SolenoidHighGear;
 import org.usfirst.frc.team747.robot.commands.SolenoidLowGear;
@@ -81,6 +82,7 @@ public class OI {
 		OP_RB.whileHeld(new ForwardGroup());
 		OP_LB.whenPressed(new SolenoidLowGear());
 		OP_LB.whenReleased(new SolenoidHighGear());
+        OP_START.whileHeld(new ShootFastGroup());
 		SmartDashboard.putBoolean("Competition Robot?", compBot);
 
 	    //OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
