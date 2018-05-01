@@ -19,7 +19,8 @@ public class Autonomous{
         AUTOMODE_CROSS_LINE,
         AUTOMODE_TWO_CUBE_CENTER,
         AUTOMODE_SWERVE,
-        AUTOMODE_VAULT
+        AUTOMODE_VAULT,
+        AUTOMODE_MOTIONPROFILE
     }
     
     private SendableChooser autoChooser1;
@@ -34,7 +35,8 @@ public class Autonomous{
         autoChooser1.addObject("Left Wing Autonomous", AutoMode.AUTOMODE_LEFT);
         autoChooser1.addObject("Right Wing Autonomous", AutoMode.AUTOMODE_RIGHT);
         autoChooser1.addDefault("Adaptive Center Arc Drive", AutoMode.AUTOMODE_SWERVE);        
-        autoChooser1.addObject("Vault Auto (Agua de Coco 2.0 Baby)", AutoMode.AUTOMODE_VAULT);        
+        autoChooser1.addObject("Vault Auto (Agua de Coco 2.0 Baby)", AutoMode.AUTOMODE_VAULT);
+        autoChooser1.addObject("Motion Profile Autonomous", AutoMode.AUTOMODE_MOTIONPROFILE);
 
         SmartDashboard.putData("Auto mode", autoChooser1);
     }
@@ -65,6 +67,8 @@ public class Autonomous{
             case AUTOMODE_TWO_CUBE_CENTER: //bridgewater code
                 new AutoChooserTwoCubeCenter().start();
                 break;
+            case AUTOMODE_MOTIONPROFILE:
+            	new AutoChooserFindPath().start();
             case AUTOMODE_NONE:
                 //DO NOTHING
 

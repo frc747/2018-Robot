@@ -26,8 +26,8 @@ public class FindPathCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
-    	trajectoryL = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_left_detailed.traj"));
-        trajectoryR = Pathfinder.readFromFile(new File("/home/lvuser/trajectories/" + name + "_right_detailed.traj"));
+    	trajectoryL = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_left_detailed.csv"));
+        trajectoryR = Pathfinder.readFromCSV(new File("/home/lvuser/trajectories/" + name + "_right_detailed.csv"));
     	
         modifierL = new TankModifier(trajectoryL).modify(0.5);
         modifierR = new TankModifier(trajectoryR).modify(0.5);

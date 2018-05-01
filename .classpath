@@ -12,5 +12,10 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/wpilib/user/java/lib/Pathfinder-Java-1.8.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/wpilib/user/java/lib/log4j-api-2.11.0.jar" sourcepath="C:/Users/Adam/wpilib/user/java/lib/log4j-api-2.11.0-javadoc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-1.2-api-2.11.0-javadoc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-1.2-api-2.11.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-api-2.11.0-javadoc.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/log4j-api-2.11.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/Pathfinder-Java-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
