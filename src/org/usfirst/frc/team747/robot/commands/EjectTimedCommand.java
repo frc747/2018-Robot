@@ -13,7 +13,6 @@ public class EjectTimedCommand extends Command {
     
     public EjectTimedCommand(boolean reverse, double timeOutAmount) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cube);
         rev = reverse;
         setTimeout(timeOutAmount);
     }

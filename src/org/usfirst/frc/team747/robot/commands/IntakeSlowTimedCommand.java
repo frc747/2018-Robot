@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeTimedCommand extends Command {
+public class IntakeSlowTimedCommand extends Command {
 	
 	boolean rev;
 	
-    public IntakeTimedCommand(boolean reverse, double timeOutAmount) {
+    public IntakeSlowTimedCommand(boolean reverse, double timeOutAmount) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.cube);
     	rev = reverse;
@@ -19,8 +19,8 @@ public class IntakeTimedCommand extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setIntake(true, rev);
-    	Robot.cube.setIntakeArms(true, rev);
+    	Robot.cube.setIntakeSlow(true, rev);
+    	Robot.cube.setIntakeArmsSlow(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,8 +30,8 @@ public class IntakeTimedCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setIntake(false, rev);
-    	Robot.cube.setIntakeArms(false, rev);
+    	Robot.cube.setIntakeSlow(false, rev);
+    	Robot.cube.setIntakeArmsSlow(false, rev);
 
     }
     

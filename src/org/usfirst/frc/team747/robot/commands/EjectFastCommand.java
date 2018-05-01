@@ -7,32 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeTimedCommand extends Command {
+public class EjectFastCommand extends Command {
 	
 	boolean rev;
 	
-    public IntakeTimedCommand(boolean reverse, double timeOutAmount) {
+    public EjectFastCommand(boolean reverse) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cube);
+        // eg. requires(chassis);
     	rev = reverse;
-    	setTimeout(timeOutAmount);
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.cube.setIntake(true, rev);
-    	Robot.cube.setIntakeArms(true, rev);
+    	Robot.cube.setEjectFast(true, rev);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.cube.setIntake(false, rev);
-    	Robot.cube.setIntakeArms(false, rev);
-
+    	Robot.cube.setEjectFast(false, rev);
     }
     
 }
