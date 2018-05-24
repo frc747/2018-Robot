@@ -41,15 +41,15 @@ public class IntakeDriveCommand extends Command {
          double left = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_LEFT_Y.getValue());
          double right = OI.operatorController.getRawAxis(ControllerMap.GamePad.AXIS_RIGHT_Y.getValue());
 
-         //if (Math.abs(left) < 0.1) {
+         if (Math.abs(left) < 0.1) {
              left = 0;
-         //}
-         //if (Math.abs(right) < 0.1) {
+         }
+         if (Math.abs(right) < 0.1) {
              right = 0;
-         //}
+         }
          
          
-         double speed = 1;
+         double speed = 0;
          
          Robot.cube.leftIntakeArm.set(ControlMode.PercentOutput, OI.leftIntakeArm * left * speed);     
          Robot.cube.rightIntakeArm.set(ControlMode.PercentOutput, OI.rightIntakeArm * right * speed);
