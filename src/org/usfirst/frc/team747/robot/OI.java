@@ -38,9 +38,10 @@ public class OI {
     
     public static boolean compBot = true;
     
-	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
-	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
-	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
+    public static Joystick paradeDrive = new Joystick(0);
+	//public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
+	//public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
+	public static Joystick operatorController = new Joystick(1);
 	public String highLow;
 	public static int intLeft = 1;
 	public static int intRight = 1;
@@ -70,7 +71,7 @@ public class OI {
 	Button OP_RB = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_RB.getValue());
 	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
-	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
+	//Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
 
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);

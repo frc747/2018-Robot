@@ -32,8 +32,8 @@ public class DriveCommand extends Command{
         Robot.DRIVE_SUBSYSTEM.talonDriveRightPrimary.configPeakOutputReverse(-MAX_PERCENT_VOLTAGE, timeoutMs);
 	}
 	protected void execute() {
-		double left = -OI.leftStick.getRawAxis(ControllerMap.Joystick.AXIS_Y.getValue());
-        double right = -OI.rightStick.getRawAxis(ControllerMap.Joystick.AXIS_Y.getValue());
+		double left = -OI.paradeDrive.getRawAxis(ControllerMap.Joystick.AXIS_Y.getValue());
+        double right = -OI.paradeDrive.getRawAxis(5);
 
         if (Math.abs(left) < 0.1) {
             left = 0;
