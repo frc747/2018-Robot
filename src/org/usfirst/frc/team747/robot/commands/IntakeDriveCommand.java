@@ -49,14 +49,14 @@ public class IntakeDriveCommand extends Command {
          }
          
          
-         double speed = 0;
+         double speed = 1;
          
          Robot.cube.leftIntakeArm.set(ControlMode.PercentOutput, OI.leftIntakeArm * left * speed);     
          Robot.cube.rightIntakeArm.set(ControlMode.PercentOutput, OI.rightIntakeArm * right * speed);
-         Robot.cube.intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * left * speed);     
+         /*Robot.cube.intakeLeft.set(ControlMode.PercentOutput, OI.intLeft * left * speed);     
          Robot.cube.intakeRight.set(ControlMode.PercentOutput, OI.intRight * right * speed);
          Robot.cube.ejectLeft.set(ControlMode.PercentOutput, OI.extLeft * left * speed);     
-         Robot.cube.ejectRight.set(ControlMode.PercentOutput, OI.extRight * right * speed);
+         Robot.cube.ejectRight.set(ControlMode.PercentOutput, OI.extRight * right * speed);*/
     }
     
     // Make this return true when this Command no longer needs to run execute()
