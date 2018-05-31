@@ -16,6 +16,9 @@ package org.usfirst.frc.team747.robot;
 //import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandIntake;
+import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootFastGroup;
@@ -24,10 +27,12 @@ import org.usfirst.frc.team747.robot.commands.SolenoidHighGear;
 import org.usfirst.frc.team747.robot.commands.SolenoidLowGear;
 import org.usfirst.frc.team747.robot.maps.ControllerMap;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -37,7 +42,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
     
     public static boolean compBot = true;
-    
+    double area;
+    double x;
+    NetworkTable table;
+    double distance;    
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
 	public static Joystick operatorController = new Joystick(ControllerMap.Controller.OPERATOR.getValue());
@@ -71,11 +79,15 @@ public class OI {
 	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
 	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
+	Button DR_RIGHT_TRIGGER = new JoystickButton(rightStick, ControllerMap.Joystick.BUTTON_1.getValue());
+
 
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
 		
-		OP_B.whileHeld(new RollerCommand(false));
+		DR_LEFT_TRIGGER.toggleWhenPressed(new PIDDriveRotateCommand(x));
+		
+		//OP_B.whileHeld(new RollerCommand(false));
 		OP_Y.whileHeld(new ShootGroup());
 		OP_A.whileHeld(new ReverseGroup());
 		OP_X.whileHeld(new IntakeCommand(false));
@@ -91,11 +103,26 @@ public class OI {
 	}
 	
 	public void updateOI() {
+		
+		
+		 table = NetworkTableInstance.getDefault().getTable("limelight");
+	     x = table.getEntry("tx").getDouble(0);
+	     area = table.getEntry("ta").getDouble(0);
+	     distance = Math.sqrt(50000/(area+5));
+	     int sub = (distance>43) ? 20:0;//38:0;
+	    
+	     
+			OP_B.toggleWhenPressed(new PIDDriveInchesCommandIntake(Math.round(distance-sub), false));
+
+	     
 		highLow = (Robot.switchb)? "High" : "Low";
 		SmartDashboard.putString("High or Low?", highLow);
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Current NavX Angle:", Robot.getNavXAngle());
+		SmartDashboard.putNumber("x:", x);
+		SmartDashboard.putNumber("distance:", distance);
+
 		if(compBot) {
 			
 			leftIntakeArm = 1;
