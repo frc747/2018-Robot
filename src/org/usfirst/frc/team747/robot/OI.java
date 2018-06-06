@@ -19,6 +19,7 @@ import org.usfirst.frc.team747.robot.commands.IntakeCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommand;
 import org.usfirst.frc.team747.robot.commands.PIDDriveInchesCommandIntake;
 import org.usfirst.frc.team747.robot.commands.PIDDriveRotateCommand;
+import org.usfirst.frc.team747.robot.commands.PIDDriveRotateFromCenterCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootFastGroup;
@@ -43,8 +44,8 @@ public class OI {
     
     public static boolean compBot = true;
     double area;
-    double x;
-    NetworkTable table;
+    public static double x;
+    public static NetworkTable table;
     double distance;    
 	public static Joystick leftStick = new Joystick(ControllerMap.Controller.DRIVER_LEFT.getValue()); //Driver Controller 1
 	public static Joystick rightStick = new Joystick(ControllerMap.Controller.DRIVER_RIGHT.getValue()); //Driver Controller 2
@@ -69,6 +70,8 @@ public class OI {
 	public static double latestDistanceDriven;
 	public static double latestDiagonalDriven;
 	
+	private static double degrees;
+	
 	// CREATING BUTTONS - OP == OPERATOR; DR == DRIVER
 	Button OP_A = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_A.getValue());
 	Button OP_B = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_B.getValue());
@@ -85,7 +88,7 @@ public class OI {
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
 		
-		DR_LEFT_TRIGGER.toggleWhenPressed(new PIDDriveRotateCommand(x));
+		DR_LEFT_TRIGGER.toggleWhenPressed(new PIDDriveRotateFromCenterCommand(x));
 		
 		//OP_B.whileHeld(new RollerCommand(false));
 		OP_Y.whileHeld(new ShootGroup());
@@ -110,9 +113,8 @@ public class OI {
 	     area = table.getEntry("ta").getDouble(0);
 	     distance = Math.sqrt(50000/(area+5));
 	     int sub = (distance>43) ? 20:0;//38:0;
-	    
 	     
-			OP_B.toggleWhenPressed(new PIDDriveInchesCommandIntake(Math.round(distance-sub), false));
+		OP_B.toggleWhenPressed(new PIDDriveInchesCommandIntake(Math.round(distance-sub/*40*/-11/*+11*/), false)); // distance - robot length (if less than 40) + cube width
 
 	     
 		highLow = (Robot.switchb)? "High" : "Low";
