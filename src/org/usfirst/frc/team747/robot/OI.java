@@ -110,11 +110,12 @@ public class OI {
 		
 		 table = NetworkTableInstance.getDefault().getTable("limelight");
 	     x = table.getEntry("tx").getDouble(0);
+	     double y = table.getEntry("ty").getDouble(0);
 	     area = table.getEntry("ta").getDouble(0);
-	     distance = Math.sqrt(50000/(area+5));
-	     int sub = (distance>43) ? 20:0;//38:0;
+	     //distance = Math.sqrt(50000/(area+5));
+	     distance = 3*8*Math.tan(Math.toRadians(50+y))-2;
 	     
-		OP_B.toggleWhenPressed(new PIDDriveInchesCommandIntake(Math.round(distance-sub/*40*/-11/*+11*/), false)); // distance - robot length (if less than 40) + cube width
+		OP_B.toggleWhenPressed(new PIDDriveInchesCommandIntake(Math.round(distance-30), false)); // distance - robot length (if less than 40) + cube width
 
 	     
 		highLow = (Robot.switchb)? "High" : "Low";
