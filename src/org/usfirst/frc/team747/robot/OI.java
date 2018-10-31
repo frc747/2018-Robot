@@ -16,6 +16,7 @@ package org.usfirst.frc.team747.robot;
 //import org.usfirst.frc.team747.robot.commands.EjectCommand;
 import org.usfirst.frc.team747.robot.commands.ForwardGroup;
 import org.usfirst.frc.team747.robot.commands.IntakeCommand;
+import org.usfirst.frc.team747.robot.commands.LockCommand;
 import org.usfirst.frc.team747.robot.commands.ReverseGroup;
 import org.usfirst.frc.team747.robot.commands.RollerCommand;
 import org.usfirst.frc.team747.robot.commands.ShootFastGroup;
@@ -70,7 +71,10 @@ public class OI {
 	Button OP_RB = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_RB.getValue());
 	Button OP_START = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_START.getValue());
 	Button OP_LEFT_STICK_PRESS = new JoystickButton(operatorController, ControllerMap.GamePad.STICK_LEFT.getValue());
+	Button OP_BACK = new JoystickButton(operatorController, ControllerMap.GamePad.BUTTON_BACK.getValue());
+	
 	Button DR_LEFT_TRIGGER = new JoystickButton(leftStick, ControllerMap.Joystick.BUTTON_1.getValue());
+	
 
 	public OI() {
 		new Notifier(() -> updateOI()).startPeriodic(.1);
@@ -83,6 +87,7 @@ public class OI {
 		OP_LB.whenPressed(new SolenoidLowGear());
 		OP_LB.whenReleased(new SolenoidHighGear());
         OP_START.whileHeld(new ShootFastGroup());
+        OP_BACK.whileHeld(new LockCommand());
 		SmartDashboard.putBoolean("Competition Robot?", compBot);
 
 	    //OP_LEFT_STICK_PRESS.toggleWhenPressed(new PIDDriveRotateCommand(90));
@@ -91,7 +96,7 @@ public class OI {
 	}
 	
 	public void updateOI() {
-		highLow = (Robot.switchb)? "High" : "Low";
+		highLow = (!Robot.switchb)? "High" : "Low";
 		SmartDashboard.putString("High or Low?", highLow);
 	    SmartDashboard.putNumber("Left Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getLeftEncoderPosition()/22118.4)*19.635);
 		SmartDashboard.putNumber("Right Encoder Position:", (Robot.DRIVE_SUBSYSTEM.getRightEncoderPosition()/22118.4)*19.635);
